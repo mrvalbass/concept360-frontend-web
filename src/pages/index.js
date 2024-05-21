@@ -29,10 +29,9 @@ export default function Home() {
     <>
       <Header />
       <main
-        className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
+        className={`flex flex-col min-h-[90vh] items-center justify-center`}
       >
-        bienvenue sur la HomePage
-        <Link href={"/patient/664c8cee6374e3ff8434448c"}>Patient Page</Link>
+        Bienvenue sur la HomePage
       </main>
     </>
   );

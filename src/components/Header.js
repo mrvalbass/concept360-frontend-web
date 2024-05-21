@@ -1,26 +1,40 @@
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { inputStyle, buttonStyle } from "../styles/style";
+import { buttonStyle } from "../styles/style";
+import Link from "next/link";
+
 export default function Header() {
   const router = useRouter();
-  return (
-    <div className={"flex flex-row gap-9 items-center"}>
-      <div>Concept 360</div>
-      <FontAwesomeIcon onClick={() => router.push("/")} icon={faHouse} />
 
-      <button className={buttonStyle} onClick={() => router.push("/Programs")}>
-        Programs
-      </button>
-      <button className={buttonStyle} onClick={() => router.push("/Clients")}>
-        My clients
-      </button>
-      <button className={buttonStyle} onClick={() => router.push("/Messages")}>
-        Messages
-      </button>
-      <button className={buttonStyle} onClick={() => router.push("/Others")}>
-        Others
-      </button>
+  return (
+    <div
+      className={
+        "flex justify-between px-9 items-center bg-[#067D5D] h-[10vh] text-white font-[Sora]"
+      }
+    >
+      <div className="flex items-center gap-9">
+        <h1 className="font-bold text-2xl">Concept 360</h1>
+        <FontAwesomeIcon
+          className="text-2xl duration-75 hover:scale-110"
+          onClick={() => router.push("/")}
+          icon={faHouse}
+        />
+      </div>
+      <div className="flex gap-32">
+        <Link className={`duration-75 hover:scale-110`} href="/Programs">
+          Programmes
+        </Link>
+        <Link className={`duration-75 hover:scale-110`} href="/Clients">
+          Mes Clients
+        </Link>
+        <Link className={`duration-75 hover:scale-110`} href="/Messages">
+          Messages
+        </Link>
+        <Link className={`duration-75 hover:scale-110`} href="/Others">
+          Others
+        </Link>
+      </div>
     </div>
   );
 }

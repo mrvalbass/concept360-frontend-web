@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Routine from "./routine";
+import Routine from "./Routine";
+import Image from "next/image";
 
 export default function PatientCard({ patientId }) {
   const [date, setDate] = useState(
@@ -22,7 +23,7 @@ export default function PatientCard({ patientId }) {
     })();
   }, []);
 
-  if (!programData) return <div>No Data</div>;
+  if (!programData) return <div className="border-2 grow">No Data</div>;
 
   const { patient, program } = programData;
   const currentRoutine = program.find(
@@ -30,16 +31,33 @@ export default function PatientCard({ patientId }) {
   );
 
   return (
-    <>
-      <div className="flex">
-        <h2>{`${patient.user.firstName} ${patient.user.lastName}`}</h2>
+    <div className="flex flex-col border-2 grow p-5">
+      <div className="flex items-center justify-between px-10">
+        <div className="flex items-center gap-6">
+          <div className="w-16 ">
+            <Image
+              src="/gigachad.jpg"
+              width={565}
+              height={601}
+              alt="Patient Profile Picture"
+              className="rounded-full"
+            />
+          </div>
+          <h2>{`${patient.user.firstName} ${patient.user.lastName}`}</h2>
+        </div>
+        <input
+          type="date"
+          onChange={(e) => setDate(e.nativeEvent.target.value)}
+          value={date}
+        />
       </div>
-      <input
-        type="date"
-        onChange={(e) => setDate(e.nativeEvent.target.value)}
-        value={date}
-      />
-      <div>{currentRoutine && <Routine {...currentRoutine.routine} />}</div>
-    </>
+      <div>
+        {currentRoutine ? (
+          <Routine {...currentRoutine.routine} />
+        ) : (
+          <p>Rien de prévu aujourd'hui</p>
+        )}
+      </div>
+    </div>
   );
 }
