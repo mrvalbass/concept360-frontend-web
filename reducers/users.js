@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
-    isConnected: false,
+    token: "",
+    userData: null,
   },
 };
 
@@ -10,11 +11,16 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    ChangeConnectionState: (state) => {
-      state.value.isConnected = !state.value.isConnected;
+    ChangeConnectionState: (state, action) => {
+      !state.value.token
+        ? localStorage.setItem("token", action.payload)
+        : localStorage.removeItem("token");
+    },
+    setUserData: (state, action) => {
+      state.value.userData = action.payload;
     },
   },
 });
 
-export const { ChangeConnectionState } = usersSlice.actions;
+export const { ChangeConnectionState, setUserData } = usersSlice.actions;
 export default usersSlice.reducer;
