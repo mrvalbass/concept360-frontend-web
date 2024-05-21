@@ -1,12 +1,13 @@
-import PatientCard from "@/components/patientCard";
+import PatientCard from "@/components/PatientCard";
 import { useRouter } from "next/router";
+import Header from "@/components/Header";
 
 export default function PatientPage() {
   const router = useRouter();
   const { patientId } = router.query;
   return (
     <div>
-      <div>header placeholder</div>
+      <Header />
       {patientId && <PatientCard patientId={patientId} />}
     </div>
   );

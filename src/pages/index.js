@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../reducers/users";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
@@ -26,12 +26,13 @@ export default function Home() {
     getUserData();
   }, []);
   return (
-    <main
-      className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
-    >
-      bienvenue sur la HomePage
-      <Link href={"/patient/664c8cee6374e3ff8434448c"}>Patient Page</Link>
-
-    </main>
+    <>
+      <Header />
+      <main
+        className={`flex flex-col min-h-[90vh] items-center justify-center`}
+      >
+        Bienvenue sur la HomePage
+      </main>
+    </>
   );
 }

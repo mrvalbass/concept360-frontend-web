@@ -1,11 +1,14 @@
-import Header from "@/components/header";
+import Header from "@/components/Header";
+import PatientCard from "@/components/PatientCard";
 export default function Clients() {
   return (
-    <main
-      className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
-    >
+    <>
       <Header />
-      <div>Pages des Clients</div>
-    </main>
+      <main className={`flex gap-5 min-h-[90vh] p-5`}>
+        <div className="border-2 w-1/4">placeholder myClientList</div>
+
+        <PatientCard patientId="664c8cee6374e3ff8434448c"></PatientCard>
+      </main>
+    </>
   );
 }
