@@ -30,7 +30,7 @@ export default function login() {
       "http://localhost:3000/users/signup",
       form
     ).then((r) => r.json());
-    dispatch(ChangeConnectionState());
+    dispatch(ChangeConnectionState(response.token));
     router.push("/");
   };
 
@@ -47,9 +47,10 @@ export default function login() {
       "http://localhost:3000/users/signin",
       form
     ).then((r) => r.json());
-    dispatch(ChangeConnectionState());
+    dispatch(ChangeConnectionState(response.token));
     router.push("/");
   };
+
   return (
     <main
       className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
