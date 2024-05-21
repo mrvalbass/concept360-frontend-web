@@ -31,7 +31,7 @@ export default function login() {
       "http://localhost:3000/users/signup",
       form
     ).then((r) => r.json());
-    dispatch(ChangeConnectionState());
+    dispatch(ChangeConnectionState(response.token));
     router.push("/");
   };
 
@@ -48,9 +48,10 @@ export default function login() {
       "http://localhost:3000/users/signin",
       form
     ).then((r) => r.json());
-    dispatch(ChangeConnectionState());
+    dispatch(ChangeConnectionState(response.token));
     router.push("/");
   };
+
   return (
     <main className='flex flex-col min-h-screen min-w-full items-center justify-center bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.20)_50%,_rgba(6,_125,_93,_0.20)_88.81%)]'>
       <div className='m-20 font-sora text-8xl font-semibold text-center text-[#00a5ac]'>
