@@ -26,8 +26,7 @@ export default function Home() {
     <>
       <Header />
       <main
-        className={`flex flex-col min-h-[90vh] items-center justify-center`}
-      >
+        className={`flex flex-col min-h-[90vh] items-center justify-center`}>
         Bienvenue sur la HomePage
       </main>
     </>

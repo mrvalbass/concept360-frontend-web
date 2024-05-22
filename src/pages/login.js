@@ -53,8 +53,9 @@ export default function login() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen min-w-full items-center justify-center bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.20)_50%,_rgba(6,_125,_93,_0.20)_88.81%)]">
-      <div className="m-20 font-sora text-8xl font-semibold text-center text-[#00a5ac]">
+    <main
+      className={`flex flex-col min-h-screen min-w-full items-center justify-center bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}>
+      <div className='m-20 font-sora text-8xl font-semibold text-center text-[#00a5ac]'>
         Concept 360
       </div>
       <div className="flex flex-row m-5 justify-center items-end gap-[24px]">
