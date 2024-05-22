@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
-import PatientCard from "@/components/PatientCard";
 
 export default function Clients() {
-  const user = useSelector((state) => state.users.value.userData);
+  const user = useSelector((state) => state.users.value);
   const specialistId = user._id;
   const [userData, setUserData] = useState([]);
   const [specialistList, setSpecialistList] = useState([]);
