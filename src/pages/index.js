@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setUserData } from "../../reducers/users";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../reducers/users";
 import Header from "@/components/Header";
 
 export default function Home() {
@@ -11,7 +10,7 @@ export default function Home() {
   const user = useSelector((state) => state.users.value);
 
   useEffect(() => {
-    const getUserData = async () => {
+    (async () => {
       const token = localStorage.getItem("token");
       if (token) {
         const data = await fetch(
@@ -21,9 +20,9 @@ export default function Home() {
       } else {
         router.push("/login");
       }
-    };
-    getUserData();
+    })();
   }, []);
+
   return (
     <>
       <Header />
