@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { buttonStyle } from "../styles/style";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function Header() {
           icon={faHouse}
         />
       </div>
-      <div className="flex gap-32">
+      <div className="flex gap-32 items-center">
         <Link className={`duration-75 hover:scale-110`} href="/Programs">
           Programmes
         </Link>
@@ -35,11 +35,20 @@ export default function Header() {
         <Link className={`duration-75 hover:scale-110`} href="/Messages">
           Messages
         </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/Others">
-          Others
-        </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/Others">
-          Profile
+        <Link
+          href="/Profile"
+          className={`flex items-center gap-4 duration-75 hover:scale-110`}
+        >
+          <div className="w-12 rounded-full border-4">
+            <Image
+              src="/gigachad.jpg"
+              width={565}
+              height={601}
+              alt="Patient Profile Picture"
+              className="rounded-full"
+            />
+          </div>
+          <h2>{`${user.firstName} ${user.lastName}`}</h2>
         </Link>
       </div>
     </div>
