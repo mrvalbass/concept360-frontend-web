@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserData } from "../../reducers/users";
+import { setUserData } from "../reducers/users";
 import Header from "@/components/Header";
 
 export default function Home() {
@@ -29,8 +29,7 @@ export default function Home() {
     <>
       <Header />
       <main
-        className={`flex flex-col min-h-[90vh] items-center justify-center`}
-      >
+        className={`flex flex-col min-h-[90vh] items-center justify-center`}>
         Bienvenue sur la HomePage
       </main>
     </>
