@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import Header from "@/components/Header";
 import { ChangeConnectionState } from "@/reducers/users";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function Others() {
@@ -10,14 +10,14 @@ export default function Others() {
   const router = useRouter();
   const [renderTrigger, setRenderTrigger] = useState(true);
 
-  if (!localStorage.getItem("token")) router.push("/login");
+  useEffect(() => {
+    if (!localStorage.getItem("token")) router.push("/login");
+  }, [renderTrigger]);
 
   return (
     <>
       <Header />
-      <main
-        className={`flex flex-col min-h-[90vh] items-center justify-center`}
-      >
+      <main className="flex flex-col min-h-[90vh] items-center justify-center">
         <Button
           onClick={() => {
             dispatch(ChangeConnectionState());
