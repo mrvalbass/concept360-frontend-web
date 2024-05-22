@@ -9,7 +9,6 @@ export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value.userData);
-  const [patientEmail, setPatientEmail] = useState("");
 
   useEffect(() => {
     const getUserData = async () => {
