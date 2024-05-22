@@ -1,8 +1,11 @@
 import Header from "@/components/Header";
+
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import PatientCard from "@/components/PatientCard";
+
 export default function Clients() {
   const user = useSelector((state) => state.users.value.userData);
   const specialistId = user._id;
@@ -45,7 +48,7 @@ export default function Clients() {
     <>
       <Header />
       <main
-        className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
+        className={`flex gap-5 min-h-[90vh] p-5 items-center justify-center`}
       >
         <div>Pages des Clients de Mr. {user.lastName}</div>
         <div className={"flex flex-row min-w-full justify-between"}>

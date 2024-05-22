@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,11 +25,13 @@ export default function Home() {
     getUserData();
   }, []);
   return (
-    <main
-      className={`flex flex-col min-h-screen min-w-full items-center justify-center`}
-    >
+    <>
       <Header />
-      <div>bienvenue sur la HomePage</div>
-    </main>
+      <main
+        className={`flex flex-col min-h-[90vh] items-center justify-center`}
+      >
+        Bienvenue sur la HomePage
+      </main>
+    </>
   );
 }
