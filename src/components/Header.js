@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <div
       className={
-        "flex justify-between px-9 items-center bg-[#067D5D] h-[10vh] text-white font-[Sora]"
+        "flex justify-between px-9 items-center bg-[#00a5ac] h-[10vh] text-white font-[Sora]"
       }
     >
       <div className="flex items-center gap-9">
