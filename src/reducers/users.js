@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: {
-    token: "",
-    userData: null,
-  },
+  value: {},
 };
 
 export const usersSlice = createSlice({
@@ -12,12 +9,12 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     ChangeConnectionState: (state, action) => {
-      !state.value.token
+      !localStorage.getItem("token")
         ? localStorage.setItem("token", action.payload)
         : localStorage.removeItem("token");
     },
     setUserData: (state, action) => {
-      state.value.userData = action.payload;
+      state.value = action.payload;
     },
   },
 });
