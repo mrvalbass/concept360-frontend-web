@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.value.userData);
+  const user = useSelector((state) => state.users.value);
 
   useEffect(() => {
     const getUserData = async () => {
