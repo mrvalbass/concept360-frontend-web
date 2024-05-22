@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { buttonStyle } from "../styles/style";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const router = useRouter();
+  const user = useSelector((state) => state.users.value);
+
+  console.log(user);
 
   return (
     <div
@@ -33,6 +37,9 @@ export default function Header() {
         </Link>
         <Link className={`duration-75 hover:scale-110`} href="/Others">
           Others
+        </Link>
+        <Link className={`duration-75 hover:scale-110`} href="/Others">
+          Profile
         </Link>
       </div>
     </div>

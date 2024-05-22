@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserData } from "../../reducers/users";
+import { setUserData } from "../reducers/users";
 import Header from "@/components/Header";
 
 export default function Home() {

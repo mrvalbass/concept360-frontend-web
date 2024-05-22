@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import users from "../../reducers/users";
+import users from "../reducers/users";
 
 const store = configureStore({
   reducer: { users },
