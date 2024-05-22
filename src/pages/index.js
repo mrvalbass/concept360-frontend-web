@@ -2,13 +2,12 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../reducers/users";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.value.userData);
-  const [patientEmail, setPatientEmail] = useState("");
 
   useEffect(() => {
     const getUserData = async () => {
