@@ -26,17 +26,17 @@ export default function Header() {
         />
       </div>
       <div className="flex gap-32 items-center">
-        <Link className={`duration-75 hover:scale-110`} href="/Programs">
+        <Link className={`duration-75 hover:scale-110`} href="/programs">
           Programmes
         </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/Clients">
+        <Link className={`duration-75 hover:scale-110`} href="/clients">
           Mes Clients
         </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/Messages">
-          Messages
+        <Link className={`duration-75 hover:scale-110`} href="/database">
+          Gestion Base de Données
         </Link>
         <Link
-          href="/Profile"
+          href="/profile"
           className={`flex items-center gap-4 duration-75 hover:scale-110`}
         >
           <div className="w-12 rounded-full border-4">

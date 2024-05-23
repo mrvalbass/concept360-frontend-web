@@ -1,8 +1,8 @@
-export default function Button({ children, onClick }) {
+export default function Button({ children, onClick, className }) {
   return (
     <button
       onClick={onClick}
-      className=" font-semibold bg-white px-5 rounded shadow-xl"
+      className={`${className} font-semibold bg-white px-5 rounded shadow-xl`}
     >
       {children}
     </button>

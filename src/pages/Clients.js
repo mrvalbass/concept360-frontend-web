@@ -46,9 +46,7 @@ export default function Clients() {
   return (
     <>
       <Header />
-      <main
-        className={`flex gap-5 min-h-[90vh] p-5 items-center justify-center`}
-      >
+      <main className="flex gap-5 min-h-[90vh] p-5 items-center justify-center bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
         <div>Pages des Clients de Mr. {user.lastName}</div>
         <div className={"flex flex-row min-w-full justify-between"}>
           <div>
