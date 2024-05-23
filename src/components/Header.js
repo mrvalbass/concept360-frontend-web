@@ -8,7 +8,6 @@ import Image from "next/image";
 export default function Header() {
   const router = useRouter();
   const specialist = useSelector((state) => state.users.value);
-  console.log(specialist);
 
   return (
     <div

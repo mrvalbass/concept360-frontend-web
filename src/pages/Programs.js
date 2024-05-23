@@ -1,15 +1,7 @@
 import Header from "@/components/Header";
 import PatientCard from "@/components/PatientCard";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export default function Programs() {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) router.push("/login");
-  }, []);
-
   return (
     <>
       <Header />
