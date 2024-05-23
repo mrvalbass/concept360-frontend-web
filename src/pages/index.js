@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../reducers/users";
 import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const specialist = useSelector((state) => state.users.value);
 
   useEffect(() => {
     (async () => {
@@ -15,7 +16,7 @@ export default function Home() {
         const data = await fetch(
           `http://localhost:3000/users/token/${token}`
         ).then((r) => r.json());
-        dispatch(setUserData(data.user));
+        dispatch(setUserData(data.specialist));
       } else {
         router.push("/login");
       }
