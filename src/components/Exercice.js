@@ -9,14 +9,14 @@ export default function Exercice({
   onIconClick,
 }) {
   return (
-    <div className="flex justify-between items-center gap-4 p-2 border-b">
+    <div className="flex justify-between gap-4 p-2 border-b">
       <div>
-        <p className="flex items-center justify-start font-medium text-base font-[Sora]">
+        <p className="flex items-center justify-start font-semibold text-base font-[Sora]">
           {title}
-        </p>
-        <div className="flex flex-row items-center justify-start ">
-          <p className="flex items-center justify-start ">{movement}</p>
-          <p className="flex items-center justify-start ">{bodyPart}</p>
+        </p> 
+        <div className=' flex flex-row '>
+          <p className=' w-[50%]  '>Mouvement : {movement}</p>
+          <p className=' w-[50%]  '>Partie du corps :{bodyPart}</p>
         </div>
       </div>
       {icon && (

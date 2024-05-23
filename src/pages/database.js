@@ -2,12 +2,14 @@ import Header from "@/components/Header";
 import Exercice from "@/components/Exercice";
 import Card from "@/components/Card";
 import RoutineModal from "@/components/RoutineModal";
+import ExerciceModal from "@/components/ExerciceModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Programs() {
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
+  const [openExerciceModal, setOpenExerciceModal] = useState(false);
   const [routines, setRoutines] = useState([]);
   const [exercices, setExercices] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
@@ -64,6 +66,10 @@ export default function Programs() {
         setOpenRoutineModal={setOpenRoutineModal}
         exercicesData={exercices}
       />
+      <ExerciceModal
+        open={openExerciceModal}
+        setOpenExerciceModal={setOpenExerciceModal}
+      />
       <Header />
       <main
         className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
@@ -71,9 +77,10 @@ export default function Programs() {
         <Card
           title="Exercices"
           displayButton
-          //   onButtonClick={setOpenExerciceModal}
+          onButtonClick={setOpenExerciceModal}>
           buttonText="Créer un exercice"
         >
+
           {exercicesComponents}
         </Card>
         <Card
