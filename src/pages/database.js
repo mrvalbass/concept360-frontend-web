@@ -4,6 +4,7 @@ import Card from "@/components/Card";
 import RoutineModal from "@/components/RoutineModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Programs() {
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
@@ -25,13 +26,35 @@ export default function Programs() {
     })();
   }, [renderTrigger]);
 
+  const handleDelete = async (id) => {
+    const deleteResponse = await fetch(
+      `http://localhost:3000/exercices/${id}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    ).then((response) => response.json());
+
+    if (deleteResponse.result) {
+      setRenderTrigger((prev) => !prev);
+    } else {
+      console.error("Error deleting exercice:", deleteResponse.message);
+    }
+  };
+
   const routinesComponents =
     routines && routines.map((routine, i) => <Routine key={i} {...routine} />);
 
   const exercicesComponents =
     exercices &&
     exercices.map((exercice, i) => (
-      <Exercice key={i} {...exercice} setRenderTrigger={setRenderTrigger} />
+      <Exercice
+        key={i}
+        {...exercice}
+        icon={faXmark}
+        onIconClick={handleDelete}
+        setRenderTrigger={setRenderTrigger}
+      />
     ));
 
   return (
@@ -39,6 +62,7 @@ export default function Programs() {
       <RoutineModal
         open={openRoutineModal}
         setOpenRoutineModal={setOpenRoutineModal}
+        exercicesData={exercices}
       />
       <Header />
       <main
@@ -48,22 +72,10 @@ export default function Programs() {
           title="Exercices"
           displayButton
           //   onButtonClick={setOpenExerciceModal}
+          buttonText="Créer un exercice"
         >
           {exercicesComponents}
         </Card>
-        {/* <div className='w-[40%]  bg-white ms-2.5 p-8 rounded'>
-          <h2 className=' border-b flex items-center justify-center @apply rounded-[5px_5px_0px_0px] p-5'>
-            Exercices
-          </h2>
-          <div className='p-2'>
-            <Exercice />
-          </div>
-          <div className='flex items-center justify-center '>
-            <button className='flex bg-white drop-shadow-lg w-[40%] h-[40px] items-center justify-center font-semibold'>
-              Create new exercice
-            </button>
-          </div>
-        </div> */}
         <Card
           title="Routines"
           displayButton
