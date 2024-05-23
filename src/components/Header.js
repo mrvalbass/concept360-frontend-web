@@ -7,9 +7,8 @@ import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
-  const user = useSelector((state) => state.users.value);
-
-  console.log(user);
+  const specialist = useSelector((state) => state.users.value);
+  console.log(specialist);
 
   return (
     <div
@@ -48,7 +47,10 @@ export default function Header() {
               className="rounded-full"
             />
           </div>
-          <h2>{`${user.firstName} ${user.lastName}`}</h2>
+          <h2>
+            {specialist.user &&
+              `${specialist.user.firstName} ${specialist.user.lastName}`}
+          </h2>
         </Link>
       </div>
     </div>

@@ -6,57 +6,82 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Clients() {
-  const user = useSelector((state) => state.users.value);
-  const specialistId = user._id;
-  const [userData, setUserData] = useState([]);
-  const [specialistList, setSpecialistList] = useState([]);
+  const specialist = useSelector((state) => state.users.value);
+  const [allPatientData, setAllPatientData] = useState([]);
+  const [patientInSpecialistList, setPatientInSpecialistList] = useState([]);
+  const [reRender, setReRender] = useState(false);
 
   useEffect(() => {
-    const getUserData = async () => {
-      const userData = await fetch("http://localhost:3000/users").then((r) =>
-        r.json()
-      );
-      setUserData(userData.user);
-      const specialistData = await fetch(
-        `http://localhost:3000/users/getPatient/${user._id}`
+    (async () => {
+      const allPatientData = await fetch(
+        "http://localhost:3000/users/state/patient"
       ).then((r) => r.json());
-      setSpecialistList(specialistData);
+      setAllPatientData(allPatientData.Patient);
+      const specialistData = await fetch(
+        `http://localhost:3000/users/getPatientList/${specialist._id}`
+      ).then((r) => r.json());
+      setPatientInSpecialistList(specialistData.PatientList);
+    })();
+  }, [reRender]);
+
+  const addToSpecialistList = async (patient) => {
+    const data = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        patientId: patient._id,
+      }),
     };
-    getUserData();
-  }, []);
-  console.log(userData);
-  console.log(user);
+    const response = await fetch(
+      `http://localhost:3000/users/addPatient/${specialist._id}`,
+      data
+    ).then((r) => r.json());
+    setReRender(!reRender);
+  };
 
-  const addToSpecialist = (index) => {};
-
-  const userList = userData.map((user, i) => {
+  const patientList = allPatientData.map((patient, i) => {
     return (
       <>
         <div className={"flex flex-row gap-5"} key={i}>
-          <div>firstName : {user.firstName}</div>
-          <div>lastName : {user.lastName}</div>
-          <FontAwesomeIcon onClick={addToSpecialist(i)} icon={faSquarePlus} />
+          <div>firstName : {patient.user.firstName}</div>
+          <div>lastName : {patient.user.lastName}</div>
+          <FontAwesomeIcon
+            onClick={() => addToSpecialistList(patient)}
+            icon={faSquarePlus}
+          />
         </div>
       </>
     );
   });
 
-  //   const patientList =
+  const patientListInSpecialistList = patientInSpecialistList.map(
+    (patient, i) => {
+      return (
+        <>
+          <div className={"flex flex-row gap-5"} key={i}>
+            <div>firstName : {patient.user.firstName}</div>
+            <div>lastName : {patient.user.lastName}</div>
+          </div>
+        </>
+      );
+    }
+  );
 
   return (
     <>
       <Header />
       <main
-        className={`flex gap-5 min-h-[90vh] p-5 items-center justify-center`}
+        className={`flex flex-col gap-5 min-h-[90vh] p-5 items-center justify-center`}
       >
-        <div>Pages des Clients de Mr. {user.lastName}</div>
+        <div>Pages des Clients de Mr. {specialist.user.lastName}</div>
         <div className={"flex flex-row min-w-full justify-between"}>
           <div>
             <div>All patients</div>
-            {userList}
+            {patientList}
           </div>
           <div>
             <div>My patients</div>
+            {patientListInSpecialistList}
           </div>
         </div>
       </main>
