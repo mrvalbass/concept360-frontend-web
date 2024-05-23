@@ -1,7 +1,5 @@
 import { Modal } from "@mui/material";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 
 export default function RoutineModal({ open, setOpenRoutineModal }) {
@@ -14,13 +12,9 @@ export default function RoutineModal({ open, setOpenRoutineModal }) {
       onClose={() => setOpenRoutineModal((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-1/2 w-1/2 flex flex-col items-center p-5 ">
+      <div className="bg-white h-3/4 w-3/4 flex flex-col items-center p-5 ">
         <h2 className="font-[sora] text-xl font-semibold">Routines</h2>
-        <div className="grow flex flex-col justify-center">
-          <Button>
-            <FontAwesomeIcon icon={faAdd} className="text-4xl" />
-          </Button>
-        </div>
+        <div className="grow flex flex-col justify-center"></div>
       </div>
     </Modal>
   );

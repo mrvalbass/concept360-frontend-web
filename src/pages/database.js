@@ -48,6 +48,7 @@ export default function Programs() {
           title="Routines"
           displayButton
           onButtonClick={setOpenRoutineModal}
+          buttonText="Créer une routine"
         >
           {routinesComponents}
         </Card>

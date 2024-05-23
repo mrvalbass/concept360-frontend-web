@@ -4,6 +4,7 @@ export default function Card({
   title,
   displayButton,
   onButtonClick,
+  buttonText,
   children,
 }) {
   return (
@@ -17,7 +18,7 @@ export default function Card({
           className={"self-end"}
           onClick={() => onButtonClick((prev) => !prev)}
         >
-          Créer une routine
+          {buttonText}
         </Button>
       )}
     </div>
