@@ -1,15 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-// import { useSelector } from "react-redux";
-// import { addExerciceToStore } from "../reducers/exercices";
-// import { useRouter } from "next/router";
 
 export default function Exercice() {
-  // const handleDelete = ()= > {
-  // }
-
   const [exercices, setExercices] = useState([]);
+
+  const handleDelete = (id) => {
+    fetch(`http://localhost:3000/exercices/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          setExercices(exercices.filter((exercice) => exercice.id !== id));
+        }
+      })
+      .catch((error) => console.error("Error deleting exercice:", error));
+  };
+
   useEffect(() => {
     fetch("http://localhost:3000/exercices/exerciceList")
       .then((response) => response.json())
@@ -39,7 +48,10 @@ export default function Exercice() {
             {exercice.bodyPart}
           </p>
           <p className='flex items-center justify-end  text-xl duration-75 hover:scale-110 text-[#067D5D]'>
-            <FontAwesomeIcon icon={faXmark} />
+            <FontAwesomeIcon
+              icon={faXmark}
+              onClick={() => handleDelete(exercice.id)}
+            />
           </p>
         </div>
       ))}
