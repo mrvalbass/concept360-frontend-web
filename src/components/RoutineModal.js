@@ -1,12 +1,37 @@
 import { Modal } from "@mui/material";
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Card from "./Card";
+import Exercice from "./Exercice";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import Button from "./Button";
+import ExerciceRoutine from "./ExerciceRoutine";
 
-export default function RoutineModal({ open, setOpenRoutineModal }) {
+export default function RoutineModal({
+  open,
+  setOpenRoutineModal,
+  exercicesData,
+}) {
   const [selectedExercices, setSelectedExercices] = useState([]);
-  const [renderTrigger, setRenderTrigger] = useState(false);
+
+  const handleAddToRoutine = async (id) => {
+    const selectedExercice = await fetch(
+      `http://localhost:3000/exercices/filter?_id=${id}`
+    ).then((r) => r.json());
+    setSelectedExercices([...selectedExercices, ...selectedExercice.data]);
+  };
+
+  console.log(selectedExercices);
+  const routine = selectedExercices.map((exercice, i) => (
+    <ExerciceRoutine key={i} {...exercice} />
+  ));
+
+  const exercices = exercicesData.map((exercice, i) => (
+    <Exercice
+      key={i}
+      {...exercice}
+      icon={faAdd}
+      onIconClick={handleAddToRoutine}
+    />
+  ));
 
   return (
     <Modal
@@ -14,12 +39,15 @@ export default function RoutineModal({ open, setOpenRoutineModal }) {
       onClose={() => setOpenRoutineModal((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-1/2 w-1/2 flex flex-col items-center p-5 ">
-        <h2 className="font-[sora] text-xl font-semibold">Routines</h2>
-        <div className="grow flex flex-col justify-center">
-          <Button>
-            <FontAwesomeIcon icon={faAdd} className="text-4xl" />
-          </Button>
+      <div className="bg-white h-3/4 w-3/4 flex flex-col gap-5 p-5 rounded">
+        <h2 className="font-[sora] text-xl font-semibold self-center">
+          Routines
+        </h2>
+        <div className="flex gap-5 grow overflow-y-hidden">
+          <Card title="Exercices">{exercices}</Card>
+          <Card title="Ma routine" displayButton buttonText="Créer ma routine">
+            {routine}
+          </Card>
         </div>
       </div>
     </Modal>

@@ -5,6 +5,7 @@ import RoutineModal from "@/components/RoutineModal";
 import ExerciceModal from "@/components/ExerciceModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Programs() {
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
@@ -27,13 +28,35 @@ export default function Programs() {
     })();
   }, [renderTrigger]);
 
+  const handleDelete = async (id) => {
+    const deleteResponse = await fetch(
+      `http://localhost:3000/exercices/${id}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    ).then((response) => response.json());
+
+    if (deleteResponse.result) {
+      setRenderTrigger((prev) => !prev);
+    } else {
+      console.error("Error deleting exercice:", deleteResponse.message);
+    }
+  };
+
   const routinesComponents =
     routines && routines.map((routine, i) => <Routine key={i} {...routine} />);
 
   const exercicesComponents =
     exercices &&
     exercices.map((exercice, i) => (
-      <Exercice key={i} {...exercice} setRenderTrigger={setRenderTrigger} />
+      <Exercice
+        key={i}
+        {...exercice}
+        icon={faXmark}
+        onIconClick={handleDelete}
+        setRenderTrigger={setRenderTrigger}
+      />
     ));
 
   return (
@@ -41,6 +64,7 @@ export default function Programs() {
       <RoutineModal
         open={openRoutineModal}
         setOpenRoutineModal={setOpenRoutineModal}
+        exercicesData={exercices}
       />
       <ExerciceModal
         open={openExerciceModal}
@@ -48,17 +72,23 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
+        className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
+      >
         <Card
-          title='Exercices'
+          title="Exercices"
           displayButton
           onButtonClick={setOpenExerciceModal}>
+          buttonText="Créer un exercice"
+        >
+
           {exercicesComponents}
         </Card>
         <Card
-          title='Routines'
+          title="Routines"
           displayButton
-          onButtonClick={setOpenRoutineModal}>
+          onButtonClick={setOpenRoutineModal}
+          buttonText="Créer une routine"
+        >
           {routinesComponents}
         </Card>
       </main>
