@@ -25,19 +25,18 @@ export default function Exercice({
   };
 
   return (
-    <div className='grid grid-cols-2 gap-4 place-content-around  p-2 m-3 border-b'>
-      <div>
-        <div>
-          <p className='flex items-center justify-start font-medium text-base font-[Sora]'>
-            {title}
-          </p>
-        </div>
-        <div className='flex flex-row items-center justify-start '>
-          <p className='flex items-center justify-start '>{movement}</p>
-          <p className='flex items-center justify-start '>{bodyPart}</p>
+    <div className=' flex flex-row justify-between  border-b p-3 m-3'>
+      <div className=' w-[100%]'>
+        <p className=' flex items-center justify-start font-semibold text-base font-[Sora] '>
+          {title}
+        </p>
+        <div className=' flex flex-row '>
+          <p className=' w-[50%]  '>Mouvement : {movement}</p>
+          <p className=' w-[50%]  '>Partie du corps :{bodyPart}</p>
         </div>
       </div>
-      <p className='flex items-center justify-end  text-xl duration-75 hover:scale-110 text-[#067D5D]'>
+
+      <p className='flex items-center justify-end text-xl duration-75 hover:scale-110 text-[#067D5D] '>
         <FontAwesomeIcon icon={faXmark} onClick={() => handleDelete()} />
       </p>
     </div>
