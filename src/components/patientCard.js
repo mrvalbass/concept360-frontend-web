@@ -42,7 +42,11 @@ export default function PatientCard({ patientId }) {
             </div>
             <h2>{`${patient.user.firstName} ${patient.user.lastName}`}</h2>
           </div>
-          <textarea className="border-2 grow" placeholder="Notes"></textarea>
+          <textarea
+            className="border-2 grow bg-[#ffffff77]
+            p-2"
+            placeholder="Notes"
+          ></textarea>
         </div>
         <div className="w-[320px]">
           <DateCalendar value={date} onChange={setDate} />
@@ -50,7 +54,7 @@ export default function PatientCard({ patientId }) {
       </div>
       <div className="border-2 grow">
         {currentRoutine ? (
-          <Routine {...currentRoutine.routine} />
+          <Routine {...currentRoutine.routine} checkbox />
         ) : (
           <p>Rien de prévu aujourd'hui</p>
         )}
