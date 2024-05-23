@@ -7,33 +7,8 @@ import Button from "@/components/Button";
 export default function login() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.value);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [discipline, setDiscipline] = useState("");
-
-  const SignUp = async () => {
-    const form = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        state: "specialist",
-        discipline,
-      }),
-    };
-    const response = await fetch(
-      "http://localhost:3000/users/signup",
-      form
-    ).then((r) => r.json());
-    dispatch(ChangeConnectionState(response.token));
-    router.push("/");
-  };
 
   const signIn = async () => {
     const form = {
@@ -48,8 +23,12 @@ export default function login() {
       "http://localhost:3000/users/signin",
       form
     ).then((r) => r.json());
-    dispatch(ChangeConnectionState(response.token));
-    router.push("/");
+    if (response.result) {
+      dispatch(ChangeConnectionState(response.token));
+      router.push("/");
+    } else {
+      alert("Connection failed");
+    }
   };
 
   return (

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Routine from "./Routine";
 import Button from "./Button";
 
-export default function DisplayRoutine() {
+export default function DisplayRoutine({ setOpenRoutineModal }) {
   const [routines, setRoutines] = useState([]);
 
   useEffect(() => {
@@ -19,9 +19,16 @@ export default function DisplayRoutine() {
     routines && routines.map((routine, i) => <Routine key={i} {...routine} />);
   return (
     <div className="w-2/5 flex justify-between flex-col bg-white p-5 gap-5 rounded shadow-md">
-      <h2 className="text-center font-[sora] text-lg">Routines</h2>
+      <h2 className="text-center font-semibold font-[sora] text-xl">
+        Routines
+      </h2>
       <div className="grow">{routinesComponents}</div>
-      <Button className={"self-end"}>Créer une routine</Button>
+      <Button
+        className={"self-end"}
+        onClick={() => setOpenRoutineModal((prev) => !prev)}
+      >
+        Créer une routine
+      </Button>
     </div>
   );
 }

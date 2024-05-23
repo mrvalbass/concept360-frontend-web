@@ -1,10 +1,17 @@
 import Header from "@/components/Header";
 import Exercice from "@/components/Exercice";
 import DisplayRoutine from "@/components/DisplayRoutine";
+import RoutineModal from "@/components/RoutineModal";
+import { useState } from "react";
 
 export default function Programs() {
+  const [openRoutineModal, setOpenRoutineModal] = useState(false);
   return (
     <>
+      <RoutineModal
+        open={openRoutineModal}
+        setOpenRoutineModal={setOpenRoutineModal}
+      />
       <Header />
       <main
         className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
@@ -20,7 +27,7 @@ export default function Programs() {
           </div>
           <button>Create new exercice</button>
         </div>
-        <DisplayRoutine />
+        <DisplayRoutine setOpenRoutineModal={setOpenRoutineModal} />
       </main>
     </>
   );
