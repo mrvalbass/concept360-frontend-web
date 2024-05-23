@@ -25,17 +25,21 @@ export default function Clients() {
   }, [reRender]);
 
   const addToSpecialistList = async (patient) => {
-    const data = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        patientId: patient._id,
-      }),
-    };
-    const response = await fetch(
-      `http://localhost:3000/users/addPatient/${specialist._id}`,
-      data
-    ).then((r) => r.json());
+    if (
+      !patientInSpecialistList.find((element) => element._id === patient._id)
+    ) {
+      const data = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          patientId: patient._id,
+        }),
+      };
+      const response = await fetch(
+        `http://localhost:3000/users/addPatient/${specialist._id}`,
+        data
+      ).then((r) => r.json());
+    }
     setReRender(!reRender);
   };
 
