@@ -13,7 +13,9 @@ export default function Exercice() {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          setExercices(exercices.filter((exercice) => exercice.id !== id));
+          setExercices(exercices.filter((exercice) => exercice._id !== id));
+        } else {
+          console.error("Error deleting exercice:", data.message);
         }
       })
       .catch((error) => console.error("Error deleting exercice:", error));
@@ -33,7 +35,6 @@ export default function Exercice() {
     return <div className='border-2 grow'>No Data</div>;
   }
 
-  //space-x-20 p-5
   return (
     <div className='w-[100%]'>
       {exercices.map((exercice, index) => (
@@ -50,7 +51,7 @@ export default function Exercice() {
           <p className='flex items-center justify-end  text-xl duration-75 hover:scale-110 text-[#067D5D]'>
             <FontAwesomeIcon
               icon={faXmark}
-              onClick={() => handleDelete(exercice.id)}
+              onClick={() => handleDelete(exercice._id)}
             />
           </p>
         </div>
