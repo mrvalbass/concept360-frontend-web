@@ -23,15 +23,15 @@ export default function Header() {
           icon={faHouse}
         />
       </div>
-      <div className="flex gap-32 items-center">
+      <div className="flex gap-20 items-center">
         <Link className={`duration-75 hover:scale-110`} href="/programs">
           Programmes
         </Link>
         <Link className={`duration-75 hover:scale-110`} href="/clients">
-          Mes Clients
+          Mes Patients
         </Link>
         <Link className={`duration-75 hover:scale-110`} href="/database">
-          Gestion Base de Données
+          Base de Données
         </Link>
         <Link
           href="/profile"

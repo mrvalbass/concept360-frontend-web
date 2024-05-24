@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ChangeConnectionState } from "../reducers/users";
+import { ChangeConnectionState, setUserData } from "../reducers/users";
 import Button from "@/components/Button";
 
 export default function login() {
@@ -12,7 +12,7 @@ export default function login() {
   const [Connection, setConnection] = useState(true);
 
   const signIn = async () => {
-    const form = {
+    const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -22,11 +22,21 @@ export default function login() {
     };
     const response = await fetch(
       "http://localhost:3000/users/signin",
-      form
+      options
     ).then((r) => r.json());
     if (response.result) {
-      dispatch(ChangeConnectionState(response.token));
-      router.push("/");
+      const specialistResponse = await fetch(
+        `http://localhost:3000/users/specialists/token/${response.user.token}`
+      ).then((r) => r.json());
+      if (specialistResponse.specialist) {
+        dispatch(ChangeConnectionState(response.user.token));
+        dispatch(setUserData(specialistResponse.specialist));
+        router.push("/");
+      } else {
+        alert(
+          "This is the specialist app, try using the Concept360 Mobile App"
+        );
+      }
     } else {
       setConnection(false);
       // alert("Connection failed");
