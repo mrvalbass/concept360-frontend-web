@@ -5,10 +5,13 @@ export default function Card({
   displayButton,
   onButtonClick,
   buttonText,
+  className,
   children,
 }) {
   return (
-    <div className="flex basis-1/2 justify-between flex-col bg-white p-5  rounded shadow-md max-h-[99%]">
+    <div
+      className={`flex justify-between flex-col bg-white p-5 rounded shadow-md max-h-[99%] ${className}`}
+    >
       <h2 className="text-center font-semibold font-[sora] text-xl border-b-2 pb-5">
         {title}
       </h2>

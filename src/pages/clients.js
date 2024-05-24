@@ -149,10 +149,13 @@ export default function Clients() {
           displayButton
           onButtonClick={setOpenNewPatientModal}
           buttonText="Ajouter un patient"
+          className="basis-1/2"
         >
           {patients}
         </Card>
-        <Card title="Mes Patients"> {specialistPatients}</Card>
+        <Card title="Mes Patients" className="basis-1/2">
+          {specialistPatients}
+        </Card>
       </main>
     </>
   );
