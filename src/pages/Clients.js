@@ -9,85 +9,87 @@ import { faSquarePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function Clients() {
   const specialist = useSelector((state) => state.users.value);
-  const [allPatientData, setAllPatientData] = useState([]);
-  const [patientInSpecialistList, setPatientInSpecialistList] = useState([]);
+  const [patientsData, setPatientsData] = useState([]);
+  const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [reRender, setReRender] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const allPatientData = await fetch(
-        "http://localhost:3000/users/state/patient"
+      const patientsData = await fetch(
+        "http://localhost:3000/users/patients"
       ).then((r) => r.json());
-      setAllPatientData(allPatientData.Patient);
+      setPatientsData(patientsData.patients);
 
-      const specialistData = await fetch(
-        `http://localhost:3000/users/getPatientList/${specialist._id}`
+      const specialistPatientsData = await fetch(
+        `http://localhost:3000/users/patients/specialist/${specialist._id}`
       ).then((r) => r.json());
-      setPatientInSpecialistList(specialistData.PatientList);
+      setSpecialistsPatientsData(specialistPatientsData.patients);
     })();
   }, [reRender]);
 
-  const addToSpecialistList = async (patient) => {
+  const addToSpecialistPatients = async (patient) => {
     if (
-      !patientInSpecialistList.find((element) => element._id === patient._id)
+      !specialistPatientsData.find((element) => element._id === patient._id)
     ) {
       const data = {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          specialistId: specialist._id,
           patientId: patient._id,
         }),
       };
-      const response = await fetch(
-        `http://localhost:3000/users/addPatient/${specialist._id}`,
+      await fetch(
+        `http://localhost:3000/users/specialists/addPatient/`,
         data
       ).then((r) => r.json());
     }
     setReRender(!reRender);
   };
 
-  const deletePatientFromSpecialistList = async (patient) => {
+  const deleteFromSpecialistPatients = async (patient) => {
     const data = {
-      method: "DELETE",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        specialistId: specialist._id,
         patientId: patient._id,
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/users/deletePatient/${specialist._id}`,
+      `http://localhost:3000/users/specialists/deletePatient/`,
       data
     ).then((r) => r.json());
     setReRender(!reRender);
   };
 
-  const allPatientFiltred = allPatientData.filter((patient) =>
-    patientInSpecialistList
-      ? !patientInSpecialistList.find((element) => patient._id === element._id)
+  const patientsDataFiltered = patientsData.filter((patient) =>
+    specialistPatientsData
+      ? !specialistPatientsData.find((element) => patient._id === element._id)
       : ""
   );
 
-  const patientList = allPatientFiltred.map((patient, i) => {
+  const patients = patientsDataFiltered.map((patient, i) => {
     return (
       <Patient
         key={i}
         firstName={patient.user.firstName}
         lastName={patient.user.lastName}
-        function={addToSpecialistList}
+        function={addToSpecialistPatients}
         patient={patient}
         icon={faSquarePlus}
       />
     );
   });
 
-  const patientListInSpecialistList = patientInSpecialistList
+  const specialistPatients = specialistPatientsData
     .map((patient, i) => {
       return (
         <Patient
           key={i}
           firstName={patient.user.firstName}
           lastName={patient.user.lastName}
-          function={deletePatientFromSpecialistList}
+          function={deleteFromSpecialistPatients}
           patient={patient}
           icon={faTrashCan}
         />
@@ -99,10 +101,17 @@ export default function Clients() {
     <>
       <Header />
       <main
-        className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
       >
-        <Card title="Patients du Cabinet"> {patientList}</Card>
-        <Card title="Mes Patients"> {patientListInSpecialistList}</Card>
+        <Card
+          title="Patients du Cabinet"
+          displayButton
+          buttonText="Ajouter un patient"
+        >
+          {" "}
+          {patients}
+        </Card>
+        <Card title="Mes Patients"> {specialistPatients}</Card>
       </main>
     </>
   );

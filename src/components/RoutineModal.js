@@ -1,33 +1,60 @@
 import { Modal } from "@mui/material";
 import { useState } from "react";
 import Card from "./Card";
-import Exercice from "./Exercice";
+import Exercise from "./Exercise";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import ExerciceRoutine from "./ExerciceRoutine";
+import ExerciseRoutine from "./ExerciseRoutine";
+import uid2 from "uid2";
+import { useSelector } from "react-redux";
 
 export default function RoutineModal({
   open,
   setOpenRoutineModal,
-  exercicesData,
+  exercisesData,
 }) {
-  const [selectedExercices, setSelectedExercices] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState([]);
+  const specialist = useSelector((state) => state.users.value);
 
   const handleAddToRoutine = async (id) => {
-    const selectedExercice = await fetch(
-      `http://localhost:3000/exercices/filter?_id=${id}`
+    const selectedExercise = await fetch(
+      `http://localhost:3000/exercises?_id=${id}`
     ).then((r) => r.json());
-    setSelectedExercices([...selectedExercices, ...selectedExercice.data]);
+    selectedExercise.data[0].tempId = uid2(8);
+    setSelectedExercises([...selectedExercises, ...selectedExercise.data]);
   };
 
-  console.log(selectedExercices);
-  const routine = selectedExercices.map((exercice, i) => (
-    <ExerciceRoutine key={i} {...exercice} />
+  const deleteFromRoutine = async (tempId) => {
+    setSelectedExercises(
+      selectedExercises.filter((exercise) => exercise.tempId !== tempId)
+    );
+  };
+
+  const submitRoutine = async () => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        creatorToken: specialist.user.token,
+      }),
+    };
+    const test = await fetch("http://localhost:3000/routines", options).then(
+      (r) => r.json()
+    );
+    console.log(test);
+  };
+
+  const routine = selectedExercises.map((exercise, i) => (
+    <ExerciseRoutine
+      key={i}
+      title={exercise.title}
+      onIconClick={deleteFromRoutine}
+    />
   ));
 
-  const exercices = exercicesData.map((exercice, i) => (
-    <Exercice
+  const exercises = exercisesData.map((exercise, i) => (
+    <Exercise
       key={i}
-      {...exercice}
+      {...exercise}
       icon={faAdd}
       onIconClick={handleAddToRoutine}
     />
@@ -44,8 +71,13 @@ export default function RoutineModal({
           Routines
         </h2>
         <div className="flex gap-5 grow overflow-y-hidden">
-          <Card title="Exercices">{exercices}</Card>
-          <Card title="Ma routine" displayButton buttonText="Créer ma routine">
+          <Card title="exercises">{exercises}</Card>
+          <Card
+            title="Ma routine"
+            displayButton
+            buttonText="Créer ma routine"
+            onButtonClick={submitRoutine}
+          >
             {routine}
           </Card>
         </div>

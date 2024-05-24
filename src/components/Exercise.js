@@ -3,18 +3,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Exercice({
   title,
   movement,
-  bodyPart,
+  bodyParts,
   _id,
   icon,
   onIconClick,
 }) {
+  const bodyMembers = bodyParts.join(", ");
   return (
-    <div className='flex items-center justify-between gap-4 p-2 border-b'>
-      <div className='w-full '>
-        <p className='font-semibold font-[Sora]'>{title}</p>
-        <div className=' flex flex-row  '>
-          <p className=' grow '>Mouvement : {movement}</p>
-          <p className=' grow '>Partie du corps : {bodyPart}</p>
+    <div className='flex justify-between gap-4 p-2 border-b items-center'>
+      <div className='w-full'>
+        <p className='flex font-semibold font-[Sora]'>{title}</p>
+        <div className='flex'>
+          <p className='basis-1/2'>Mouvement : {movement}</p>
+          <p className='basis-1/2'>Partie du corps :{bodyMembers}</p>
         </div>
       </div>
       {icon && (

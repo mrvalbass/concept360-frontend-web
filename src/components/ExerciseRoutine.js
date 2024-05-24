@@ -2,8 +2,7 @@ import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function ExerciceRoutine({ title }) {
-  const handleDelete = () => {};
+export default function ExerciceRoutine({ title, onIconClick, tempId }) {
   return (
     <div className='flex flex-col gap-4 p-2 border-b'>
       <div className='flex justify-between px-5 font-medium font-[Sora]'>
@@ -11,10 +10,10 @@ export default function ExerciceRoutine({ title }) {
         <FontAwesomeIcon
           icon={faTrash}
           className='text-[#00a5ac] hover:scale-125 cursor-pointer active:scale-100'
-          onClick={handleDelete}
+          onClick={() => onIconClick(tempId)}
         />
       </div>
-      <div className='flex gap-4'>
+      <div className='flex gap-5'>
         <div className='grow'>
           <TextField
             fullWidth
