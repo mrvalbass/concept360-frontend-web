@@ -72,23 +72,19 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
-      >
+        className={`flex justify-center p-10 min-h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
         <Card
-          title="Exercices"
+          title='Exercices'
           displayButton
-          onButtonClick={setOpenExerciceModal}>
-          buttonText="Créer un exercice"
-        >
-
+          onButtonClick={setOpenExerciceModal}
+          buttonText='Créer un exercice'>
           {exercicesComponents}
         </Card>
         <Card
-          title="Routines"
+          title='Routines'
           displayButton
           onButtonClick={setOpenRoutineModal}
-          buttonText="Créer une routine"
-        >
+          buttonText='Créer une routine'>
           {routinesComponents}
         </Card>
       </main>
