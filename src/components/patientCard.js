@@ -3,62 +3,81 @@ import Routine from "./Routine";
 import Image from "next/image";
 import { DateCalendar } from "@mui/x-date-pickers";
 import moment from "moment";
+import Card from "./Card";
+import Patient from "./Patient";
 
-export default function PatientCard({ patientId }) {
-  const [programData, setProgramData] = useState(null);
+export default function PatientCard({ patient }) {
+  const [programData, setProgramData] = useState({});
   const [date, setDate] = useState(() => moment().startOf("day"));
+  const [notes, setNotes] = useState("");
 
   useEffect(() => {
     (async () => {
-      const data = await fetch(
-        `http://localhost:3000/programs/${patientId}`
-      ).then((r) => r.json());
-      if (data.result) {
-        setProgramData(data.userProgram);
+      if (patient) {
+        const data = await fetch(
+          `http://localhost:3000/programs/${patient}`
+        ).then((r) => r.json());
+        if (data.result) {
+          setProgramData(data.userProgram);
+          setNotes(data.userProgram.notes);
+        }
       }
     })();
-  }, []);
+  }, [patient]);
 
-  if (!programData) return <div className="border-2 grow">No Data</div>;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("save");
+      const options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes: notes }),
+      };
+      fetch(`http://localhost:3000/programs/${programData._id}`, options);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [notes]);
 
-  const { patient, program } = programData;
+  if (Object.keys(programData).length === 0)
+    return <div className="border-2 grow">No Data</div>;
+
+  const { patient: patientData, program } = programData;
   const currentRoutine = program.find((routine) => {
     return moment(routine.date).startOf("day").isSame(date);
   });
 
   return (
-    <div className="flex flex-col border-2 grow px-5 pb-5">
-      <div className="flex gap-10 items-start justify-between px-10">
+    <div className="flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]">
+      <div className="flex gap-10 px-10">
         <div className="flex flex-col h-full gap-5 grow py-5">
-          <div className="flex items-center gap-6">
-            <div className="w-16 ">
-              <Image
-                src="/gigachad.jpg"
-                width={565}
-                height={601}
-                alt="Patient Profile Picture"
-                className="rounded-full"
-              />
-            </div>
-            <h2>{`${patient.user.firstName} ${patient.user.lastName}`}</h2>
-          </div>
+          <Patient
+            firstName={patientData.user.firstName}
+            lastName={patientData.user.lastName}
+            className="px-0 gap-4 border-none "
+            imgSize="16"
+          />
           <textarea
             className="border-2 grow bg-[#ffffff77]
             p-2"
             placeholder="Notes"
+            onChange={(e) => {
+              setNotes(e.target.value);
+            }}
+            value={notes}
           ></textarea>
         </div>
         <div className="w-[320px]">
           <DateCalendar value={date} onChange={setDate} />
         </div>
       </div>
-      <div className="border-2 grow">
-        {currentRoutine ? (
-          <Routine {...currentRoutine.routine} checkbox />
-        ) : (
-          <p>Rien de prévu aujourd'hui</p>
-        )}
-      </div>
+      <Card
+        title="Routine du jour"
+        displayButton
+        buttonText="Sélectionner une routine"
+        className="grow"
+      >
+        {currentRoutine && <Routine {...currentRoutine.routine} checkbox />}
+      </Card>
     </div>
   );
 }

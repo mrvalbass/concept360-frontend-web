@@ -79,14 +79,16 @@ export default function Programs() {
           displayButton
           onButtonClick={setOpenExerciseModal}
           buttonText="Créer un exercice"
+          className="basis-1/2"
         >
           {exercisesComponents}
         </Card>
         <Card
           title="Routines"
           displayButton
-          onButtonClick={setOpenRoutineModal}
+          onButtonClick={() => setOpenRoutineModal((prev) => !prev)}
           buttonText="Créer une routine"
+          className="basis-1/2"
         >
           {routinesComponents}
         </Card>

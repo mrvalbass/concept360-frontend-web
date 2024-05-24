@@ -20,6 +20,7 @@ export default function ExerciceRoutine({ title, onIconClick, tempId }) {
             id="outlined-number"
             label="Séries"
             type="number"
+            size="small"
             InputLabelProps={{
               shrink: true,
             }}
@@ -31,6 +32,7 @@ export default function ExerciceRoutine({ title, onIconClick, tempId }) {
             fullWidth
             label="Répétitions"
             type="number"
+            size="small"
             InputLabelProps={{
               shrink: true,
             }}

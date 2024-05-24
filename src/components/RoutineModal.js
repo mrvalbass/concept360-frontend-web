@@ -19,8 +19,9 @@ export default function RoutineModal({
     const selectedExercise = await fetch(
       `http://localhost:3000/exercises?_id=${id}`
     ).then((r) => r.json());
-    selectedExercise.data[0].tempId = uid2(8);
-    setSelectedExercises([...selectedExercises, ...selectedExercise.data]);
+    console.log(selectedExercise);
+    selectedExercise.exercises[0].tempId = uid2(8);
+    setSelectedExercises([...selectedExercises, ...selectedExercise.exercises]);
   };
 
   const deleteFromRoutine = async (tempId) => {
@@ -40,7 +41,6 @@ export default function RoutineModal({
     const test = await fetch("http://localhost:3000/routines", options).then(
       (r) => r.json()
     );
-    console.log(test);
   };
 
   const routine = selectedExercises.map((exercise, i) => (
@@ -56,7 +56,7 @@ export default function RoutineModal({
       key={i}
       {...exercise}
       icon={faAdd}
-      onIconClick={handleAddToRoutine}
+      onIconClick={() => handleAddToRoutine(exercise._id)}
     />
   ));
 
@@ -71,12 +71,15 @@ export default function RoutineModal({
           Routines
         </h2>
         <div className="flex gap-5 grow overflow-y-hidden">
-          <Card title="exercises">{exercises}</Card>
+          <Card title="Exercices" className="basis-1/2">
+            {exercises}
+          </Card>
           <Card
             title="Ma routine"
             displayButton
             buttonText="Créer ma routine"
             onButtonClick={submitRoutine}
+            className="basis-1/2"
           >
             {routine}
           </Card>
