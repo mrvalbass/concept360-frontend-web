@@ -14,10 +14,7 @@ export default function Card({
       </h2>
       <div className="grow overflow-y-auto">{children}</div>
       {displayButton && (
-        <Button
-          className={"self-end mt-5"}
-          onClick={() => onButtonClick((prev) => !prev)}
-        >
+        <Button className={"self-end mt-5"} onClick={onButtonClick}>
           {buttonText}
         </Button>
       )}

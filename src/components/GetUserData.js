@@ -6,12 +6,13 @@ import { useDispatch } from "react-redux";
 export default function GetUserData() {
   const dispatch = useDispatch();
   const router = useRouter();
+
   useEffect(() => {
     (async () => {
       const token = localStorage.getItem("token");
       if (token) {
         const data = await fetch(
-          `http://localhost:3000/users/token/${token}`
+          `http://localhost:3000/users/specialists/token/${token}`
         ).then((r) => r.json());
         dispatch(setUserData(data.specialist));
       } else {
@@ -19,5 +20,6 @@ export default function GetUserData() {
       }
     })();
   }, []);
+
   return;
 }
