@@ -6,12 +6,15 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { faSquarePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import NewPatientModal from "@/components/NewPatientModal";
 
 export default function Clients() {
   const specialist = useSelector((state) => state.users.value);
+  const [openNewPatientModal, setOpenNewPatientModal] = useState(false);
   const [patientsData, setPatientsData] = useState([]);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [reRender, setReRender] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -100,8 +103,43 @@ export default function Clients() {
     })
     .reverse();
 
+  const SignUpPatient = async (firstName, lastName, email) => {
+    if (!firstName || !lastName || !email) {
+      setMessage("Un ou des champs sont vides");
+    } else {
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password: "Concept360",
+          state: "patient",
+        }),
+      };
+      const response = await fetch(
+        "http://localhost:3000/users/signup",
+        options
+      ).then((r) => r.json());
+
+      if (response.error === "User already exist") {
+        setMessage("Le patient existe déjà");
+      } else if (response.result) {
+        setMessage("Le patient a bien été créé");
+      }
+    }
+    setReRender(!reRender);
+  };
+
   return (
     <>
+      <NewPatientModal
+        open={openNewPatientModal}
+        setOpenNewPatientModal={setOpenNewPatientModal}
+        SignUpPatient={SignUpPatient}
+        message={message}
+      />
       <Header />
       <main
         className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
@@ -109,9 +147,9 @@ export default function Clients() {
         <Card
           title="Patients du Cabinet"
           displayButton
+          onButtonClick={setOpenNewPatientModal}
           buttonText="Ajouter un patient"
         >
-          {" "}
           {patients}
         </Card>
         <Card title="Mes Patients"> {specialistPatients}</Card>
