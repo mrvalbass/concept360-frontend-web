@@ -5,14 +5,17 @@ import RoutineModal from "@/components/RoutineModal";
 import ExerciseModal from "@/components/ExerciseModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Programs() {
+  const specialist = useSelector((state) => state.users.value);
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
   const [openExerciseModal, setOpenExerciseModal] = useState(false);
   const [routines, setRoutines] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -44,6 +47,43 @@ export default function Programs() {
     }
   };
 
+  const handleCreate = async (
+    title,
+    movement,
+    bodyParts,
+    disciplines,
+    videoLinkExercice
+  ) => {
+    if (!title || !movement || !bodyParts || !disciplines) {
+      setMessage("Un ou des champs sont vides");
+    } else {
+      let videoLink;
+      const token = localStorage.getItem("token");
+      videoLinkExercice ? (videoLink = videoLinkExercice) : (videoLink = "");
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          creatorToken: token,
+          title,
+          movement,
+          bodyParts,
+          disciplines,
+          videoLink,
+          description: "",
+        }),
+      };
+      const response = await fetch(
+        "http://localhost:3000/exercises",
+        options
+      ).then((r) => r.json());
+      if (response.result) {
+        setMessage("L'exercice a bien été ajouté");
+        console.log(response);
+      }
+    }
+    setRenderTrigger((prev) => !prev);
+  };
   const routinesComponents =
     routines && routines.map((routine, i) => <Routine key={i} {...routine} />);
 
@@ -55,7 +95,6 @@ export default function Programs() {
         {...exercise}
         icon={faXmark}
         onIconClick={handleDelete}
-        setRenderTrigger={setRenderTrigger}
       />
     ));
 
@@ -65,10 +104,13 @@ export default function Programs() {
         open={openRoutineModal}
         setOpenRoutineModal={setOpenRoutineModal}
         exercisesData={exercises}
+        message={message}
       />
       <ExerciseModal
         open={openExerciseModal}
         setOpenExerciseModal={setOpenExerciseModal}
+        handleCreate={handleCreate}
+        message={message}
       />
       <Header />
       <main

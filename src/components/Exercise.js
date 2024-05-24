@@ -15,7 +15,7 @@ export default function Exercice({
         <p className="flex font-semibold font-[Sora]">{title}</p>
         <div className="flex">
           <p className="basis-1/2">Mouvement : {movement}</p>
-          <p className="basis-1/2">Partie du corps :{bodyMembers}</p>
+          <p className="basis-1/2">Partie du corps :{bodyParts}</p>
         </div>
       </div>
       {icon && (
