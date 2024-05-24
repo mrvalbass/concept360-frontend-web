@@ -9,6 +9,7 @@ export default function login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [Connection, setConnection] = useState(true);
 
   const signIn = async () => {
     const form = {
@@ -27,7 +28,8 @@ export default function login() {
       dispatch(ChangeConnectionState(response.token));
       router.push("/");
     } else {
-      alert("Connection failed");
+      setConnection(false);
+      // alert("Connection failed");
     }
   };
 
@@ -49,6 +51,11 @@ export default function login() {
           value={password}
           placeholder="Mot de passe"
         />
+        {Connection ? (
+          ""
+        ) : (
+          <p className=" text-red-600">Email ou mot de passe incorrect</p>
+        )}
         <Button onClick={signIn}>Connection</Button>
       </div>
     </main>

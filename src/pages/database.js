@@ -77,10 +77,9 @@ export default function Programs() {
         <Card
           title="Exercices"
           displayButton
-          onButtonClick={setOpenExerciceModal}>
+          onButtonClick={setOpenExerciceModal}
           buttonText="Créer un exercice"
         >
-
           {exercicesComponents}
         </Card>
         <Card
