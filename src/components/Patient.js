@@ -7,8 +7,6 @@ export default function Patient(props) {
         className={
           "flex justify-between items-center gap-16 py-2 px-10 border-b"
         }
-        // ??
-        key={props.key ? props.key : 0}
       >
         <div>
           <Image
