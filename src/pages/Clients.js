@@ -20,10 +20,14 @@ export default function Clients() {
       ).then((r) => r.json());
       setPatientsData(patientsData.patients);
 
-      const specialistPatientsData = await fetch(
-        `http://localhost:3000/users/patients/specialist/${specialist._id}`
-      ).then((r) => r.json());
-      setSpecialistsPatientsData(specialistPatientsData.patients);
+      if (Object.keys(specialist).length !== 0) {
+        const specialistPatientsData = await fetch(
+          `http://localhost:3000/users/patients/specialist/${specialist._id}`
+        ).then((r) => r.json());
+        setSpecialistsPatientsData(specialistPatientsData.patients);
+      } else {
+        setTimeout(() => setReRender((prev) => !prev), 100);
+      }
     })();
   }, [reRender]);
 
@@ -56,17 +60,16 @@ export default function Clients() {
         patientId: patient._id,
       }),
     };
-    const response = await fetch(
+    await fetch(
       `http://localhost:3000/users/specialists/deletePatient/`,
       data
     ).then((r) => r.json());
     setReRender(!reRender);
   };
 
-  const patientsDataFiltered = patientsData.filter((patient) =>
-    specialistPatientsData
-      ? !specialistPatientsData.find((element) => patient._id === element._id)
-      : ""
+  const patientsDataFiltered = patientsData.filter(
+    (patient) =>
+      !specialistPatientsData.find((element) => patient._id === element._id)
   );
 
   const patients = patientsDataFiltered.map((patient, i) => {
