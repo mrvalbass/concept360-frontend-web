@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Routine from "./Routine";
-import Image from "next/image";
 import { DateCalendar } from "@mui/x-date-pickers";
 import moment from "moment";
 import Card from "./Card";
@@ -39,7 +37,7 @@ export default function PatientCard({ patient }) {
   }, [notes]);
 
   if (Object.keys(programData).length === 0)
-    return <div className="border-2 grow">No Data</div>;
+    return <div className='border-2 grow'>No Data</div>;
 
   const { patient: patientData, program } = programData;
   const currentRoutine = program.find((routine) => {
@@ -47,35 +45,33 @@ export default function PatientCard({ patient }) {
   });
 
   return (
-    <div className="flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]">
-      <div className="flex gap-10 px-10">
-        <div className="flex flex-col h-full gap-5 grow py-5">
+    <div className='flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]'>
+      <div className='flex gap-10 px-10'>
+        <div className='flex flex-col h-full gap-5 grow py-5'>
           <Patient
             firstName={patientData.user.firstName}
             lastName={patientData.user.lastName}
-            className="px-0 gap-4 border-none "
-            imgSize="16"
+            className='px-0 gap-4 border-none '
+            imgSize='16'
           />
           <textarea
-            className="border-2 grow bg-[#ffffff77]
-            p-2"
-            placeholder="Notes"
+            className='border-2 grow bg-[#ffffff77]
+            p-2'
+            placeholder='Notes'
             onChange={(e) => {
               setNotes(e.target.value);
             }}
-            value={notes}
-          ></textarea>
+            value={notes}></textarea>
         </div>
-        <div className="w-[320px]">
+        <div className='w-[320px]'>
           <DateCalendar value={date} onChange={setDate} />
         </div>
       </div>
       <Card
-        title="Routine du jour"
+        title='Routine du jour'
         displayButton
-        buttonText="Sélectionner une routine"
-        className="grow"
-      >
+        buttonText='Sélectionner une routine'
+        className='grow'>
         {currentRoutine && <Routine {...currentRoutine.routine} checkbox />}
       </Card>
     </div>
