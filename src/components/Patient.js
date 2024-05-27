@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+
 export default function Patient(props) {
   return (
     <>
@@ -7,15 +8,13 @@ export default function Patient(props) {
         className={`flex justify-between items-center gap-16 py-2 px-10 border-b ${props.className}`}
         onClick={props.onClick}
       >
-        <div>
+        <div className="shrink-0">
           <Image
             src="/gigachad.jpg"
             width={565}
             height={601}
             alt="Patient Profile Picture"
-            className={`rounded-full border-4 w-${
-              props.imgSize ? props.imgSize : 12
-            }`}
+            className={`rounded-full border-4 w-12`}
           />
         </div>
         <p className="grow">
