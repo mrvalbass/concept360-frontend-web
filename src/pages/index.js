@@ -4,12 +4,14 @@ import Patient from "@/components/Patient";
 import Routine from "@/components/routine";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const specialist = useSelector((state) => state.users.value);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [patient, setPatient] = useState();
   const [routines, setRoutines] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -31,7 +33,12 @@ export default function Home() {
         lastName={patient.user.lastName}
         patient={patient}
         className='gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100'
-        // onClick={() => }
+        onClick={() =>
+          router.push({
+            pathname: `/programs`,
+            query: { patient: patient._id },
+          })
+        }
       />
     );
   });
@@ -54,8 +61,8 @@ export default function Home() {
         key={i}
         {...routine}
         title={routine.exercises.title}
-        // sets={routine.exercises.type.sets}
-        // reps={routine.exercises.type.reps}
+        sets={routine.exercises[0].sets}
+        reps={routine.exercises[0].reps}
         // onClick={() => }
         className='gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100'
       />

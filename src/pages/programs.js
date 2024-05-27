@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Patient from "@/components/Patient";
 import PatientCard from "@/components/patientCard";
 import RoutineModal from "@/components/RoutineModal";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -12,6 +13,8 @@ export default function Programs() {
   const [patient, setPatient] = useState();
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
   const [exercises, setExercises] = useState([]);
+  const router = useRouter();
+  console.log("router", router.query);
 
   useEffect(() => {
     (async () => {
@@ -20,7 +23,11 @@ export default function Programs() {
           `http://localhost:3000/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
         setSpecialistsPatientsData(specialistPatientsData.patients);
-        setPatient(specialistPatientsData.patients[0]._id);
+        if (Object.keys(router.query).length !== 0) {
+          setPatient(router.query.patient);
+        } else {
+          setPatient(specialistPatientsData.patients[0]._id);
+        }
       }
     })();
   }, [specialist]);
