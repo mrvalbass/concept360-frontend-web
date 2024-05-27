@@ -10,9 +10,9 @@ export default function Card({
 }) {
   return (
     <div
-      className={`flex justify-between flex-col bg-white p-5 rounded shadow-md max-h-[99%] ${className}`}
+      className={`flex justify-between flex-col bg-white p-2 rounded shadow-md max-h-[99%] ${className}`}
     >
-      <h2 className="text-center font-semibold font-[sora] text-xl border-b-2 pb-5">
+      <h2 className="text-center font-semibold font-[sora] text-lg border-b-2 pb-2">
         {title}
       </h2>
       <div className="grow overflow-y-auto">{children}</div>

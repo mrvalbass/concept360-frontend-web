@@ -81,7 +81,7 @@ export default function Clients() {
         key={i}
         firstName={patient.user.firstName}
         lastName={patient.user.lastName}
-        function={addToSpecialistPatients}
+        onIconClick={addToSpecialistPatients}
         patient={patient}
         icon={faSquarePlus}
       />

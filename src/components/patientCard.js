@@ -3,10 +3,16 @@ import { DateCalendar } from "@mui/x-date-pickers";
 import moment from "moment";
 import Card from "./Card";
 import Patient from "./Patient";
+import Routine from "./Routine";
 
-export default function PatientCard({ patient }) {
-  const [programData, setProgramData] = useState({});
-  const [date, setDate] = useState(() => moment().startOf("day"));
+export default function PatientCard({
+  patient,
+  setOpenProgramModal,
+  date,
+  setDate,
+  programData,
+  setProgramData,
+}) {
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
@@ -25,7 +31,6 @@ export default function PatientCard({ patient }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("save");
       const options = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -68,11 +73,15 @@ export default function PatientCard({ patient }) {
         </div>
       </div>
       <Card
-        title='Routine du jour'
+        title="Programme"
         displayButton
-        buttonText='Sélectionner une routine'
-        className='grow'>
-        {currentRoutine && <Routine {...currentRoutine.routine} checkbox />}
+        buttonText="Ajouter un Programme"
+        onButtonClick={() => setOpenProgramModal(true)}
+        className="grow"
+      >
+        {currentRoutine && (
+          <Routine {...currentRoutine.routine} checkbox editable />
+        )}
       </Card>
     </div>
   );
