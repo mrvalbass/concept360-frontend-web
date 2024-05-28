@@ -1,4 +1,4 @@
-import PatientCard from "@/components/PatientCard";
+import PatientCard from "@/components/patientCard";
 import { useRouter } from "next/router";
 import Header from "@/components/Header";
 
