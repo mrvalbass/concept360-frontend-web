@@ -11,6 +11,7 @@ export default function RoutineModal({
   open,
   setOpenRoutineModal,
   exercisesData,
+  setRenderTrigger,
 }) {
   const [selectedExercises, setSelectedExercises] = useState([]);
   const specialist = useSelector((state) => state.users.value);
@@ -19,14 +20,15 @@ export default function RoutineModal({
     const selectedExercise = await fetch(
       `http://localhost:3000/exercises?_id=${id}`
     ).then((r) => r.json());
-    console.log(selectedExercise);
     selectedExercise.exercises[0].tempId = uid2(8);
     setSelectedExercises([...selectedExercises, ...selectedExercise.exercises]);
   };
 
   const deleteFromRoutine = async (tempId) => {
     setSelectedExercises(
-      selectedExercises.filter((exercise) => exercise.tempId !== tempId)
+      selectedExercises.filter((exercise) => {
+        return exercise.tempId !== tempId;
+      })
     );
   };
 
@@ -36,11 +38,25 @@ export default function RoutineModal({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         creatorToken: specialist.user.token,
+        exercises: selectedExercises.map((exercise) => ({
+          exercise: exercise._id,
+          reps: exercise.reps,
+          sets: exercise.sets,
+        })),
       }),
     };
-    const test = await fetch("http://localhost:3000/routines", options).then(
-      (r) => r.json()
-    );
+    const response = await fetch(
+      "http://localhost:3000/routines",
+      options
+    ).then((r) => r.json());
+    if (response.result) {
+      setOpenRoutineModal(false);
+      alert("Routine ajoutée à la Base de Données");
+      setRenderTrigger((prev) => !prev);
+      setSelectedExercises([]);
+    } else {
+      alert("Something went wrong");
+    }
   };
 
   const routine = selectedExercises.map((exercise, i) => (
@@ -48,6 +64,8 @@ export default function RoutineModal({
       key={i}
       title={exercise.title}
       onIconClick={deleteFromRoutine}
+      tempId={exercise.tempId}
+      setSelectedExercises={setSelectedExercises}
     />
   ));
 

@@ -92,7 +92,11 @@ export default function Programs() {
   };
 
   const routinesComponents =
-    routines && routines.map((routine, i) => <Routine key={i} {...routine} />);
+    routines &&
+    routines.map((routine, i) => {
+      console.log(routine);
+      return <Routine key={i} {...routine} editable />;
+    });
 
   const exercisesComponents =
     exercises &&
@@ -129,6 +133,7 @@ export default function Programs() {
       <RoutineModal
         open={openRoutineModal}
         setOpenRoutineModal={setOpenRoutineModal}
+        setRenderTrigger={setRenderTrigger}
         exercisesData={exercises}
         message={message}
       />
