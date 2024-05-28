@@ -94,7 +94,6 @@ export default function Programs() {
   const routinesComponents =
     routines &&
     routines.map((routine, i) => {
-      console.log(routine);
       return <Routine key={i} {...routine} editable />;
     });
 
@@ -125,7 +124,6 @@ export default function Programs() {
     //   setSpecialistSearch(searchPatientName);
     // }
   };
-  console.log(exerciseSearch);
 
   // console.log(exercises);
   return (

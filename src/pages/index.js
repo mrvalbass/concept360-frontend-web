@@ -75,10 +75,10 @@ export default function Home() {
         <main
           className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
         >
-          <Card title="Mes Patients" className="w-2/5 overflow-hidden">
+          <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
             {specialistPatients}
           </Card>
-          <Card title="Mes routines" className="w-2/5 overflow-hidden">
+          <Card title="Mes routines" className="basis-1/2 overflow-hidden">
             {routinesComponents}
           </Card>
         </main>

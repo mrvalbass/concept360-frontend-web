@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DateCalendar } from "@mui/x-date-pickers";
+import { Skeleton } from "@mui/material";
 import moment from "moment";
 import Card from "./Card";
 import Patient from "./Patient";
@@ -13,6 +14,8 @@ export default function PatientCard({
   setDate,
   programData,
   setProgramData,
+  renderTrigger,
+  setRenderTrigger,
 }) {
   const [notes, setNotes] = useState("");
   const specialist = useSelector((state) => state.users.value);
@@ -25,11 +28,12 @@ export default function PatientCard({
         ).then((r) => r.json());
         if (data.result) {
           setProgramData(data.userProgram);
-          setNotes(data.userProgram.notes);
+          if (data.userProgram.notes) setNotes(data.userProgram.notes);
+          else setNotes("");
         }
       }
     })();
-  }, [patient]);
+  }, [patient, renderTrigger]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,16 +42,36 @@ export default function PatientCard({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ notes: notes }),
       };
-      fetch(`http://localhost:3000/programs/${programData._id}`, options);
+      fetch(
+        `http://localhost:3000/programs/saveNotes/${programData._id}`,
+        options
+      );
     }, 300);
     return () => clearTimeout(timer);
   }, [notes]);
 
   if (Object.keys(programData).length === 0)
-    return <div className="border-2 grow">No Data</div>;
+    return (
+      <Skeleton variant="rounded" animation="wave" className="grow !h-[99%]" />
+    );
+
+  const handleRemove = async (programRoutineId) => {
+    const options = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        programRoutine: programRoutineId,
+      }),
+    };
+    const response = await fetch(
+      `http://localhost:3000/programs/deleteRoutine/${programData._id}`,
+      options
+    ).then((r) => r.json());
+    setRenderTrigger((prev) => !prev);
+  };
 
   const { patient: patientData, program } = programData;
-  const currentRoutine = program.find((routine) => {
+  const currentRoutine = program.filter((routine) => {
     return moment(routine.date).startOf("day").isSame(date);
   });
 
@@ -80,11 +104,21 @@ export default function PatientCard({
         displayButton
         buttonText="Ajouter un Programme"
         onButtonClick={() => setOpenProgramModal(true)}
-        className="grow"
+        className="grow min-h-0"
       >
-        {currentRoutine && (
-          <Routine {...currentRoutine.routine} checkbox editable />
-        )}
+        {currentRoutine &&
+          currentRoutine.map((programRoutine, i) => (
+            <Routine
+              key={i}
+              {...programRoutine.routine}
+              checkbox={programRoutine.done}
+              remove
+              onRemove={() => handleRemove(programRoutine._id)}
+              programId={programData._id}
+              programRoutineId={programRoutine._id}
+              setRenderTrigger={setRenderTrigger}
+            />
+          ))}
       </Card>
     </div>
   );

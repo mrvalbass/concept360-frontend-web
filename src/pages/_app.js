@@ -14,6 +14,9 @@ const store = configureStore({
 });
 
 export default function App({ Component, pageProps }) {
+  useEffect(() => {
+    return localStorage.removeItem("lastCheckedPatient");
+  }, []);
   return (
     <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterMoment}>

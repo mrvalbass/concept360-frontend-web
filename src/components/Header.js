@@ -9,6 +9,44 @@ export default function Header() {
   const router = useRouter();
   const specialist = useSelector((state) => state.users.value);
 
+  const pages = [
+    { title: "Programmes", path: "/programs" },
+    { title: "Mes Patients", path: "/clients" },
+    { title: "Base de Données", path: "/database" },
+    {
+      title: (
+        <>
+          <div className="w-12 rounded-full border-4">
+            <Image
+              src="/gigachad.jpg"
+              width={565}
+              height={601}
+              alt="Patient Profile Picture"
+              className="rounded-full"
+            />
+          </div>
+          <h2>
+            {specialist.user &&
+              `${specialist.user.firstName} ${specialist.user.lastName}`}
+          </h2>
+        </>
+      ),
+      path: "/profile",
+    },
+  ];
+
+  const nav = pages.map((page, i) => (
+    <Link
+      key={i}
+      className={`flex font-[sora] items-center gap-4 duration-75 hover:scale-110 ${
+        page.path === router.pathname ? "underline font-bold" : ""
+      }`}
+      href={page.path}
+    >
+      {page.title}
+    </Link>
+  ));
+
   return (
     <div
       className={
@@ -23,35 +61,7 @@ export default function Header() {
           icon={faHouse}
         />
       </div>
-      <div className="flex gap-20 items-center">
-        <Link className={`duration-75 hover:scale-110`} href="/programs">
-          Programmes
-        </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/clients">
-          Mes Patients
-        </Link>
-        <Link className={`duration-75 hover:scale-110`} href="/database">
-          Base de Données
-        </Link>
-        <Link
-          href="/profile"
-          className={`flex items-center gap-4 duration-75 hover:scale-110`}
-        >
-          <div className="w-12 rounded-full border-4">
-            <Image
-              src="/gigachad.jpg"
-              width={565}
-              height={601}
-              alt="Patient Profile Picture"
-              className="rounded-full"
-            />
-          </div>
-          <h2>
-            {specialist.user &&
-              `${specialist.user.firstName} ${specialist.user.lastName}`}
-          </h2>
-        </Link>
-      </div>
+      <div className="flex gap-20 items-center">{nav}</div>
     </div>
   );
 }
