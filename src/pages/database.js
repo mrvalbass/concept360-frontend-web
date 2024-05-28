@@ -5,13 +5,11 @@ import RoutineModal from "@/components/RoutineModal";
 import ExerciseModal from "@/components/ExerciseModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import TextFieldComponent from "@/components/TextFieldComponent";
 
 export default function Programs() {
-  const specialist = useSelector((state) => state.users.value);
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
   const [openExerciseModal, setOpenExerciseModal] = useState(false);
   const [routines, setRoutines] = useState([]);
@@ -96,7 +94,7 @@ export default function Programs() {
     routines.map((routine, i) => {
       return <Routine key={i} {...routine} editable />;
     });
-  console.log(routines);
+
   const exercisesComponents =
     exercises &&
     exercises.map((exercise, i) => (
@@ -214,7 +212,6 @@ export default function Programs() {
           ) : (
             <> {routinesComponents} </>
           )}
-          {/* {routinesComponents} */}
         </Card>
       </main>
     </>

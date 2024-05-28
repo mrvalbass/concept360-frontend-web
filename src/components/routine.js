@@ -36,13 +36,13 @@ export default function Routine({
         done: !done,
       }),
     };
-    const response = await fetch(
+    await fetch(
       `http://localhost:3000/programs/toggleDone/${programId}`,
       options
     ).then((r) => r.json());
     setRenderTrigger((prev) => !prev);
   };
-
+  console.log(exercises);
   const exercisesList = exercises.map((exercise, i) => (
     <div key={i} className="flex items-center gap-2">
       <p className="basis-1/2 font-[500]"> {`${exercise.exercise.title}`}</p>
