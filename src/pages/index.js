@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Patient from "@/components/Patient";
-import Routine from "@/components/routine";
+import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -32,7 +32,7 @@ export default function Home() {
         firstName={patient.user.firstName}
         lastName={patient.user.lastName}
         patient={patient}
-        className='gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100'
+        className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
         onClick={() =>
           router.push({
             pathname: `/programs`,
@@ -64,7 +64,7 @@ export default function Home() {
         sets={routine.exercises[0].sets}
         reps={routine.exercises[0].reps}
         // onClick={() => }
-        className='gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100'
+        className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
       />
     ));
 
@@ -73,16 +73,17 @@ export default function Home() {
       <Header />
       {Object.keys(specialist).length !== 0 ? (
         <main
-          className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
-          <Card title='Mes Patients' className='w-2/5 overflow-hidden'>
+          className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
+        >
+          <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
             {specialistPatients}
           </Card>
-          <Card title='Mes routines' className='w-2/5 overflow-hidden'>
+          <Card title="Mes routines" className="basis-1/2 overflow-hidden">
             {routinesComponents}
           </Card>
         </main>
       ) : (
-        <main className='flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
+        <main className="flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
           Loading ...
         </main>
       )}

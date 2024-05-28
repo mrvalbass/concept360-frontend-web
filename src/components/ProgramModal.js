@@ -3,12 +3,17 @@ import Card from "./Card";
 import { useEffect, useState } from "react";
 import Routine from "./Routine";
 import { useRouter } from "next/router";
+import moment from "moment";
+import "moment/locale/fr";
+
+moment.locale("fr");
 
 export default function ProgramModal({
   open,
   setOpenProgramModal,
   date,
   programData,
+  setRenderTrigger,
 }) {
   const router = useRouter();
   const [routines, setRoutines] = useState([]);
@@ -33,9 +38,15 @@ export default function ProgramModal({
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/programs/${programData._id}`,
+      `http://localhost:3000/programs/addRoutine/${programData._id}`,
       options
     ).then((r) => r.json());
+    if (response.result) {
+      setRenderTrigger((prev) => !prev);
+      setOpenProgramModal(false);
+    } else {
+      alert("There was an error", response.error);
+    }
   };
 
   const routinesComponents =
@@ -60,7 +71,7 @@ export default function ProgramModal({
     >
       <div className="bg-white h-3/4 w-3/4 flex flex-col gap-5 p-5 rounded">
         <h2 className="font-[sora] text-xl font-semibold self-center">
-          {`Ajouter un Programme - ${date}`}
+          {`Ajouter un Programme - ${date.format("dddd DD MMMM YYYY")}`}
         </h2>
         <div className="flex gap-5 grow overflow-y-hidden">
           <Card

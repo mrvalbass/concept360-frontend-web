@@ -3,7 +3,7 @@ import Exercise from "@/components/Exercise";
 import Card from "@/components/Card";
 import RoutineModal from "@/components/RoutineModal";
 import ExerciseModal from "@/components/ExerciseModal";
-import Routine from "@/components/routine";
+import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -94,7 +94,6 @@ export default function Programs() {
   const routinesComponents =
     routines &&
     routines.map((routine, i) => {
-      console.log(routine);
       return <Routine key={i} {...routine} editable />;
     });
   console.log(routines);
@@ -124,7 +123,6 @@ export default function Programs() {
       setRoutineSearch(list);
     }
   };
-  console.log(exerciseSearch);
 
   return (
     <>
