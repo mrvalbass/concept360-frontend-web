@@ -3,7 +3,7 @@ import Exercise from "@/components/Exercise";
 import Card from "@/components/Card";
 import RoutineModal from "@/components/RoutineModal";
 import ExerciseModal from "@/components/ExerciseModal";
-import Routine from "@/components/Routine";
+import Routine from "@/components/routine";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -119,24 +119,21 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
-      >
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
         <Card
-          title="Exercices"
+          title='Exercices'
           displayButton
           onButtonClick={setOpenExerciseModal}
-          buttonText="Créer un exercice"
-          className="basis-1/2"
-        >
+          buttonText='Créer un exercice'
+          className='basis-1/2'>
           {exercisesComponents}
         </Card>
         <Card
-          title="Routines"
+          title='Routines'
           displayButton
           onButtonClick={() => setOpenRoutineModal((prev) => !prev)}
-          buttonText="Créer une routine"
-          className="basis-1/2"
-        >
+          buttonText='Créer une routine'
+          className='basis-1/2'>
           {routinesComponents}
         </Card>
       </main>
