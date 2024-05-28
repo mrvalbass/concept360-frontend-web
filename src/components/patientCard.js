@@ -4,6 +4,7 @@ import moment from "moment";
 import Card from "./Card";
 import Patient from "./Patient";
 import Routine from "./Routine";
+import { useSelector } from "react-redux";
 
 export default function PatientCard({
   patient,
@@ -14,12 +15,13 @@ export default function PatientCard({
   setProgramData,
 }) {
   const [notes, setNotes] = useState("");
+  const specialist = useSelector((state) => state.users.value);
 
   useEffect(() => {
     (async () => {
       if (patient) {
         const data = await fetch(
-          `http://localhost:3000/programs/${patient}`
+          `http://localhost:3000/programs/${specialist._id}/${patient}`
         ).then((r) => r.json());
         if (data.result) {
           setProgramData(data.userProgram);
@@ -42,7 +44,7 @@ export default function PatientCard({
   }, [notes]);
 
   if (Object.keys(programData).length === 0)
-    return <div className='border-2 grow'>No Data</div>;
+    return <div className="border-2 grow">No Data</div>;
 
   const { patient: patientData, program } = programData;
   const currentRoutine = program.find((routine) => {
@@ -50,25 +52,26 @@ export default function PatientCard({
   });
 
   return (
-    <div className='flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]'>
-      <div className='flex gap-10 px-10'>
-        <div className='flex flex-col h-full gap-5 grow py-5'>
+    <div className="flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]">
+      <div className="flex gap-10 px-10">
+        <div className="flex flex-col h-full gap-5 grow py-5">
           <Patient
             firstName={patientData.user.firstName}
             lastName={patientData.user.lastName}
-            className='px-0 gap-4 border-none '
-            imgSize='16'
+            className="px-0 gap-4 border-none "
+            imgSize="16"
           />
           <textarea
-            className='border-2 grow bg-[#ffffff77]
-            p-2'
-            placeholder='Notes'
+            className="border-2 grow bg-[#ffffff77]
+            p-2"
+            placeholder="Notes"
             onChange={(e) => {
               setNotes(e.target.value);
             }}
-            value={notes}></textarea>
+            value={notes}
+          ></textarea>
         </div>
-        <div className='w-[320px]'>
+        <div className="w-[320px]">
           <DateCalendar value={date} onChange={setDate} />
         </div>
       </div>

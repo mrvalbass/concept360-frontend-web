@@ -18,7 +18,6 @@ export default function Programs() {
   const [date, setDate] = useState(() => moment().startOf("day"));
   const router = useRouter();
 
-
   useEffect(() => {
     (async () => {
       if (Object.keys(specialist).length !== 0) {
@@ -58,8 +57,8 @@ export default function Programs() {
       />
       <Header />
       {Object.keys(specialist).length !== 0 ? (
-        <main className='flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
-          <Card title='Mes Patients' className='w-1/4 overflow-hidden'>
+        <main className="flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
+          <Card title="Mes Patients" className="w-1/4 overflow-hidden">
             {specialistPatients}
           </Card>
 
@@ -73,7 +72,7 @@ export default function Programs() {
           ></PatientCard>
         </main>
       ) : (
-        <main className='flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
+        <main className="flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
           Loading ...
         </main>
       )}
