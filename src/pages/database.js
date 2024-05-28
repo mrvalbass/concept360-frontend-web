@@ -6,7 +6,9 @@ import ExerciseModal from "@/components/ExerciseModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import TextFieldComponent from "@/components/TextFieldComponent";
 
 export default function Programs() {
   const specialist = useSelector((state) => state.users.value);
@@ -16,6 +18,10 @@ export default function Programs() {
   const [exercises, setExercises] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchExerciseName, setSearchExerciseName] = useState("");
+  const [exerciseSearch, setExerciseSearch] = useState([]);
+  // const [searchSpecialistList, setSearchSpecialistList] = useState("");
+  // const [specialistSearch, setSpecialistSearch] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -84,6 +90,7 @@ export default function Programs() {
     }
     setRenderTrigger((prev) => !prev);
   };
+
   const routinesComponents =
     routines &&
     routines.map((routine, i) => {
@@ -102,6 +109,25 @@ export default function Programs() {
       />
     ));
 
+  const searchExercise = (category) => {
+    if (category === "exercise") {
+      const list = exercises.filter((exercise) =>
+        exercise.title.toLowerCase().includes(searchExerciseName.toLowerCase())
+      );
+      setExerciseSearch(list);
+    }
+    // } else if (list === "routine") {
+    //   const searchPatientName = specialistPatientsData.filter((patient) =>
+    //     patient.user.lastName
+    //       .toLowerCase()
+    //       .includes(searchSpecialistList.toLowerCase())
+    //   );
+    //   setSpecialistSearch(searchPatientName);
+    // }
+  };
+  console.log(exerciseSearch);
+
+  // console.log(exercises);
   return (
     <>
       <RoutineModal
@@ -124,11 +150,39 @@ export default function Programs() {
         <Card
           title="Exercices"
           displayButton
-          onButtonClick={setOpenExerciseModal}
+          onButtonClick={() => setOpenExerciseModal((prev) => !prev)}
           buttonText="Créer un exercice"
           className="basis-1/2"
         >
-          {exercisesComponents}
+          <div className="flex justify-center items-center gap-2 pt-2">
+            <TextFieldComponent
+              id="SearchByName"
+              label="Rechercher par nom d'exercice"
+              valueSetter={setSearchExerciseName}
+              valueGetter={searchExerciseName}
+              size={"small"}
+            />
+            <FontAwesomeIcon
+              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              onClick={() => searchExercise("exercise")}
+              icon={faMagnifyingGlass}
+            />
+          </div>
+          {exerciseSearch.length > 0 ? (
+            exerciseSearch.map((exercise, i) => {
+              return (
+                <Exercise
+                  key={i}
+                  {...exercise}
+                  icon={faXmark}
+                  onIconClick={handleDelete}
+                />
+              );
+            })
+          ) : (
+            <> {exercisesComponents} </>
+          )}
+          {/* {exercisesComponents} */}
         </Card>
         <Card
           title="Routines"

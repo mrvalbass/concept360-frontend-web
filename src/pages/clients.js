@@ -1,11 +1,18 @@
 import Header from "@/components/Header";
+// import { TextField } from "@mui/material";
 import Card from "@/components/Card";
 import Patient from "@/components/Patient";
+import TextFieldComponent from "@/components/TextFieldComponent";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { faSquarePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSquarePlus,
+  faTrashCan,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NewPatientModal from "@/components/NewPatientModal";
 
 export default function Clients() {
@@ -15,6 +22,10 @@ export default function Clients() {
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [reRender, setReRender] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [allPatientSearch, setAllPatientSearch] = useState([]);
+  const [searchSpecialistList, setSearchSpecialistList] = useState("");
+  const [specialistSearch, setSpecialistSearch] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -70,39 +81,6 @@ export default function Clients() {
     setReRender(!reRender);
   };
 
-  const patientsDataFiltered = patientsData.filter(
-    (patient) =>
-      !specialistPatientsData.find((element) => patient._id === element._id)
-  );
-
-  const patients = patientsDataFiltered.map((patient, i) => {
-    return (
-      <Patient
-        key={i}
-        firstName={patient.user.firstName}
-        lastName={patient.user.lastName}
-        onIconClick={addToSpecialistPatients}
-        patient={patient}
-        icon={faSquarePlus}
-      />
-    );
-  });
-
-  const specialistPatients = specialistPatientsData
-    .map((patient, i) => {
-      return (
-        <Patient
-          key={i}
-          firstName={patient.user.firstName}
-          lastName={patient.user.lastName}
-          function={deleteFromSpecialistPatients}
-          patient={patient}
-          icon={faTrashCan}
-        />
-      );
-    })
-    .reverse();
-
   const SignUpPatient = async (firstName, lastName, email) => {
     if (!firstName || !lastName || !email) {
       setMessage("Un ou des champs sont vides");
@@ -132,6 +110,55 @@ export default function Clients() {
     setReRender(!reRender);
   };
 
+  const patientsDataFiltered = patientsData.filter(
+    (patient) =>
+      !specialistPatientsData.find((element) => patient._id === element._id)
+  );
+
+  const searchPatient = (category) => {
+    if (category === "allPatient") {
+      const searchPatientName = patientsDataFiltered.filter((patient) =>
+        patient.user.lastName.toLowerCase().includes(searchName.toLowerCase())
+      );
+      setAllPatientSearch(searchPatientName);
+    } else if (category === "specialistList") {
+      const searchPatientName = specialistPatientsData.filter((patient) =>
+        patient.user.lastName
+          .toLowerCase()
+          .includes(searchSpecialistList.toLowerCase())
+      );
+      setSpecialistSearch(searchPatientName);
+    }
+  };
+
+  const patients = patientsDataFiltered.map((patient, i) => {
+    return (
+      <Patient
+        key={i}
+        firstName={patient.user.firstName}
+        lastName={patient.user.lastName}
+        function={addToSpecialistPatients}
+        patient={patient}
+        icon={faSquarePlus}
+      />
+    );
+  });
+
+  const specialistPatients = specialistPatientsData
+    .map((patient, i) => {
+      return (
+        <Patient
+          key={i}
+          firstName={patient.user.firstName}
+          lastName={patient.user.lastName}
+          function={deleteFromSpecialistPatients}
+          patient={patient}
+          icon={faTrashCan}
+        />
+      );
+    })
+    .reverse();
+
   return (
     <>
       <NewPatientModal
@@ -147,14 +174,72 @@ export default function Clients() {
         <Card
           title="Patients du Cabinet"
           displayButton
-          onButtonClick={setOpenNewPatientModal}
+          onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
           buttonText="Ajouter un patient"
           className="basis-1/2"
         >
-          {patients}
+          <div className="flex justify-center items-center gap-2 pt-2">
+            <TextFieldComponent
+              id="SearchByLastName"
+              label="Rechercher par nom"
+              valueSetter={setSearchName}
+              valueGetter={searchName}
+              size={"small"}
+            />
+            <FontAwesomeIcon
+              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              onClick={() => searchPatient("allPatient")}
+              icon={faMagnifyingGlass}
+            />
+          </div>
+          {allPatientSearch.length > 0 ? (
+            allPatientSearch.map((patient, i) => {
+              return (
+                <Patient
+                  key={i}
+                  firstName={patient.user.firstName}
+                  lastName={patient.user.lastName}
+                  function={addToSpecialistPatients}
+                  patient={patient}
+                  icon={faSquarePlus}
+                />
+              );
+            })
+          ) : (
+            <> {patients} </>
+          )}
         </Card>
         <Card title="Mes Patients" className="basis-1/2">
-          {specialistPatients}
+          <div className="flex justify-center items-center gap-2 pt-2">
+            <TextFieldComponent
+              id="SearchByLastName"
+              label="Rechercher par nom"
+              valueSetter={setSearchSpecialistList}
+              valueGetter={searchSpecialistList}
+              size={"small"}
+            />
+            <FontAwesomeIcon
+              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              onClick={() => searchPatient("specialistList")}
+              icon={faMagnifyingGlass}
+            />
+          </div>
+          {specialistSearch.length > 0 ? (
+            specialistSearch.map((patient, i) => {
+              return (
+                <Patient
+                  key={i}
+                  firstName={patient.user.firstName}
+                  lastName={patient.user.lastName}
+                  function={deleteFromSpecialistPatients}
+                  patient={patient}
+                  icon={faTrashCan}
+                />
+              );
+            })
+          ) : (
+            <> {specialistPatients} </>
+          )}
         </Card>
       </main>
     </>

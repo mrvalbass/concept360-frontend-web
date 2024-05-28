@@ -1,5 +1,6 @@
-import { Modal, TextField } from "@mui/material";
+import { Modal } from "@mui/material";
 import { useState } from "react";
+import TextFieldComponent from "./TextFieldComponent";
 import Button from "@/components/Button";
 
 export default function NewPatientModal({
@@ -32,26 +33,23 @@ export default function NewPatientModal({
           Créer un nouveau patient
         </h2>
         <div className="flex flex-col gap-4">
-          <TextField
+          <TextFieldComponent
             id="firstNameInput"
             label="Prénom *"
-            variant="outlined"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
+            valueGetter={firstName}
+            valueSetter={setFirstName}
           />
-          <TextField
+          <TextFieldComponent
             id="lastNameInput"
             label="Nom *"
-            variant="outlined"
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
+            valueGetter={lastName}
+            valueSetter={setLastName}
           />
-          <TextField
+          <TextFieldComponent
             id="EmailInput"
             label="Email *"
-            variant="outlined"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            valueGetter={email}
+            valueSetter={setEmail}
           />
           <p className="self-center">{message}</p>
           <Button
