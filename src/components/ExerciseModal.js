@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { Modal } from "@mui/material";
 import TextFieldComponent from "./TextFieldComponent";
-import SelectForm from "./selectForm";
+import SelectForm from "./SelectForm";
 
 export default function ExerciceModal({
   open,

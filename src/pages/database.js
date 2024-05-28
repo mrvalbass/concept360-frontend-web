@@ -20,8 +20,8 @@ export default function Programs() {
   const [message, setMessage] = useState("");
   const [searchExerciseName, setSearchExerciseName] = useState("");
   const [exerciseSearch, setExerciseSearch] = useState([]);
-  // const [searchSpecialistList, setSearchSpecialistList] = useState("");
-  // const [specialistSearch, setSpecialistSearch] = useState([]);
+  const [searchRoutineName, setSearchRoutineName] = useState("");
+  const [routineSearch, setRoutineSearch] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -97,7 +97,7 @@ export default function Programs() {
       console.log(routine);
       return <Routine key={i} {...routine} editable />;
     });
-
+  console.log(routines);
   const exercisesComponents =
     exercises &&
     exercises.map((exercise, i) => (
@@ -115,19 +115,17 @@ export default function Programs() {
         exercise.title.toLowerCase().includes(searchExerciseName.toLowerCase())
       );
       setExerciseSearch(list);
+    } else if (category === "routine") {
+      const list = routines.filter((routine) =>
+        routine.createdBy
+          .toLowerCase()
+          .includes(searchRoutineName.toLowerCase())
+      );
+      setRoutineSearch(list);
     }
-    // } else if (list === "routine") {
-    //   const searchPatientName = specialistPatientsData.filter((patient) =>
-    //     patient.user.lastName
-    //       .toLowerCase()
-    //       .includes(searchSpecialistList.toLowerCase())
-    //   );
-    //   setSpecialistSearch(searchPatientName);
-    // }
   };
   console.log(exerciseSearch);
 
-  // console.log(exercises);
   return (
     <>
       <RoutineModal
@@ -182,7 +180,6 @@ export default function Programs() {
           ) : (
             <> {exercisesComponents} </>
           )}
-          {/* {exercisesComponents} */}
         </Card>
         <Card
           title="Routines"
@@ -191,7 +188,35 @@ export default function Programs() {
           buttonText="Créer une routine"
           className="basis-1/2"
         >
-          {routinesComponents}
+          <div className="flex justify-center items-center gap-2 pt-2">
+            <TextFieldComponent
+              id="SearchByName"
+              label="Rechercher une routine"
+              valueSetter={setSearchRoutineName}
+              valueGetter={searchRoutineName}
+              size={"small"}
+            />
+            <FontAwesomeIcon
+              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              onClick={() => searchExercise("routine")}
+              icon={faMagnifyingGlass}
+            />
+          </div>
+          {routineSearch.length > 0 ? (
+            routineSearch.map((exercise, i) => {
+              return (
+                <Exercise
+                  key={i}
+                  {...exercise}
+                  icon={faXmark}
+                  onIconClick={handleDelete}
+                />
+              );
+            })
+          ) : (
+            <> {routinesComponents} </>
+          )}
+          {/* {routinesComponents} */}
         </Card>
       </main>
     </>

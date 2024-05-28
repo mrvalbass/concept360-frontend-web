@@ -14,6 +14,7 @@ export default function SelectForm({
   valueGetter,
   valueSetter,
   valueList,
+  size,
 }) {
   if (!multiple) {
     return (
@@ -25,6 +26,7 @@ export default function SelectForm({
           value={valueGetter}
           label={`${id}`}
           onChange={(e) => valueSetter(e.target.value)}
+          size={size}
         >
           {valueList.map((element) => (
             <MenuItem key={element} value={element}>
@@ -45,6 +47,7 @@ export default function SelectForm({
             multiple
             value={valueGetter}
             label={`${id}`}
+            size={size}
             onChange={(event) => {
               const {
                 target: { value },

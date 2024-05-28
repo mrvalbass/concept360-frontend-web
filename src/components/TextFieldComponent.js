@@ -14,6 +14,7 @@ export default function TextFieldComponent({
       onChange={(e) => valueSetter(e.target.value)}
       value={valueGetter}
       size={size}
+      className="bg-white"
     />
   );
 }

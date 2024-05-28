@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ChangeConnectionState, setUserData } from "../reducers/users";
 import Button from "@/components/Button";
+import TextFieldComponent from "@/components/TextFieldComponent";
+import PasswordComponent from "@/components/PasswordComponent";
 
 export default function login() {
   const router = useRouter();
@@ -49,24 +51,28 @@ export default function login() {
         Concept 360
       </div>
       <div className="flex flex-col gap-6">
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="text"
-          value={email}
-          placeholder="Email"
+        <TextFieldComponent
+          id="loginEmail"
+          label="email"
+          valueSetter={setEmail}
+          valueGetter={email}
+          size={"small"}
         />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          value={password}
-          placeholder="Mot de passe"
+        <PasswordComponent
+          id="passwordLogin"
+          label="Password"
+          valueSetter={setPassword}
+          valueGetter={password}
+          size={"small"}
         />
         {Connection ? (
           ""
         ) : (
-          <p className=" text-red-600">Email ou mot de passe incorrect</p>
+          <p className=" text-red-600 text-center">
+            Email ou mot de passe incorrect
+          </p>
         )}
-        <Button onClick={signIn}>Connection</Button>
+        <Button onClick={signIn}>Connexion</Button>
       </div>
     </main>
   );
