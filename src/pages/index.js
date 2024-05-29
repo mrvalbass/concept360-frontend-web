@@ -2,6 +2,7 @@ import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Patient from "@/components/Patient";
 import Routine from "@/components/Routine";
+import Filter from "@/components/Filter";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -9,7 +10,8 @@ import { useRouter } from "next/router";
 export default function Home() {
   const specialist = useSelector((state) => state.users.value);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
-  const [patient, setPatient] = useState();
+  const [searchSpecialistList, setSearchSpecialistList] = useState("");
+  const [specialistSearch, setSpecialistSearch] = useState([]);
   const [routines, setRoutines] = useState([]);
   const router = useRouter();
 
@@ -20,28 +22,29 @@ export default function Home() {
           `http://localhost:3000/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
         setSpecialistsPatientsData(specialistPatientsData.patients);
-        setPatient(specialistPatientsData.patients[0]._id);
       }
     })();
   }, [specialist]);
 
-  const specialistPatients = specialistPatientsData.map((patient, i) => {
-    return (
-      <Patient
-        key={i}
-        firstName={patient.user.firstName}
-        lastName={patient.user.lastName}
-        patient={patient}
-        className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
-        onClick={() =>
-          router.push({
-            pathname: `/programs`,
-            query: { patient: patient._id },
-          })
-        }
-      />
-    );
-  });
+  const specialistPatients = specialistPatientsData
+    .map((patient, i) => {
+      return (
+        <Patient
+          key={i}
+          firstName={patient.user.firstName}
+          lastName={patient.user.lastName}
+          patient={patient}
+          className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+          onClick={() =>
+            router.push({
+              pathname: `/programs`,
+              query: { patient: patient._id },
+            })
+          }
+        />
+      );
+    })
+    .reverse();
 
   useEffect(() => {
     (async () => {
@@ -61,9 +64,6 @@ export default function Home() {
         key={i}
         {...routine}
         title={routine.exercises.title}
-        sets={routine.exercises[0].sets}
-        reps={routine.exercises[0].reps}
-        // onClick={() => }
         className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
       />
     ));
@@ -76,7 +76,39 @@ export default function Home() {
           className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
         >
           <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
-            {specialistPatients}
+            <Filter
+              id={"SearchByLastName"}
+              label="Rechercher par nom"
+              setterTextField={setSearchSpecialistList}
+              getterTextField={searchSpecialistList}
+              size={"small"}
+              listToFilter={specialistPatientsData}
+              category={"user"}
+              setterToReturn={setSpecialistSearch}
+            />
+            {specialistSearch.length > 0 ? (
+              specialistSearch
+                .map((patient, i) => {
+                  return (
+                    <Patient
+                      key={i}
+                      firstName={patient.user.firstName}
+                      lastName={patient.user.lastName}
+                      patient={patient}
+                      className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+                      onClick={() =>
+                        router.push({
+                          pathname: `/programs`,
+                          query: { patient: patient._id },
+                        })
+                      }
+                    />
+                  );
+                })
+                .reverse()
+            ) : (
+              <> {specialistPatients} </>
+            )}
           </Card>
           <Card title="Mes routines" className="basis-1/2 overflow-hidden">
             {routinesComponents}

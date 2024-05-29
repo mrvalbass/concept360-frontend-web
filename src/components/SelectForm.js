@@ -19,7 +19,7 @@ export default function SelectForm({
   if (!multiple) {
     return (
       <FormControl fullWidth>
-        <InputLabel id={`${id}`}>{label} *</InputLabel>
+        <InputLabel id={`${id}`}>{label}</InputLabel>
         <Select
           labelId={`${id}`}
           id={`select_${id}`}
@@ -40,7 +40,7 @@ export default function SelectForm({
     return (
       <>
         <FormControl fullWidth>
-          <InputLabel id={`${id}`}>{label} *</InputLabel>
+          <InputLabel id={`${id}`}>{label}</InputLabel>
           <Select
             labelId={`${id}`}
             id={`select_${id}`}

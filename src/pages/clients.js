@@ -1,18 +1,11 @@
 import Header from "@/components/Header";
-// import { TextField } from "@mui/material";
 import Card from "@/components/Card";
 import Patient from "@/components/Patient";
-import TextFieldComponent from "@/components/TextFieldComponent";
-
+import Filter from "@/components/Filter";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import {
-  faSquarePlus,
-  faTrashCan,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import NewPatientModal from "@/components/NewPatientModal";
 
 export default function Clients() {
@@ -115,22 +108,6 @@ export default function Clients() {
       !specialistPatientsData.find((element) => patient._id === element._id)
   );
 
-  const searchPatient = (category) => {
-    if (category === "allPatient") {
-      const searchPatientName = patientsDataFiltered.filter((patient) =>
-        patient.user.lastName.toLowerCase().includes(searchName.toLowerCase())
-      );
-      setAllPatientSearch(searchPatientName);
-    } else if (category === "specialistList") {
-      const searchPatientName = specialistPatientsData.filter((patient) =>
-        patient.user.lastName
-          .toLowerCase()
-          .includes(searchSpecialistList.toLowerCase())
-      );
-      setSpecialistSearch(searchPatientName);
-    }
-  };
-
   const patients = patientsDataFiltered.map((patient, i) => {
     return (
       <Patient
@@ -178,20 +155,16 @@ export default function Clients() {
           buttonText="Ajouter un patient"
           className="basis-1/2"
         >
-          <div className="flex justify-center items-center gap-2 pt-2">
-            <TextFieldComponent
-              id="SearchByLastName"
-              label="Rechercher par nom"
-              valueSetter={setSearchName}
-              valueGetter={searchName}
-              size={"small"}
-            />
-            <FontAwesomeIcon
-              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
-              onClick={() => searchPatient("allPatient")}
-              icon={faMagnifyingGlass}
-            />
-          </div>
+          <Filter
+            id={"SearchByLastName"}
+            label="Rechercher par nom"
+            setterTextField={setSearchName}
+            getterTextField={searchName}
+            size={"small"}
+            listToFilter={patientsDataFiltered}
+            category={"user"}
+            setterToReturn={setAllPatientSearch}
+          />
           {allPatientSearch.length > 0 ? (
             allPatientSearch.map((patient, i) => {
               return (
@@ -210,33 +183,31 @@ export default function Clients() {
           )}
         </Card>
         <Card title="Mes Patients" className="basis-1/2">
-          <div className="flex justify-center items-center gap-2 pt-2">
-            <TextFieldComponent
-              id="SearchByLastName"
-              label="Rechercher par nom"
-              valueSetter={setSearchSpecialistList}
-              valueGetter={searchSpecialistList}
-              size={"small"}
-            />
-            <FontAwesomeIcon
-              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
-              onClick={() => searchPatient("specialistList")}
-              icon={faMagnifyingGlass}
-            />
-          </div>
+          <Filter
+            id={"SearchByLastName"}
+            label="Rechercher par nom"
+            setterTextField={setSearchSpecialistList}
+            getterTextField={searchSpecialistList}
+            size={"small"}
+            listToFilter={specialistPatientsData}
+            category={"user"}
+            setterToReturn={setSpecialistSearch}
+          />
           {specialistSearch.length > 0 ? (
-            specialistSearch.map((patient, i) => {
-              return (
-                <Patient
-                  key={i}
-                  firstName={patient.user.firstName}
-                  lastName={patient.user.lastName}
-                  function={deleteFromSpecialistPatients}
-                  patient={patient}
-                  icon={faTrashCan}
-                />
-              );
-            })
+            specialistSearch
+              .map((patient, i) => {
+                return (
+                  <Patient
+                    key={i}
+                    firstName={patient.user.firstName}
+                    lastName={patient.user.lastName}
+                    function={deleteFromSpecialistPatients}
+                    patient={patient}
+                    icon={faTrashCan}
+                  />
+                );
+              })
+              .reverse()
           ) : (
             <> {specialistPatients} </>
           )}

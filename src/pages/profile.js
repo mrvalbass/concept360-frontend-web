@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import TextFieldComponent from "@/components/TextFieldComponent";
-import PasswordComponent from "@/components/PasswordComponent";
+import PasswordModal from "@/components/PasswordModal";
 
 export default function Others() {
   const dispatch = useDispatch();
@@ -20,31 +20,36 @@ export default function Others() {
   const [message, setMessage] = useState("");
   const [showMyInfo, setShowMyInfo] = useState(false);
   const [showAddSpecialist, setShowAddSpecialist] = useState(false);
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
 
   const updateSpecialist = async () => {
-    const options = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-      }),
-    };
-    const response = await fetch(
-      `http://localhost:3000/users/changeData/${specialist._id}`,
-      options
-    ).then((r) => r.json());
-    if (response.result) {
-      setMessage("Vos informations ont bien été modifiées");
+    if (!firstName && !lastName && !email) {
+      setMessage("Tous les champs sont vides");
     } else {
-      setMessage("Une erreur s'est produite");
+      const options = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+        }),
+      };
+      const response = await fetch(
+        `http://localhost:3000/users/changeData/${specialist.user._id}`,
+        options
+      ).then((r) => r.json());
+      if (response.result) {
+        setMessage("Vos informations ont bien été modifiées");
+      } else {
+        setMessage("Une erreur s'est produite");
+      }
     }
   };
 
   const addNewSpecialist = async () => {
     if (!firstName || !lastName || !email || !discipline) {
-      setMessage("Un ou des champs sont vides");
+      setMessage("Un ou des champs sont vide(s)");
     } else {
       const options = {
         method: "POST",
@@ -72,6 +77,11 @@ export default function Others() {
 
   return (
     <>
+      <PasswordModal
+        open={openPasswordModal}
+        setOpenNewPatientModal={setOpenPasswordModal}
+        specialist={specialist}
+      />
       <Header />
       <main className="flex flex-row min-h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
         <div className="flex justify-center w-2/6 py-14 rounded bg-white drop-shadow-lg max-h-[99%]">
@@ -129,13 +139,7 @@ export default function Others() {
         </div>
         <div className="flex flex-col items-center rounded grow px-20 py-10 bg-white drop-shadow-lg max-h-[99%]">
           {!showMyInfo ? (
-            <div className="h-full flex pt-16">
-              <p className="font-[sora] text-8xl text-center font-semibold text-[#00a5ac]">
-                Concept
-                <br />
-                360
-              </p>
-            </div>
+            ""
           ) : (
             <>
               <h1 className="font-semibold font-[sora] text-lg pb-8">
@@ -179,6 +183,12 @@ export default function Others() {
                 {!message ? "" : <p>{message}</p>}
                 <Button onClick={() => updateSpecialist()}>Modifier</Button>
               </div>
+              <Button
+                onClick={() => setOpenPasswordModal((prev) => !prev)}
+                className={"m-10"}
+              >
+                Modifier mon mot de passe
+              </Button>
             </>
           )}
 
