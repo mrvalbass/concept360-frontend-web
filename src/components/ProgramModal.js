@@ -34,7 +34,7 @@ export default function ProgramModal({
       body: JSON.stringify({
         date: date.toString(),
         routine: routineId,
-        comment: "zboub",
+        comment: "",
       }),
     };
     const response = await fetch(
