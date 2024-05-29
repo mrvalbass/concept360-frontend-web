@@ -4,44 +4,78 @@ import { Modal } from "@mui/material";
 import TextFieldComponent from "./TextFieldComponent";
 import SelectForm from "./SelectForm";
 
-export default function ExerciceModal({
+export default function UpdateExerciceModal({
   open,
-  setOpenExerciseModal,
-  handleCreate,
-  message,
+  setOpenUpdateExerciseModal,
+  titleUpdate,
+  movementUpdate,
+  bodyPartsUpdate,
+  disciplinesUpdate,
+  videoLinkUpdate,
+  _idUpdate,
+  setRenderTrigger,
 }) {
-  const [title, setTitle] = useState("");
-  const [movement, setMovement] = useState("");
-  const [bodyParts, setBodyParts] = useState([]);
-  const [disciplines, setDisciplines] = useState([]);
-  const [videoLink, setVideoLink] = useState("");
+  const [title, setTitle] = useState(titleUpdate);
+  const [movement, setMovement] = useState(movementUpdate);
+  const [bodyParts, setBodyParts] = useState(bodyPartsUpdate);
+  const [disciplines, setDisciplines] = useState(disciplinesUpdate);
+  const [videoLink, setVideoLink] = useState(videoLinkUpdate);
+  const [message, setMessage] = useState("");
+
+  const updateExercise = async () => {
+    const options = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        movement,
+        bodyParts,
+        disciplines,
+        videoLink,
+      }),
+    };
+    const response = await fetch(
+      `http://localhost:3000/exercises/${_idUpdate}`,
+      options
+    ).then((r) => r.json());
+    if (response.result) {
+      setMessage("L'exercice a bien été modifié");
+      setRenderTrigger((prev) => !prev);
+    } else {
+      setMessage("Une erreur s'est produite");
+    }
+  };
   return (
     <Modal
       open={open}
-      onClose={() => setOpenExerciseModal((prev) => !prev)}
+      onClose={() => setOpenUpdateExerciseModal((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-2/4 flex flex-col items-center p-5 rounded">
+      <div className="bg-white h-5/6 w-2/4 flex flex-col items-center p-5 rounded">
         <button
           className="self-end"
           onClick={() => {
-            setOpenExerciseModal((prev) => !prev);
+            setOpenUpdateExerciseModal((prev) => !prev);
           }}
         >
           ✕
         </button>
-        <h2 className="font-[sora] text-xl font-semibold">Nouvel Exercice</h2>
-        <div className=" w-[100%] flex flex-row  justify-around ">
+        <h2 className="font-[sora] text-xl font-semibold text-center mb-4">
+          Modifier l'exercice <br />
+          {titleUpdate}
+        </h2>
+
+        <div className=" w-[100%] flex flex-row justify-around">
           <div className=" flex flex-col gap-4">
             <TextFieldComponent
               id="exerciseName"
-              label="Nom de votre exercice *"
+              label="Nom"
               valueGetter={title}
               valueSetter={setTitle}
             />
             <SelectForm
               id="specialities"
-              label="Spécialité *"
+              label="Spécialité"
               multiple={true}
               valueGetter={disciplines}
               valueSetter={setDisciplines}
@@ -49,7 +83,7 @@ export default function ExerciceModal({
             />
             <SelectForm
               id="movement"
-              label="Mouvement *"
+              label="Mouvement"
               multiple={false}
               valueGetter={movement}
               valueSetter={setMovement}
@@ -57,7 +91,7 @@ export default function ExerciceModal({
             />
             <SelectForm
               id="bodyParts"
-              label="Partie du corps *"
+              label="Partie du corps"
               multiple={true}
               valueGetter={bodyParts}
               valueSetter={setBodyParts}
@@ -77,24 +111,7 @@ export default function ExerciceModal({
               valueSetter={setVideoLink}
             />
             <p className="self-center">{message}</p>
-            <Button
-              onClick={() => {
-                handleCreate(
-                  title,
-                  movement,
-                  bodyParts,
-                  disciplines,
-                  videoLink
-                ),
-                  setTitle(""),
-                  setMovement(""),
-                  setBodyParts([]),
-                  setDisciplines([]),
-                  setVideoLink("");
-              }}
-            >
-              Enregistrer l'exercice
-            </Button>
+            <Button onClick={() => updateExercise()}>Modifier</Button>
           </div>
         </div>
       </div>

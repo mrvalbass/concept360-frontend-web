@@ -18,29 +18,31 @@ export default function SelectForm({
 }) {
   if (!multiple) {
     return (
-      <FormControl fullWidth>
-        <InputLabel id={`${id}`}>{label} *</InputLabel>
-        <Select
-          labelId={`${id}`}
-          id={`select_${id}`}
-          value={valueGetter}
-          label={`${id}`}
-          onChange={(e) => valueSetter(e.target.value)}
-          size={size}
-        >
-          {valueList.map((element) => (
-            <MenuItem key={element} value={element}>
-              {element}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <>
+        <FormControl fullWidth>
+          <InputLabel id={`${id}`}>{label}</InputLabel>
+          <Select
+            labelId={`${id}`}
+            id={`select_${id}`}
+            value={valueGetter}
+            label={`${id}`}
+            onChange={(e) => valueSetter(e.target.value)}
+            size={size}
+          >
+            {valueList.map((element) => (
+              <MenuItem key={element} value={element}>
+                {element}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </>
     );
   } else {
     return (
       <>
         <FormControl fullWidth>
-          <InputLabel id={`${id}`}>{label} *</InputLabel>
+          <InputLabel id={`${id}`}>{label}</InputLabel>
           <Select
             labelId={`${id}`}
             id={`select_${id}`}

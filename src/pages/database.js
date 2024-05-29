@@ -5,13 +5,10 @@ import RoutineModal from "@/components/RoutineModal";
 import ExerciseModal from "@/components/ExerciseModal";
 import Routine from "@/components/Routine";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import TextFieldComponent from "@/components/TextFieldComponent";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import Filter from "@/components/Filter";
 
 export default function Programs() {
-  const specialist = useSelector((state) => state.users.value);
   const [openRoutineModal, setOpenRoutineModal] = useState(false);
   const [openExerciseModal, setOpenExerciseModal] = useState(false);
   const [routines, setRoutines] = useState([]);
@@ -91,12 +88,6 @@ export default function Programs() {
     setRenderTrigger((prev) => !prev);
   };
 
-  const routinesComponents =
-    routines &&
-    routines.map((routine, i) => {
-      return <Routine key={i} {...routine} editable />;
-    });
-  console.log(routines);
   const exercisesComponents =
     exercises &&
     exercises.map((exercise, i) => (
@@ -104,25 +95,16 @@ export default function Programs() {
         key={i}
         {...exercise}
         icon={faXmark}
-        onIconClick={handleDelete}
+        onIconClose={handleDelete}
+        setRenderTrigger={setRenderTrigger}
       />
     ));
 
-  const searchExercise = (category) => {
-    if (category === "exercise") {
-      const list = exercises.filter((exercise) =>
-        exercise.title.toLowerCase().includes(searchExerciseName.toLowerCase())
-      );
-      setExerciseSearch(list);
-    } else if (category === "routine") {
-      const list = routines.filter((routine) =>
-        routine.createdBy
-          .toLowerCase()
-          .includes(searchRoutineName.toLowerCase())
-      );
-      setRoutineSearch(list);
-    }
-  };
+  const routinesComponents =
+    routines &&
+    routines.map((routine, i) => {
+      return <Routine key={i} {...routine} editable />;
+    });
 
   return (
     <>
@@ -141,27 +123,26 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
+      >
         <Card
-          title='Exercices'
+          title="Exercices"
           displayButton
           onButtonClick={() => setOpenExerciseModal((prev) => !prev)}
-          buttonText='Créer un exercice'
-          className='basis-1/2'>
-          <div className='flex justify-center items-center gap-2 m-5'>
-            <TextFieldComponent
-              id='SearchByName'
-              label="Rechercher par nom d'exercice"
-              valueSetter={setSearchExerciseName}
-              valueGetter={searchExerciseName}
-              size={"small"}
-            />
-            <FontAwesomeIcon
-              className='text-xl duration-75 hover:scale-125 text-[#00a5ac]'
-              onClick={() => searchExercise("exercise")}
-              icon={faMagnifyingGlass}
-            />
-          </div>
+          buttonText="Créer un exercice"
+          className="basis-1/2"
+        >
+          <Filter
+            id={"SearchByName"}
+            label="Rechercher par nom d'exercice"
+            setterTextField={setSearchExerciseName}
+            getterTextField={searchExerciseName}
+            size={"small"}
+            listToFilter={exercises}
+            category={"exercise"}
+            setterToReturn={setExerciseSearch}
+          />
+
           {exerciseSearch.length > 0 ? (
             exerciseSearch.map((exercise, i) => {
               return (
@@ -169,7 +150,8 @@ export default function Programs() {
                   key={i}
                   {...exercise}
                   icon={faXmark}
-                  onIconClick={handleDelete}
+                  onIconClose={handleDelete}
+                  setRenderTrigger={setRenderTrigger}
                 />
               );
             })
@@ -178,25 +160,23 @@ export default function Programs() {
           )}
         </Card>
         <Card
-          title='Routines'
+          title="Routines"
           displayButton
           onButtonClick={() => setOpenRoutineModal((prev) => !prev)}
-          buttonText='Créer une routine'
-          className='basis-1/2'>
-          <div className='flex justify-center items-center gap-2 m-5'>
-            <TextFieldComponent
-              id='SearchByName'
-              label='Rechercher une routine'
-              valueSetter={setSearchRoutineName}
-              valueGetter={searchRoutineName}
-              size={"small"}
-            />
-            <FontAwesomeIcon
-              className='text-xl duration-75 hover:scale-125 text-[#00a5ac]'
-              onClick={() => searchExercise("routine")}
-              icon={faMagnifyingGlass}
-            />
-          </div>
+          buttonText="Créer une routine"
+          className="basis-1/2"
+        >
+          {/* <Filter
+            id={"SearchByName"}
+            label="Rechercher par nom d'exercice"
+            setterTextField={setSearchRoutineName}
+            getterTextField={searchRoutineName}
+            size={"small"}
+            listToFilter={routines}
+            category={"routine"}
+            setterToReturn={setRoutineSearch}
+          /> */}
+
           {routineSearch.length > 0 ? (
             routineSearch.map((exercise, i) => {
               return (
@@ -204,7 +184,7 @@ export default function Programs() {
                   key={i}
                   {...exercise}
                   icon={faXmark}
-                  onIconClick={handleDelete}
+                  onIconClose={handleDelete}
                 />
               );
             })
