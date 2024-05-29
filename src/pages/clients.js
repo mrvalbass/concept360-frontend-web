@@ -169,25 +169,23 @@ export default function Clients() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
-      >
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}>
         <Card
-          title="Patients du Cabinet"
+          title='Patients du Cabinet'
           displayButton
           onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
-          buttonText="Ajouter un patient"
-          className="basis-1/2"
-        >
-          <div className="flex justify-center items-center gap-2 pt-2">
+          buttonText='Ajouter un patient'
+          className='basis-1/2'>
+          <div className='flex justify-center items-center gap-2  m-5'>
             <TextFieldComponent
-              id="SearchByLastName"
-              label="Rechercher par nom"
+              id='SearchByLastName'
+              label='Rechercher par nom'
               valueSetter={setSearchName}
               valueGetter={searchName}
               size={"small"}
             />
             <FontAwesomeIcon
-              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              className='text-xl duration-75 hover:scale-125 text-[#00a5ac]'
               onClick={() => searchPatient("allPatient")}
               icon={faMagnifyingGlass}
             />
@@ -209,17 +207,17 @@ export default function Clients() {
             <> {patients} </>
           )}
         </Card>
-        <Card title="Mes Patients" className="basis-1/2">
-          <div className="flex justify-center items-center gap-2 pt-2">
+        <Card title='Mes Patients' className='basis-1/2'>
+          <div className='flex justify-center items-center gap-2 m-5'>
             <TextFieldComponent
-              id="SearchByLastName"
-              label="Rechercher par nom"
+              id='SearchByLastName'
+              label='Rechercher par nom'
               valueSetter={setSearchSpecialistList}
               valueGetter={searchSpecialistList}
               size={"small"}
             />
             <FontAwesomeIcon
-              className="text-xl duration-75 hover:scale-125 text-[#00a5ac]"
+              className='text-xl duration-75 hover:scale-125 text-[#00a5ac]'
               onClick={() => searchPatient("specialistList")}
               icon={faMagnifyingGlass}
             />

@@ -9,7 +9,8 @@ export default function Patient(props) {
         onClick={props.onClick}>
         <div>
           <Image
-            src='/gigachad.jpg'
+            // src={specialist.user?.profilePictureURL}
+            // src='/gigachad.jpg'
             width={565}
             height={601}
             alt='Patient Profile Picture'

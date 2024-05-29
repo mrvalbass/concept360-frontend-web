@@ -12,15 +12,16 @@
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: transparent;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 *::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
   background-color: transparent;
+
 }
 
 *::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #00a5ac;
+  border-radius: 5px;
+  background-color: rgba(0,165,172,0.4);
 }
