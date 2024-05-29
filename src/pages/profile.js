@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { ChangeConnectionState, updatePicture } from "@/reducers/users";
 import Image from "next/image";
-// import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 
 export default function Others() {
   const dispatch = useDispatch();
@@ -24,6 +23,7 @@ export default function Others() {
   const [showMyInfo, setShowMyInfo] = useState(false);
   const [showAddSpecialist, setShowAddSpecialist] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const uploadPicture = async (e) => {
     setLoading(true);
     const file = e.target.files[0];
