@@ -44,27 +44,28 @@ export default function Routine({
   };
 
   const exercisesList = exercises.map((exercise, i) => (
-    <div key={i} className="flex items-center gap-2">
-      <p className="basis-1/2 font-[500]"> {`${exercise.exercise.title}`}</p>
-      <div className="basis-1/4">
-        <p className="text-xs">Séries</p>
-        <p>{exercise.sets}</p>
+    <div key={i} className=' flex items-center '>
+      <p className='basis-3/5 font-[500] text-base'>
+        {" "}
+        - {`${exercise.exercise.title}`}
+      </p>
+      <div className='basis-1/5'>
+        <p className='text-sm'>Séries : {exercise.sets}</p>
       </div>
-      <div className="basis-1/4">
-        <p className="text-xs">Répétitions</p>
-        <p>{exercise.reps}</p>
+      <div className='basis-1/5'>
+        <p className='text-sm'>Répétitions : {exercise.reps}</p>
       </div>
     </div>
   ));
 
   return (
-    <div className="border-b flex py-2 px-5">
-      <div className="grow flex flex-col gap-2">{exercisesList}</div>
-      <div className="flex items-center gap-2 text-[#00a5ac]">
+    <div className='border-b flex p-2 m-2 '>
+      <div className='grow flex flex-col'>{exercisesList}</div>
+      <div className='flex items-center gap-2 text-[#00a5ac] '>
         {checkbox !== undefined && (
           <input
-            className="scale-[1.5]"
-            type="checkbox"
+            className='scale-[1.5]'
+            type='checkbox'
             checked={done}
             onChange={() => handleDone()}
           />
@@ -72,21 +73,21 @@ export default function Routine({
         {add && (
           <FontAwesomeIcon
             icon={faSquarePlus}
-            className="cursor-pointer duration-75 hover:scale-125 active:scale-100 text-xl"
+            className='cursor-pointer duration-75 hover:scale-125 active:scale-100 text-xl'
             onClick={() => onAdd(_id)}
           />
         )}
         {update && (
           <FontAwesomeIcon
             icon={faPen}
-            className="cursor-pointer duration-75 hover:scale-125 active:scale-100"
+            className='cursor-pointer duration-75 hover:scale-125 active:scale-100'
             onClick={() => onUpdate(_id)}
           />
         )}
         {remove && (
           <FontAwesomeIcon
             icon={faXmark}
-            className="cursor-pointer duration-75 hover:scale-125 active:scale-100 text-xl"
+            className='cursor-pointer duration-75 hover:scale-125 active:scale-100 text-xl'
             onClick={onRemove}
           />
         )}

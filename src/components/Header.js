@@ -16,15 +16,14 @@ export default function Header() {
     {
       title: (
         <>
-          <div className="w-12 rounded-full border-4">
-            <Image
-              src="/gigachad.jpg"
-              width={565}
-              height={601}
-              alt="Patient Profile Picture"
-              className="rounded-full"
-            />
-          </div>
+          <Image
+            src={specialist.user?.profilePictureURL}
+            // src='/gigachad.jpg'
+            width={565}
+            height={601}
+            alt='Patient Profile Picture'
+            className='w-12 h-12 rounded-full border-2 rounded-full object-cover'
+          />
           <h2>
             {specialist.user &&
               `${specialist.user.firstName} ${specialist.user.lastName}`}
@@ -41,8 +40,7 @@ export default function Header() {
       className={`flex font-[sora] items-center gap-4 duration-75 hover:scale-110 ${
         page.path === router.pathname ? "underline font-bold" : ""
       }`}
-      href={page.path}
-    >
+      href={page.path}>
       {page.title}
     </Link>
   ));
@@ -51,17 +49,16 @@ export default function Header() {
     <div
       className={
         "flex justify-between px-9 items-center bg-[#00a5ac] h-[10vh] text-white font-[Sora]"
-      }
-    >
-      <div className="flex items-center gap-9">
-        <h1 className="font-bold text-2xl">Concept 360</h1>
+      }>
+      <div className='flex items-center gap-9'>
+        <h1 className='font-bold text-2xl'>Concept 360</h1>
         <FontAwesomeIcon
-          className="text-2xl duration-75 hover:scale-110"
+          className='text-2xl duration-75 hover:scale-110'
           onClick={() => router.push("/")}
           icon={faHouse}
         />
       </div>
-      <div className="flex gap-20 items-center">{nav}</div>
+      <div className='flex gap-20 items-center'>{nav}</div>
     </div>
   );
 }
