@@ -3,12 +3,10 @@ import PasswordComponent from "@/components/PasswordComponent";
 import TextFieldComponent from "@/components/TextFieldComponent";
 import Button from "@/components/Button";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-export default function PasswordModal({
-  open,
-  setOpenNewPatientModal,
-  specialist,
-}) {
+export default function PasswordModal({ open, setOpenNewPatientModal }) {
+  const specialist = useSelector((state) => state.users.value);
   const [actualPassword, setActualPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordConfirmed, setPasswordConfirmed] = useState("");

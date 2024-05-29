@@ -95,7 +95,7 @@ export default function Programs() {
         key={i}
         {...exercise}
         icon={faXmark}
-        onIconClose={handleDelete}
+        onIconClick={handleDelete}
         setRenderTrigger={setRenderTrigger}
       />
     ));
@@ -150,7 +150,7 @@ export default function Programs() {
                   key={i}
                   {...exercise}
                   icon={faXmark}
-                  onIconClose={handleDelete}
+                  onIconClick={handleDelete}
                   setRenderTrigger={setRenderTrigger}
                 />
               );
@@ -184,7 +184,7 @@ export default function Programs() {
                   key={i}
                   {...exercise}
                   icon={faXmark}
-                  onIconClose={handleDelete}
+                  onIconClick={handleDelete}
                 />
               );
             })

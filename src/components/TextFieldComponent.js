@@ -15,6 +15,7 @@ export default function TextFieldComponent({
       value={valueGetter}
       size={size}
       className="bg-white"
+      fullWidth
     />
   );
 }

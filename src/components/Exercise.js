@@ -11,7 +11,7 @@ export default function Exercice({
   videoLink,
   _id,
   icon,
-  onIconClose,
+  onIconClick,
   setRenderTrigger,
 }) {
   const bodyMembers = bodyParts.join(", ");
@@ -47,7 +47,7 @@ export default function Exercice({
             />
             <FontAwesomeIcon
               icon={icon}
-              onClick={() => onIconClose(_id)}
+              onClick={() => onIconClick(_id)}
               className="cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 text-xl"
             />
           </>

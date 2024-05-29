@@ -51,7 +51,6 @@ export default function RoutineModal({
     ).then((r) => r.json());
     if (response.result) {
       setOpenRoutineModal(false);
-      alert("Routine ajoutée à la Base de Données");
       setRenderTrigger((prev) => !prev);
       setSelectedExercises([]);
     } else {
@@ -75,6 +74,7 @@ export default function RoutineModal({
       {...exercise}
       icon={faAdd}
       onIconClick={() => handleAddToRoutine(exercise._id)}
+      setRenderTrigger={setRenderTrigger}
     />
   ));
 
