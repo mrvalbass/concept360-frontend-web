@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   value: {},
 };
-
 export const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -16,8 +15,12 @@ export const usersSlice = createSlice({
     setUserData: (state, action) => {
       state.value = action.payload;
     },
+    updatePicture: (state, action) => {
+      state.value.user.profilePictureURL = action.payload;
+    },
   },
 });
 
-export const { ChangeConnectionState, setUserData } = usersSlice.actions;
+export const { ChangeConnectionState, setUserData, updatePicture } =
+  usersSlice.actions;
 export default usersSlice.reducer;

@@ -33,6 +33,7 @@ export default function login() {
       if (specialistResponse.specialist) {
         dispatch(ChangeConnectionState(response.user.token));
         dispatch(setUserData(specialistResponse.specialist));
+
         router.push("/");
       } else {
         alert(
@@ -46,21 +47,21 @@ export default function login() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center gap-20 bg-[linear-gradient(150deg,rgba(255,255,255,0.30)10%,rgba(0,165,172,0.30)100%,rgba(6,125,93,0.30)65%)]">
-      <div className="font-[sora] text-8xl font-semibold text-[#00a5ac]">
+    <main className='flex flex-col min-h-screen items-center justify-center gap-20 bg-[linear-gradient(150deg,rgba(255,255,255,0.30)10%,rgba(0,165,172,0.30)100%,rgba(6,125,93,0.30)65%)]'>
+      <div className='font-[sora] text-8xl font-semibold text-[#00a5ac]'>
         Concept 360
       </div>
-      <div className="flex flex-col gap-6">
+      <div className='flex flex-col gap-6'>
         <TextFieldComponent
-          id="loginEmail"
-          label="email"
+          id='loginEmail'
+          label='email'
           valueSetter={setEmail}
           valueGetter={email}
           size={"small"}
         />
         <PasswordComponent
-          id="passwordLogin"
-          label="Password"
+          id='passwordLogin'
+          label='Password'
           valueSetter={setPassword}
           valueGetter={password}
           size={"small"}
@@ -68,7 +69,7 @@ export default function login() {
         {Connection ? (
           ""
         ) : (
-          <p className=" text-red-600 text-center">
+          <p className=' text-red-600 text-center'>
             Email ou mot de passe incorrect
           </p>
         )}

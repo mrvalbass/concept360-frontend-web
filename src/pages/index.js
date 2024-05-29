@@ -110,7 +110,7 @@ export default function Home() {
               <> {specialistPatients} </>
             )}
           </Card>
-          <Card title="Mes routines" className="basis-1/2 overflow-hidden">
+          <Card title="Routines" className="basis-1/2 overflow-hidden">
             {routinesComponents}
           </Card>
         </main>

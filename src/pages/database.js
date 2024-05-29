@@ -189,7 +189,7 @@ export default function Programs() {
               );
             })
           ) : (
-            <> {routinesComponents} </>
+            <div> {routinesComponents} </div>
           )}
         </Card>
       </main>
