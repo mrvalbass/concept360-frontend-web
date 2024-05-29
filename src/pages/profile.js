@@ -1,17 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import TextFieldComponent from "@/components/TextFieldComponent";
 import PasswordModal from "@/components/PasswordModal";
-import PasswordComponent from "@/components/PasswordComponent";
 import SelectForm from "@/components/SelectForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { ChangeConnectionState, updatePicture } from "@/reducers/users";
 import Image from "next/image";
-// import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 
 export default function Others() {
   const dispatch = useDispatch();
@@ -26,6 +24,7 @@ export default function Others() {
   const [showAddSpecialist, setShowAddSpecialist] = useState(false);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const uploadPicture = async (e) => {
     setLoading(true);
     const file = e.target.files[0];
@@ -44,6 +43,7 @@ export default function Others() {
       setLoading(false);
     }
   };
+
   const updateSpecialist = async () => {
     if (!firstName && !lastName && !email) {
       setMessage("Tous les champs sont vides");
