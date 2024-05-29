@@ -84,7 +84,15 @@ export default function RoutineModal({
       onClose={() => setOpenRoutineModal((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-3/4 flex flex-col gap-5 p-5 rounded">
+      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded">
+        <button
+          className="self-end"
+          onClick={() => {
+            setOpenRoutineModal((prev) => !prev);
+          }}
+        >
+          ✕
+        </button>
         <h2 className="font-[sora] text-xl font-semibold self-center">
           Routines
         </h2>
