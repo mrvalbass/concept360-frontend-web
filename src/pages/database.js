@@ -123,25 +123,25 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
-      >
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
         <Card
-          title="Exercices"
+          title='Exercices'
           displayButton
           onButtonClick={() => setOpenExerciseModal((prev) => !prev)}
-          buttonText="Créer un exercice"
-          className="basis-1/2"
-        >
-          <Filter
-            id={"SearchByName"}
-            label="Rechercher par nom d'exercice"
-            setterTextField={setSearchExerciseName}
-            getterTextField={searchExerciseName}
-            size={"small"}
-            listToFilter={exercises}
-            category={"exercise"}
-            setterToReturn={setExerciseSearch}
-          />
+          buttonText='Créer un exercice'
+          className='basis-1/2'>
+          <div className='m-5'>
+            <Filter
+              id={"SearchByName"}
+              label="Rechercher par nom d'exercice"
+              setterTextField={setSearchExerciseName}
+              getterTextField={searchExerciseName}
+              size={"small"}
+              listToFilter={exercises}
+              category={"exercise"}
+              setterToReturn={setExerciseSearch}
+            />
+          </div>
 
           {exerciseSearch.length > 0 ? (
             exerciseSearch.map((exercise, i) => {
@@ -160,12 +160,11 @@ export default function Programs() {
           )}
         </Card>
         <Card
-          title="Routines"
+          title='Routines'
           displayButton
           onButtonClick={() => setOpenRoutineModal((prev) => !prev)}
-          buttonText="Créer une routine"
-          className="basis-1/2"
-        >
+          buttonText='Créer une routine'
+          className='basis-1/2'>
           {/* <Filter
             id={"SearchByName"}
             label="Rechercher par nom d'exercice"
