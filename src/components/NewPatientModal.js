@@ -51,7 +51,11 @@ export default function NewPatientModal({
             valueGetter={email}
             valueSetter={setEmail}
           />
-          <p className="self-center">{message}</p>
+          {!message
+            ? ""
+            : setTimeout(() => setMessage(""), 2000) && (
+                <p className="self-center">{message}</p>
+              )}
           <Button
             onClick={() => {
               SignUpPatient(firstName, lastName, email),

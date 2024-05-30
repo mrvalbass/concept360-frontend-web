@@ -79,7 +79,13 @@ export default function UpdateExerciceModal({
               multiple={true}
               valueGetter={disciplines}
               valueSetter={setDisciplines}
-              valueList={["kiné", "ostéopathe", "psychologue"]}
+              valueList={[
+                "Coaching sportif",
+                "Diététique",
+                "Kinésithérapie",
+                "Ostéopathie",
+                "Psychologie",
+              ]}
             />
             <SelectForm
               id="movement"
@@ -87,7 +93,16 @@ export default function UpdateExerciceModal({
               multiple={false}
               valueGetter={movement}
               valueSetter={setMovement}
-              valueList={["twist", "rotation", "push"]}
+              valueList={[
+                "Gait / Carry (Locomotion / Transport)",
+                "Hinge (Pliage à la charnière de hanche)",
+                "Lunge (Fente)",
+                "Pull (Tirage)",
+                "Push (Poussée)",
+                "Squat (Accroupissement)",
+                "Twist (Rotation / Anti-rotation)",
+                "Aucun (none)",
+              ]}
             />
             <SelectForm
               id="bodyParts"
@@ -96,12 +111,27 @@ export default function UpdateExerciceModal({
               valueGetter={bodyParts}
               valueSetter={setBodyParts}
               valueList={[
-                "dos",
-                "hanches",
-                "genoux",
-                "jambes",
-                "tête",
-                "cervicales",
+                "Abdomen",
+                "Avant-bras",
+                "Bras",
+                "Cervicale",
+                "Chevilles",
+                "Coudes",
+                "Cuisses",
+                "Dos",
+                "Doigts",
+                "Épaules",
+                "Genoux",
+                "Hanches",
+                "Ischio-jambiers",
+                "Lombaires",
+                "Main",
+                "Mollets",
+                "Nuque",
+                "Orteils",
+                "Poignets",
+                "Poitrine",
+                "Pieds",
               ]}
             />
             <TextFieldComponent
