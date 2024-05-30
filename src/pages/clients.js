@@ -129,17 +129,20 @@ export default function Clients() {
       !specialistPatientsData.find((element) => patient._id === element._id)
   );
 
-  const patients = patientsDataFiltered.map((patient, i) => {
-    return (
-      <Patient
-        key={i}
-        onIconClick={addToSpecialistPatients}
-        patient={patient}
-        icon={faSquarePlus}
-        className="gap-9 px-5"
-      />
-    );
-  });
+  const patients =
+    patientsDataFiltered &&
+    !!patientsDataFiltered.length &&
+    patientsDataFiltered.map((patient, i) => {
+      return (
+        <Patient
+          key={i}
+          onIconClick={addToSpecialistPatients}
+          patient={patient}
+          icon={faSquarePlus}
+          className="gap-9 px-5"
+        />
+      );
+    });
 
   const specialistPatients = specialistPatientsData
     .map((patient, i) => {
