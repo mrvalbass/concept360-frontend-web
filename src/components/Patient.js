@@ -13,7 +13,7 @@ export default function Patient({
       className={`flex justify-between items-center gap-16 py-2 px-10 border-b ${className}`}
       onClick={onClick}
     >
-      <div className="size-12">
+      <div className="size-12 shrink-0">
         <Image
           src={patient.user?.profilePictureURL}
           width={565}

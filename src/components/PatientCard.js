@@ -63,7 +63,7 @@ export default function PatientCard({
         programRoutine: programRoutineId,
       }),
     };
-    const response = await fetch(
+    await fetch(
       `http://localhost:3000/programs/deleteRoutine/${programData._id}`,
       options
     ).then((r) => r.json());
@@ -74,6 +74,7 @@ export default function PatientCard({
   const currentRoutine = program.filter((routine) => {
     return moment(routine.date).startOf("day").isSame(date);
   });
+  console.log(patientData);
 
   return (
     <div className="flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]">
