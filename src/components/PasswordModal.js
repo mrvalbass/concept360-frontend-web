@@ -14,6 +14,8 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
   const updatePassword = async () => {
     if (!actualPassword) {
       setMessage("un ou des champs sont vide(s)");
+    } else if (newPassword.length < 8) {
+      setMessage("Le mot de passe doit contenir au moins 8 caractères");
     } else if (newPassword !== passwordConfirmed) {
       setMessage("Les mots de passe ne correspondent pas");
     } else {
@@ -41,7 +43,12 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
   return (
     <Modal
       open={open}
-      onClose={() => setOpenNewPatientModal((prev) => !prev)}
+      onClose={() => {
+        setOpenNewPatientModal((prev) => !prev);
+        setActualPassword("");
+        setNewPassword("");
+        setPasswordConfirmed("");
+      }}
       className="flex justify-center items-center "
     >
       <div className="bg-white h-4/6 w-2/6 flex flex-col items-center p-5 rounded">
@@ -49,6 +56,9 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
           className="self-end"
           onClick={() => {
             setOpenNewPatientModal((prev) => !prev);
+            setActualPassword("");
+            setNewPassword("");
+            setPasswordConfirmed("");
           }}
         >
           ✕
@@ -87,7 +97,7 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
             </p>
             <PasswordComponent
               id="passwordConfirmed"
-              label="Confirmer votre Mot de passe"
+              label="Confirmer"
               valueSetter={setPasswordConfirmed}
               valueGetter={passwordConfirmed}
               size={"small"}
@@ -95,7 +105,7 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
           </div>
           {!message
             ? ""
-            : setTimeout(() => setMessage(""), 2000) && <p>{message}</p>}
+            : setTimeout(() => setMessage(""), 5000) && <p>{message}</p>}
           <Button onClick={() => updatePassword()}>Modifier</Button>
         </div>
       </div>

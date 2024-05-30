@@ -40,6 +40,23 @@ export default function Clients() {
     })();
   }, [reRender]);
 
+  const emailTest = (email) => {
+    const regex =
+      /^[a-zA-Z0-9]+([._%+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/i;
+
+    if (!regex.test(email)) {
+      return false;
+    }
+    const domain = email.split("@")[1];
+    if (domain.includes("..")) {
+      return false;
+    }
+    if (/^[-.]/.test(domain) || /[-.]$/.test(domain)) {
+      return false;
+    }
+    return true;
+  };
+
   const addToSpecialistPatients = async (patient) => {
     if (
       !specialistPatientsData.find((element) => element._id === patient._id)
@@ -77,14 +94,11 @@ export default function Clients() {
   };
 
   const SignUpPatient = async (firstName, lastName, email) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     if (!firstName || !lastName || !email) {
       setMessage("Un ou des champs sont vides");
-    }
-    // else if () {
-
-    // }
-    else {
+    } else if (!emailTest(email)) {
+      setMessage("Le format de l'email est incorrect");
+    } else {
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -154,6 +168,7 @@ export default function Clients() {
         setOpenNewPatientModal={setOpenNewPatientModal}
         SignUpPatient={SignUpPatient}
         message={message}
+        setMessage={setMessage}
       />
       <Header />
       <main

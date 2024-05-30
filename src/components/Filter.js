@@ -29,6 +29,7 @@ export default function Filter({
       );
     }
     setterToReturn(listFiltred);
+
     listFiltred.length === listToFilter.length || listFiltred.length === 0
       ? setMessage(true)
       : setMessage(false);
@@ -49,7 +50,11 @@ export default function Filter({
           icon={faMagnifyingGlass}
         />
       </div>
-      {message && <p className="text-center">Aucun élément trouvé</p>}
+      {!message
+        ? ""
+        : setTimeout(() => setMessage(""), 5000) && (
+            <p className="text-center">Aucun élément trouvé</p>
+          )}
     </div>
   );
 }

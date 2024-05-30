@@ -168,7 +168,7 @@ export default function Programs() {
             />
           </div>
 
-          {exerciseSearch.length > 0 ? (
+          {searchExerciseName ? (
             exerciseSearch.map((exercise, i) => {
               return (
                 <Exercise
