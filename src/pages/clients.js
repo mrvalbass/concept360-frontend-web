@@ -131,7 +131,7 @@ export default function Clients() {
           onIconClick={deleteFromSpecialistPatients}
           patient={patient}
           icon={faTrashCan}
-          className='gap-9 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
+          className='gap-9 px-5 cursor-pointer '
           onClick={() =>
             router.push({
               pathname: `/programs`,
