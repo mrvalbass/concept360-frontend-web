@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import UpdateExerciceModal from "./UpdateExerciseModal";
+import AlertModal from "./AlertModal";
 
 export default function Exercice({
   title,
@@ -16,6 +17,7 @@ export default function Exercice({
 }) {
   const bodyMembers = bodyParts.join(", ");
   const [openUpdateExerciseModal, setOpenUpdateExerciseModal] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   return (
     <>
@@ -30,6 +32,14 @@ export default function Exercice({
         _idUpdate={_id}
         setRenderTrigger={setRenderTrigger}
       />
+      <AlertModal
+        open={openAlertModal}
+        setOpenAlertModal={setOpenAlertModal}
+        content={`Etes-vous sûr de vouloir supprimer cet exercise ? Il sera également supprimé de toutes les routines.`}
+        onClickDelete={onIconClick}
+        _id={_id}
+      />
+
       <div className="flex justify-between gap-4 p-2 border-b items-center">
         <div className="w-full">
           <p className="flex font-semibold font-[Sora]">{title}</p>
@@ -47,7 +57,10 @@ export default function Exercice({
             />
             <FontAwesomeIcon
               icon={icon}
-              onClick={() => onIconClick(_id)}
+              onClick={
+                () => setOpenAlertModal((prev) => !prev)
+                // onIconClick(_id)
+              }
               className="cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 text-xl"
             />
           </>

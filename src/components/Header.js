@@ -18,7 +18,6 @@ export default function Header() {
         <>
           <Image
             src={specialist.user?.profilePictureURL}
-            // src='/gigachad.jpg'
             width={565}
             height={601}
             alt="Patient Profile Picture"

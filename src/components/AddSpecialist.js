@@ -70,12 +70,20 @@ export default function AddSpecialist({}) {
           multiple={false}
           valueGetter={discipline}
           valueSetter={setDiscipline}
-          valueList={["Kinésithérapie", "Ostéopathie", "Psychologie"]}
+          valueList={[
+            "Coaching sportif",
+            "Diététique",
+            "Kinésithérapie",
+            "Ostéopathie",
+            "Psychologie",
+          ]}
           size={"small"}
         />
       </div>
 
-      {!message ? "" : <p>{message}</p>}
+      {!message
+        ? ""
+        : setTimeout(() => setMessage(""), 2000) && <p>{message}</p>}
       <Button onClick={() => addNewSpecialist()}>Ajouter</Button>
     </>
   );

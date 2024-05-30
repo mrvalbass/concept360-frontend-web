@@ -19,41 +19,43 @@ export default function ExerciceModal({
     <Modal
       open={open}
       onClose={() => setOpenExerciseModal((prev) => !prev)}
-      className='flex justify-center items-center '>
-      <div className='bg-white h-3/4 w-2/4 flex flex-col items-center p-5 rounded'>
+      className="flex justify-center items-center "
+    >
+      <div className="bg-white h-3/4 w-2/4 flex flex-col items-center p-5 rounded">
         <button
-          className='self-end'
+          className="self-end"
           onClick={() => {
             setOpenExerciseModal((prev) => !prev);
-          }}>
+          }}
+        >
           ✕
         </button>
-        <h2 className='font-[sora] text-xl font-semibold'>Nouvel Exercice</h2>
-        <div className=' w-[100%] flex flex-row  justify-around '>
-          <div className=' flex flex-col gap-4'>
+        <h2 className="font-[sora] text-xl font-semibold">Nouvel Exercice</h2>
+        <div className=" w-[100%] flex flex-row  justify-around ">
+          <div className=" flex flex-col gap-4">
             <TextFieldComponent
-              id='exerciseName'
-              label='Nom de votre exercice *'
+              id="exerciseName"
+              label="Nom de votre exercice *"
               valueGetter={title}
               valueSetter={setTitle}
             />
             <SelectForm
-              id='specialities'
-              label='Spécialité *'
+              id="specialities"
+              label="Spécialité *"
               multiple={true}
               valueGetter={disciplines}
               valueSetter={setDisciplines}
               valueList={[
-                "Coach sportif.ve",
-                "Diététicien.ne",
-                "Kinésithérapeute",
-                "Ostéopathe",
-                "Psychologue",
+                "Coaching sportif",
+                "Diététique",
+                "Kinésithérapie",
+                "Ostéopathie",
+                "Psychologie",
               ]}
             />
             <SelectForm
-              id='movement'
-              label='Mouvement *'
+              id="movement"
+              label="Mouvement *"
               multiple={false}
               valueGetter={movement}
               valueSetter={setMovement}
@@ -65,12 +67,13 @@ export default function ExerciceModal({
                 "Push (Poussée)",
                 "Squat (Accroupissement)",
                 "Twist (Rotation / Anti-rotation)",
+                "Aucun (none)",
               ]}
             />
             <SelectForm
-              id='bodyParts'
-              label='
-              Membre engagé *'
+              id="bodyParts"
+              label="
+              Membre engagé *"
               multiple={true}
               valueGetter={bodyParts}
               valueSetter={setBodyParts}
@@ -99,12 +102,12 @@ export default function ExerciceModal({
               ]}
             />
             <TextFieldComponent
-              id='videoLink'
-              label='lien vers la vidéo'
+              id="videoLink"
+              label="lien vers la vidéo"
               valueGetter={videoLink}
               valueSetter={setVideoLink}
             />
-            <p className='self-center'>{message}</p>
+            <p className="self-center">{message}</p>
             <Button
               onClick={() => {
                 handleCreate(
@@ -119,7 +122,8 @@ export default function ExerciceModal({
                   setBodyParts([]),
                   setDisciplines([]),
                   setVideoLink("");
-              }}>
+              }}
+            >
               Enregistrer l'exercice
             </Button>
           </div>
