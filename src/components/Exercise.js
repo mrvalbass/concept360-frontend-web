@@ -19,6 +19,13 @@ export default function Exercice({
   const [openUpdateExerciseModal, setOpenUpdateExerciseModal] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
 
+  const handleClick = () => {
+    if (icon.iconName === "xmark") {
+      setOpenAlertModal((prev) => !prev);
+    } else {
+      onIconClick(_id);
+    }
+  };
   return (
     <>
       <UpdateExerciceModal
@@ -58,7 +65,7 @@ export default function Exercice({
             <FontAwesomeIcon
               icon={icon}
               onClick={
-                () => setOpenAlertModal((prev) => !prev)
+                () => handleClick()
                 // onIconClick(_id)
               }
               className="cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 text-xl"
