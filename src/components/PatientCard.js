@@ -80,8 +80,7 @@ export default function PatientCard({
       <div className="flex gap-10 px-10">
         <div className="flex flex-col h-full gap-5 grow py-5">
           <Patient
-            firstName={patientData.user.firstName}
-            lastName={patientData.user.lastName}
+            patient={patientData}
             className="px-0 gap-4 border-none "
             imgSize="16"
           />

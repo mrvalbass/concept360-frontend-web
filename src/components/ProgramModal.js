@@ -34,7 +34,7 @@ export default function ProgramModal({
       body: JSON.stringify({
         date: date.toString(),
         routine: routineId,
-        comment: "zboub",
+        comment: "",
       }),
     };
     const response = await fetch(
@@ -69,7 +69,15 @@ export default function ProgramModal({
       onClose={() => setOpenProgramModal(false)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-3/4 flex flex-col gap-5 p-5 rounded">
+      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded">
+        <button
+          className="self-end"
+          onClick={() => {
+            setOpenProgramModal((prev) => !prev);
+          }}
+        >
+          ✕
+        </button>
         <h2 className="font-[sora] text-xl font-semibold self-center">
           {`Ajouter un Programme - ${date.format("dddd DD MMMM YYYY")}`}
         </h2>

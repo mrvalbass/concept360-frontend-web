@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import users from "../reducers/users";
 import exercises from "../reducers/exercises";

@@ -16,15 +16,14 @@ export default function Header() {
     {
       title: (
         <>
-          <div className="w-12 rounded-full border-4">
-            <Image
-              src="/gigachad.jpg"
-              width={565}
-              height={601}
-              alt="Patient Profile Picture"
-              className="rounded-full"
-            />
-          </div>
+          <Image
+            src={specialist.user?.profilePictureURL}
+            // src='/gigachad.jpg'
+            width={565}
+            height={601}
+            alt="Patient Profile Picture"
+            className="w-12 h-12 rounded-full border-2 object-cover"
+          />
           <h2>
             {specialist.user &&
               `${specialist.user.firstName} ${specialist.user.lastName}`}
