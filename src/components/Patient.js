@@ -19,7 +19,6 @@ export default function Patient({
       onIconClick(patient);
     }
   };
-
   return (
     <>
       <AlertModal
@@ -45,9 +44,11 @@ export default function Patient({
               className={`rounded-full border-2 size-full`}
             />
           </div>
-          <p className="grow">
-            {patient.user.firstName} {patient.user.lastName}
-          </p>
+          {
+            <p className="grow">
+              {patient.user.firstName} {patient.user.lastName}
+            </p>
+          }
         </div>
         {icon && (
           <FontAwesomeIcon
