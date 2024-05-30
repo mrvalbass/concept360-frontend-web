@@ -40,23 +40,6 @@ export default function Clients() {
     })();
   }, [reRender]);
 
-  const emailTest = (email) => {
-    const regex =
-      /^[a-zA-Z0-9]+([._%+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/i;
-
-    if (!regex.test(email)) {
-      return false;
-    }
-    const domain = email.split("@")[1];
-    if (domain.includes("..")) {
-      return false;
-    }
-    if (/^[-.]/.test(domain) || /[-.]$/.test(domain)) {
-      return false;
-    }
-    return true;
-  };
-
   const addToSpecialistPatients = async (patient) => {
     if (
       !specialistPatientsData.find((element) => element._id === patient._id)
@@ -94,9 +77,12 @@ export default function Clients() {
   };
 
   const SignUpPatient = async (firstName, lastName, email) => {
+    const regex =
+      /[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
     if (!firstName || !lastName || !email) {
       setMessage("Un ou des champs sont vides");
-    } else if (!emailTest(email)) {
+    } else if (!regex.test(email)) {
       setMessage("Le format de l'email est incorrect");
     } else {
       const options = {
@@ -128,7 +114,6 @@ export default function Clients() {
     (patient) =>
       !specialistPatientsData.find((element) => patient._id === element._id)
   );
-
   const patients =
     patientsDataFiltered &&
     !!patientsDataFiltered.length &&
