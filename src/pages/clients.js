@@ -75,9 +75,14 @@ export default function Clients() {
   };
 
   const SignUpPatient = async (firstName, lastName, email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     if (!firstName || !lastName || !email) {
       setMessage("Un ou des champs sont vides");
-    } else {
+    }
+    // else if () {
+
+    // }
+    else {
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
