@@ -33,7 +33,7 @@ export default function RoutineModal({
 
   const handleAddToRoutine = async (id) => {
     const selectedExercise = await fetch(
-      `http://localhost:3000/exercises?_id=${id}`
+      `https://concept360-backend-five.vercel.app/exercises?_id=${id}`
     ).then((r) => r.json());
     selectedExercise.exercises[0].tempId = uid2(8);
     setSelectedExercises([...selectedExercises, ...selectedExercise.exercises]);
@@ -60,7 +60,7 @@ export default function RoutineModal({
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/routines/${updateData.id}/updateRoutine`,
+      `https://concept360-backend-five.vercel.app/routines/${updateData.id}/updateRoutine`,
       options
     ).then((r) => r.json());
     if (response.result) {
@@ -85,7 +85,7 @@ export default function RoutineModal({
       }),
     };
     const response = await fetch(
-      "http://localhost:3000/routines",
+      "https://concept360-backend-five.vercel.app/routines",
       options
     ).then((r) => r.json());
     if (response.result) {

@@ -28,7 +28,7 @@ export default function Programs() {
     (async () => {
       if (Object.keys(specialist).length) {
         const response = await fetch(
-          `http://localhost:3000/users/patients/specialist/${specialist._id}`
+          `https://concept360-backend-five.vercel.app/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
         setSpecialistsPatientsData(
           response.patients.sort((a, b) => {

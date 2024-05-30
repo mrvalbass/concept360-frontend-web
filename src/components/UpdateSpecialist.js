@@ -34,7 +34,7 @@ export default function UpdateSpecialist() {
           }),
         };
         const response = await fetch(
-          `http://localhost:3000/users/changeData/${specialist.user._id}`,
+          `https://concept360-backend-five.vercel.app/users/changeData/${specialist.user._id}`,
           options
         ).then((r) => r.json());
         if (response.result) {

@@ -42,7 +42,7 @@ export default function Routine({
       }),
     };
     await fetch(
-      `http://localhost:3000/programs/toggleDone/${programId}`,
+      `https://concept360-backend-five.vercel.app/programs/toggleDone/${programId}`,
       options
     ).then((r) => r.json());
     setRenderTrigger((prev) => !prev);

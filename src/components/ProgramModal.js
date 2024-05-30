@@ -20,9 +20,9 @@ export default function ProgramModal({
 
   useEffect(() => {
     (async () => {
-      const routinesData = await fetch("http://localhost:3000/routines/").then(
-        (r) => r.json()
-      );
+      const routinesData = await fetch(
+        "https://concept360-backend-five.vercel.app/routines/"
+      ).then((r) => r.json());
       setRoutines(routinesData.routines);
     })();
   }, []);
@@ -38,7 +38,7 @@ export default function ProgramModal({
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/programs/addRoutine/${programData._id}`,
+      `https://concept360-backend-five.vercel.app/programs/addRoutine/${programData._id}`,
       options
     ).then((r) => r.json());
     if (response.result) {

@@ -43,7 +43,7 @@ export default function ExerciceModal({
         }),
       };
       const response = await fetch(
-        "http://localhost:3000/exercises",
+        "https://concept360-backend-five.vercel.app/exercises",
         options
       ).then((r) => r.json());
       if (response.result) {

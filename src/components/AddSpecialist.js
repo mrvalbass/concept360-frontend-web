@@ -37,7 +37,7 @@ export default function AddSpecialist({}) {
         }),
       };
       const response = await fetch(
-        "http://localhost:3000/users/signup",
+        "https://concept360-backend-five.vercel.app/users/signup",
         options
       ).then((r) => r.json());
       if (response.result) {

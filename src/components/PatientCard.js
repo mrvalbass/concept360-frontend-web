@@ -28,7 +28,7 @@ export default function PatientCard({
       setLoading(true);
       if (patient) {
         const data = await fetch(
-          `http://localhost:3000/programs/${specialist._id}/${patient}`
+          `https://concept360-backend-five.vercel.app/programs/${specialist._id}/${patient}`
         ).then((r) => r.json());
         if (data.result) {
           setProgramData(data.userProgram);
@@ -46,7 +46,7 @@ export default function PatientCard({
     (async () => {
       if (patient) {
         const data = await fetch(
-          `http://localhost:3000/programs/${specialist._id}/${patient}`
+          `https://concept360-backend-five.vercel.app/programs/${specialist._id}/${patient}`
         ).then((r) => r.json());
         if (data.result) {
           setProgramData(data.userProgram);
@@ -65,7 +65,7 @@ export default function PatientCard({
         body: JSON.stringify({ notes: notes }),
       };
       fetch(
-        `http://localhost:3000/programs/saveNotes/${programData._id}`,
+        `https://concept360-backend-five.vercel.app/programs/saveNotes/${programData._id}`,
         options
       );
     }, 300);
@@ -99,7 +99,7 @@ export default function PatientCard({
       }),
     };
     await fetch(
-      `http://localhost:3000/programs/deleteRoutine/${programData._id}`,
+      `https://concept360-backend-five.vercel.app/programs/deleteRoutine/${programData._id}`,
       options
     ).then((r) => r.json());
     setRenderTrigger((prev) => !prev);

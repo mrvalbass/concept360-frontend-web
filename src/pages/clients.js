@@ -24,13 +24,13 @@ export default function Clients() {
   useEffect(() => {
     (async () => {
       const patientsData = await fetch(
-        "http://localhost:3000/users/patients"
+        "https://concept360-backend-five.vercel.app/users/patients"
       ).then((r) => r.json());
       setPatientsData(patientsData.patients);
 
       if (Object.keys(specialist).length !== 0) {
         const specialistPatientsData = await fetch(
-          `http://localhost:3000/users/patients/specialist/${specialist._id}`
+          `https://concept360-backend-five.vercel.app/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
         setSpecialistsPatientsData(specialistPatientsData.patients);
       } else {
@@ -52,7 +52,7 @@ export default function Clients() {
         }),
       };
       await fetch(
-        `http://localhost:3000/users/specialists/addPatient/`,
+        `https://concept360-backend-five.vercel.app/users/specialists/addPatient/`,
         data
       ).then((r) => r.json());
     }
@@ -69,7 +69,7 @@ export default function Clients() {
       }),
     };
     await fetch(
-      `http://localhost:3000/users/specialists/deletePatient/`,
+      `https://concept360-backend-five.vercel.app/users/specialists/deletePatient/`,
       data
     ).then((r) => r.json());
     setReRender(!reRender);

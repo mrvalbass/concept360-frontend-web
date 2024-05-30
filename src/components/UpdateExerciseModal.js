@@ -35,7 +35,7 @@ export default function UpdateExerciceModal({
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/exercises/${_idUpdate}`,
+      `https://concept360-backend-five.vercel.app/exercises/${_idUpdate}`,
       options
     ).then((r) => r.json());
     if (response.result) {

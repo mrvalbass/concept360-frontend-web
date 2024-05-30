@@ -24,10 +24,13 @@ export default function SpecialistMenu({
       formData.append("photoFromFront", file);
       formData.append("token", localStorage.getItem("token"));
 
-      const data = await fetch("http://localhost:3000/users/upload", {
-        method: "POST",
-        body: formData,
-      }).then((response) => response.json());
+      const data = await fetch(
+        "https://concept360-backend-five.vercel.app/users/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((response) => response.json());
 
       dispatch(updatePicture(data.url));
       setLoading(false);
