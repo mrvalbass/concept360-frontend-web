@@ -60,7 +60,7 @@ export default function Programs() {
           firstName={patient.user.firstName}
           lastName={patient.user.lastName}
           patient={patient}
-          className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+          className='gap-2 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
           onClick={() => {
             setSelectedPatient(patient._id),
               localStorage.setItem("lastCheckedPatient", patient._id);
@@ -81,11 +81,11 @@ export default function Programs() {
       />
       <Header />
       {Object.keys(specialist).length !== 0 ? (
-        <main className="flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
-          <Card title="Mes Patients" className="w-1/4 overflow-hidden">
+        <main className='flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
+          <Card title='Mes Patients' className='w-1/4 overflow-hidden'>
             <Filter
               id={"SearchByLastName"}
-              label="Rechercher par nom"
+              label='Rechercher par nom'
               setterTextField={setSearchSpecialistList}
               getterTextField={searchSpecialistList}
               size={"small"}
@@ -102,7 +102,7 @@ export default function Programs() {
                       firstName={patient.user.firstName}
                       lastName={patient.user.lastName}
                       patient={patient}
-                      className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+                      className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
                       onClick={() => {
                         setSelectedPatient(patient._id),
                           localStorage.setItem(
@@ -127,11 +127,10 @@ export default function Programs() {
             programData={programData}
             setProgramData={setProgramData}
             renderTrigger={renderTrigger}
-            setRenderTrigger={setRenderTrigger}
-          ></PatientCard>
+            setRenderTrigger={setRenderTrigger}></PatientCard>
         </main>
       ) : (
-        <Skeleton variant="rounded" animation="wave" className="m-5 !h-[99%]" />
+        <Skeleton variant='rounded' animation='wave' className='m-5 !h-[99%]' />
       )}
     </>
   );

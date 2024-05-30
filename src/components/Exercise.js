@@ -30,12 +30,12 @@ export default function Exercice({
         _idUpdate={_id}
         setRenderTrigger={setRenderTrigger}
       />
-      <div className="flex justify-between gap-4 p-2 border-b items-center">
-        <div className="w-full">
-          <p className="flex font-semibold font-[Sora]">{title}</p>
-          <div className="flex">
-            <p className="basis-1/2 text-sm">Mouvement : {movement}</p>
-            <p className="basis-1/2 text-sm">Membre engagé : {bodyMembers}</p>
+      <div className='flex justify-between gap-4 p-2 border-b items-center'>
+        <div className='w-full'>
+          <p className='flex font-semibold font-[Sora]'>{title}</p>
+          <div className='flex'>
+            <p className='basis-1/2 text-sm'>Mouvement : {movement}</p>
+            <p className='basis-1/2 text-sm'>Membre engagé : {bodyMembers}</p>
           </div>
         </div>
         {icon && (
@@ -43,12 +43,12 @@ export default function Exercice({
             <FontAwesomeIcon
               icon={faPenToSquare}
               onClick={() => setOpenUpdateExerciseModal((prev) => !prev)}
-              className="cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 text-xl"
+              className='cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 active:scale-100 text-xl'
             />
             <FontAwesomeIcon
               icon={icon}
               onClick={() => onIconClick(_id)}
-              className="cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 text-xl"
+              className='cursor-pointer text-[#00a5ac] duration-75 hover:scale-125 active:scale-100 text-xl'
             />
           </>
         )}

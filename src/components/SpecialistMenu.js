@@ -35,9 +35,9 @@ export default function SpecialistMenu({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-2/6 py-14 rounded bg-white drop-shadow-lg max-h-[99%]">
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex flex-row">
+    <div className='flex flex-col justify-center items-center w-2/6 py-14 rounded bg-white drop-shadow-lg max-h-[99%]'>
+      <div className='flex flex-col items-center gap-2'>
+        <div className='flex flex-row'>
           <Image
             src={
               loading || !specialist.user
@@ -46,50 +46,47 @@ export default function SpecialistMenu({
             }
             width={580}
             height={601}
-            alt="Specialist Profile Picture"
-            className="w-24 h-24 object-cover shadow-xl flex justify-center rounded-full"
+            alt='Specialist Profile Picture'
+            className='w-24 h-24 object-cover shadow-xl flex justify-center rounded-full'
           />
           <input
-            type="file"
-            id="upload_widget_opener"
+            type='file'
+            id='upload_widget_opener'
             style={{ display: "none" }}
             onChange={(e) => uploadPicture(e)}
           />
-          <label htmlFor="upload_widget_opener">
+          <label htmlFor='upload_widget_opener'>
             <FontAwesomeIcon
               icon={faPenToSquare}
-              className="cursor-pointer duration-75 hover:scale-125 active:scale-100 text-sm text-[#00a5ac]"
+              className='cursor-pointer duration-75 hover:scale-125 active:scale-100 text-sm text-[#00a5ac]'
             />
           </label>
         </div>
-        <h2 className="font-semibold font-[sora] text-lg ">
+        <h2 className='font-semibold font-[sora] text-2xl '>
           {specialist.user &&
             `${specialist.user.firstName} ${specialist.user.lastName}`}
         </h2>
       </div>
-      <div className="flex flex-col gap-6 pt-10 h-full">
+      <div className='flex flex-col gap-6 pt-10 h-full'>
         <Button
           onClick={() => {
             setShowAddSpecialist(false);
             setShowMyInfo(true);
-          }}
-        >
+          }}>
           Modifier mes informations
         </Button>
         <Button
           onClick={() => {
             setShowMyInfo(false);
             setShowAddSpecialist(true);
-          }}
-        >
+          }}>
           Ajouter un spécialiste
         </Button>
         <Button
           onClick={() => {
             dispatch(ChangeConnectionState());
             router.push("/login");
-          }}
-        >
+          }}>
           Déconnexion
         </Button>
       </div>
