@@ -102,6 +102,7 @@ export default function Programs() {
 
   const exercisesComponents =
     exercises &&
+    !!exercises.length &&
     exercises.map((exercise, i) => (
       <Exercise
         key={i}
@@ -114,6 +115,7 @@ export default function Programs() {
 
   const routinesComponents =
     routines &&
+    !!routines.length &&
     routines.map((routine, i) => {
       return (
         <Routine

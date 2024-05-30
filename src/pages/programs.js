@@ -47,7 +47,8 @@ export default function Programs() {
         } else if (localStorage.getItem("lastCheckedPatient")) {
           setSelectedPatient(localStorage.getItem("lastCheckedPatient"));
         } else {
-          setSelectedPatient(specialistPatientsData.patients[0]._id);
+          specialistPatientsData.patients.length &&
+            setSelectedPatient(specialistPatientsData.patients[0]._id);
         }
       }
     })();
