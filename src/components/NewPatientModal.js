@@ -8,6 +8,7 @@ export default function NewPatientModal({
   setOpenNewPatientModal,
   SignUpPatient,
   message,
+  setMessage,
 }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -53,15 +54,12 @@ export default function NewPatientModal({
           />
           {!message
             ? ""
-            : setTimeout(() => setMessage(""), 2000) && (
+            : setTimeout(() => setMessage(""), 5000) && (
                 <p className="self-center">{message}</p>
               )}
           <Button
             onClick={() => {
-              SignUpPatient(firstName, lastName, email),
-                setFirstName(""),
-                setLastName(""),
-                setEmail("");
+              SignUpPatient(firstName, lastName, email);
             }}
           >
             Créer

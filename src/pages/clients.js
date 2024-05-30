@@ -40,6 +40,23 @@ export default function Clients() {
     })();
   }, [reRender]);
 
+  const emailTest = (email) => {
+    const regex =
+      /^[a-zA-Z0-9]+([._%+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/i;
+
+    if (!regex.test(email)) {
+      return false;
+    }
+    const domain = email.split("@")[1];
+    if (domain.includes("..")) {
+      return false;
+    }
+    if (/^[-.]/.test(domain) || /[-.]$/.test(domain)) {
+      return false;
+    }
+    return true;
+  };
+
   const addToSpecialistPatients = async (patient) => {
     if (
       !specialistPatientsData.find((element) => element._id === patient._id)
@@ -77,14 +94,11 @@ export default function Clients() {
   };
 
   const SignUpPatient = async (firstName, lastName, email) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     if (!firstName || !lastName || !email) {
       setMessage("Un ou des champs sont vides");
-    }
-    // else if () {
-
-    // }
-    else {
+    } else if (!emailTest(email)) {
+      setMessage("Le format de l'email est incorrect");
+    } else {
       const options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -122,21 +136,20 @@ export default function Clients() {
         onIconClick={addToSpecialistPatients}
         patient={patient}
         icon={faSquarePlus}
-        className='gap-9 px-5'
+        className="gap-9 px-5"
       />
     );
   });
 
   const specialistPatients = specialistPatientsData
     .map((patient, i) => {
-      console.log(patient);
       return (
         <Patient
           key={i}
           onIconClick={deleteFromSpecialistPatients}
           patient={patient}
           icon={faTrashCan}
-          className='gap-9 px-5 cursor-pointer '
+          className="gap-9 px-5 cursor-pointer "
           onClick={() =>
             router.push({
               pathname: `/programs`,
@@ -155,19 +168,22 @@ export default function Clients() {
         setOpenNewPatientModal={setOpenNewPatientModal}
         SignUpPatient={SignUpPatient}
         message={message}
+        setMessage={setMessage}
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}>
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
+      >
         <Card
-          title='Patients du Cabinet'
+          title="Patients du Cabinet"
           displayButton
           onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
-          buttonText='Ajouter un patient'
-          className='basis-1/2'>
+          buttonText="Ajouter un patient"
+          className="basis-1/2"
+        >
           <Filter
             id={"SearchByLastName"}
-            label='Rechercher par nom'
+            label="Rechercher par nom"
             setterTextField={setSearchName}
             getterTextField={searchName}
             size={"small"}
@@ -190,10 +206,10 @@ export default function Clients() {
             <> {patients} </>
           )}
         </Card>
-        <Card title='Mes Patients' className='basis-1/2 overflow-hidden'>
+        <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
           <Filter
             id={"SearchByLastName"}
-            label='Rechercher par nom'
+            label="Rechercher par nom"
             setterTextField={setSearchSpecialistList}
             getterTextField={searchSpecialistList}
             size={"small"}

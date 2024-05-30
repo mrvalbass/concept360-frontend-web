@@ -10,9 +10,28 @@ export default function AddSpecialist({}) {
   const [discipline, setDiscipline] = useState("");
   const [message, setMessage] = useState("");
 
+  const emailTest = (email) => {
+    const regex =
+      /^[a-zA-Z0-9]+([._%+-][a-zA-Z0-9]+)*@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*\.[a-zA-Z]{2,}$/i;
+
+    if (!regex.test(email)) {
+      return false;
+    }
+    const domain = email.split("@")[1];
+    if (domain.includes("..")) {
+      return false;
+    }
+    if (/^[-.]/.test(domain) || /[-.]$/.test(domain)) {
+      return false;
+    }
+    return true;
+  };
+
   const addNewSpecialist = async () => {
     if (!firstName || !lastName || !email || !discipline) {
       setMessage("Un ou des champs sont vide(s)");
+    } else if (!emailTest(email)) {
+      setMessage("Le format de l'email est incorrect");
     } else {
       const options = {
         method: "POST",
@@ -83,7 +102,7 @@ export default function AddSpecialist({}) {
 
       {!message
         ? ""
-        : setTimeout(() => setMessage(""), 2000) && <p>{message}</p>}
+        : setTimeout(() => setMessage(""), 5000) && <p>{message}</p>}
       <Button onClick={() => addNewSpecialist()}>Ajouter</Button>
     </>
   );
