@@ -4,6 +4,7 @@ import Patient from "@/components/Patient";
 import Filter from "@/components/Filter";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import { faSquarePlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import NewPatientModal from "@/components/NewPatientModal";
@@ -19,6 +20,7 @@ export default function Clients() {
   const [allPatientSearch, setAllPatientSearch] = useState([]);
   const [searchSpecialistList, setSearchSpecialistList] = useState("");
   const [specialistSearch, setSpecialistSearch] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -120,6 +122,7 @@ export default function Clients() {
         onIconClick={addToSpecialistPatients}
         patient={patient}
         icon={faSquarePlus}
+        className='gap-9 px-5'
       />
     );
   });
@@ -133,6 +136,13 @@ export default function Clients() {
           onIconClick={deleteFromSpecialistPatients}
           patient={patient}
           icon={faTrashCan}
+          className='gap-9 px-5 cursor-pointer '
+          onClick={() =>
+            router.push({
+              pathname: `/programs`,
+              query: { patient: patient._id },
+            })
+          }
         />
       );
     })
@@ -148,18 +158,16 @@ export default function Clients() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
-      >
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}>
         <Card
-          title="Patients du Cabinet"
+          title='Patients du Cabinet'
           displayButton
           onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
-          buttonText="Ajouter un patient"
-          className="basis-1/2"
-        >
+          buttonText='Ajouter un patient'
+          className='basis-1/2'>
           <Filter
             id={"SearchByLastName"}
-            label="Rechercher par nom"
+            label='Rechercher par nom'
             setterTextField={setSearchName}
             getterTextField={searchName}
             size={"small"}
@@ -182,19 +190,17 @@ export default function Clients() {
             <> {patients} </>
           )}
         </Card>
-        <Card title="Mes Patients" className="basis-1/2">
-          <div className="m-5">
-            <Filter
-              id={"SearchByLastName"}
-              label="Rechercher par nom"
-              setterTextField={setSearchSpecialistList}
-              getterTextField={searchSpecialistList}
-              size={"small"}
-              listToFilter={specialistPatientsData}
-              category={"user"}
-              setterToReturn={setSpecialistSearch}
-            />
-          </div>
+        <Card title='Mes Patients' className='basis-1/2 overflow-hidden'>
+          <Filter
+            id={"SearchByLastName"}
+            label='Rechercher par nom'
+            setterTextField={setSearchSpecialistList}
+            getterTextField={searchSpecialistList}
+            size={"small"}
+            listToFilter={specialistPatientsData}
+            category={"user"}
+            setterToReturn={setSpecialistSearch}
+          />
           {specialistSearch.length > 0 ? (
             specialistSearch
               .map((patient, i) => {
