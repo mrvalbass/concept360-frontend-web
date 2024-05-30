@@ -15,7 +15,6 @@ export default function Clients() {
   const [patientsData, setPatientsData] = useState([]);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [reRender, setReRender] = useState(false);
-  const [message, setMessage] = useState("");
   const [searchName, setSearchName] = useState("");
   const [allPatientSearch, setAllPatientSearch] = useState([]);
   const [searchSpecialistList, setSearchSpecialistList] = useState("");
@@ -76,40 +75,6 @@ export default function Clients() {
     setReRender(!reRender);
   };
 
-  const SignUpPatient = async (firstName, lastName, email) => {
-    const regex =
-      /[a-z0-9!#$%&'+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'+/=?^_`{|}~-]+)@(?:[a-z0-9](?:[a-z0-9-][a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
-    if (!firstName || !lastName || !email) {
-      setMessage("Un ou des champs sont vides");
-    } else if (!regex.test(email)) {
-      setMessage("Le format de l'email est incorrect");
-    } else {
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password: "Concept360",
-          state: "patient",
-        }),
-      };
-      const response = await fetch(
-        "http://localhost:3000/users/signup",
-        options
-      ).then((r) => r.json());
-
-      if (response.error === "User already exist") {
-        setMessage("Le patient existe déjà");
-      } else if (response.result) {
-        setMessage("Le patient a bien été créé");
-      }
-    }
-    setReRender(!reRender);
-  };
-
   const patientsDataFiltered = patientsData.filter(
     (patient) =>
       !specialistPatientsData.find((element) => patient._id === element._id)
@@ -154,19 +119,17 @@ export default function Clients() {
       <NewPatientModal
         open={openNewPatientModal}
         setOpenNewPatientModal={setOpenNewPatientModal}
-        SignUpPatient={SignUpPatient}
-        message={message}
-        setMessage={setMessage}
+        setReRender={setReRender}
       />
       <Header />
       <main
         className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]`}
       >
         <Card
-          title="Patients du Cabinet"
+          title="Tous les patients"
           displayButton
           onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
-          buttonText="Ajouter un patient"
+          buttonText="Créer un patient"
           className="basis-1/2"
         >
           <Filter
@@ -194,7 +157,7 @@ export default function Clients() {
             <> {patients} </>
           )}
         </Card>
-        <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
+        <Card title="Mes patients" className="basis-1/2 overflow-hidden">
           <Filter
             id={"SearchByLastName"}
             label="Rechercher par nom"

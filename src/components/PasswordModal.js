@@ -39,7 +39,6 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
     }
   };
 
-  console.log(specialist);
   return (
     <Modal
       open={open}
@@ -51,9 +50,9 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
       }}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-4/6 w-2/6 flex flex-col items-center p-5 rounded">
+      <div className="bg-white flex flex-col items-center px-32 py-10 rounded gap-6 relative">
         <button
-          className="self-end"
+          className="absolute top-3 right-5"
           onClick={() => {
             setOpenNewPatientModal((prev) => !prev);
             setActualPassword("");
@@ -63,10 +62,10 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
         >
           ✕
         </button>
-        <h2 className="font-[sora] text-xl font-semibold pb-10">
+        <h2 className="font-[sora] text-xl font-semibold">
           Modifier mon mot de passe
         </h2>
-        <div className=" w-[100%] flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-6">
           <div>
             <p className="font-semibold font-[sora] text-sm pb-2">
               Mot de passe actuel *

@@ -21,6 +21,7 @@ export default function Routine({
   onRemove,
   onAdd,
   setRenderTrigger,
+  alertMessage,
 }) {
   const [done, setDone] = useState(checkbox);
   const [showModal, setShowModal] = useState(false);
@@ -50,16 +51,13 @@ export default function Routine({
   const exercisesList =
     exercises &&
     exercises.map((exercise, i) => (
-      <div key={i} className=" flex items-center ">
-        <p className="basis-3/5 font-[500] text-base">
-          {" "}
-          - {`${exercise.exercise.title}`}
-        </p>
-        <div className="basis-1/5">
-          <p className="text-sm">Séries : {exercise.sets}</p>
+      <div key={i} className=" flex items-center gap-2">
+        <p className="basis-1/2 font-[500]">{`${exercise.exercise.title}`}</p>
+        <div className=" bg-[#123a5f] text-center rounded-md px-2">
+          <p className="text-white text-sm">Séries : {exercise.sets}</p>
         </div>
-        <div className="basis-1/5">
-          <p className="text-sm">Répétitions : {exercise.reps}</p>
+        <div className=" bg-[#00a5ac] text-center rounded-md px-2">
+          <p className=" text-white text-sm">Répétitions : {exercise.reps}</p>
         </div>
       </div>
     ));
@@ -76,12 +74,12 @@ export default function Routine({
       <AlertModal
         open={showAlertModal}
         setOpenAlertModal={setShowAlertModal}
-        content={`Êtes-vous sûr de vouloir supprimer cette routine ? Elle sera également supprimée de tous les programmes.`}
+        content={alertMessage}
         onClickDelete={onRemove}
       />
 
-      <div className="border-b flex p-2 m-2 gap-4">
-        <div className="grow flex flex-col">{exercisesList}</div>
+      <div className="border-b flex p-4 m-2 gap-4">
+        <div className="grow flex flex-col gap-2">{exercisesList}</div>
         <div className="flex items-center gap-4 text-[#00a5ac] ">
           {checkbox !== undefined && (
             <input

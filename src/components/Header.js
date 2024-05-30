@@ -10,7 +10,7 @@ export default function Header() {
   const specialist = useSelector((state) => state.users.value);
 
   const pages = [
-    { title: "Programmes", path: "/programs" },
+    { title: "Programmes", path: "/" },
     { title: "Mes Patients", path: "/clients" },
     { title: "Base de Données", path: "/database" },
     {
@@ -52,12 +52,9 @@ export default function Header() {
       }
     >
       <div className="flex items-center gap-9">
-        <h1 className="font-bold text-2xl">Concept 360</h1>
-        <FontAwesomeIcon
-          className="text-2xl duration-75 hover:scale-110"
-          onClick={() => router.push("/")}
-          icon={faHouse}
-        />
+        <Link href="/" className="font-bold text-2xl">
+          Concept 360
+        </Link>
       </div>
       <div className="flex gap-20 items-center">{nav}</div>
     </div>

@@ -69,9 +69,9 @@ export default function ProgramModal({
       onClose={() => setOpenProgramModal(false)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded">
+      <div className="bg-white min-w-[50vw] min-h-[50vh] max-h-[80vh] flex flex-col p-5 rounded relative">
         <button
-          className="self-end"
+          className="absolute top-2 right-3"
           onClick={() => {
             setOpenProgramModal((prev) => !prev);
           }}
@@ -81,10 +81,10 @@ export default function ProgramModal({
         <h2 className="font-[sora] text-xl font-semibold self-center">
           {`Ajouter un Programme - ${date.format("dddd DD MMMM YYYY")}`}
         </h2>
-        <div className="flex gap-5 grow overflow-y-hidden">
+        <div className="flex gap-5 grow overflow-y-hidden justify-center">
           <Card
             title="Routines"
-            className="basis-full"
+            className="basis-full max-w-[50vw] drop-shadow-none"
             displayButton
             buttonText="Créer une Routine"
             onButtonClick={() => router.push("/database")}

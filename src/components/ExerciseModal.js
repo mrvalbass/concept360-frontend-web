@@ -7,23 +7,62 @@ import SelectForm from "./SelectForm";
 export default function ExerciceModal({
   open,
   setOpenExerciseModal,
-  handleCreate,
-  message,
+  setRenderTrigger,
 }) {
   const [title, setTitle] = useState("");
   const [movement, setMovement] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
   const [disciplines, setDisciplines] = useState([]);
   const [videoLink, setVideoLink] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleCreate = async (
+    title,
+    movement,
+    bodyParts,
+    disciplines,
+    videoLinkExercice
+  ) => {
+    if (!title || !movement || !bodyParts || !disciplines) {
+      setMessage("Un ou des champs sont vides");
+    } else {
+      let videoLink;
+      const token = localStorage.getItem("token");
+      videoLinkExercice ? (videoLink = videoLinkExercice) : (videoLink = "");
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          creatorToken: token,
+          title,
+          movement,
+          bodyParts,
+          disciplines,
+          videoLink,
+          description: "",
+        }),
+      };
+      const response = await fetch(
+        "http://localhost:3000/exercises",
+        options
+      ).then((r) => r.json());
+      if (response.result) {
+        setOpenExerciseModal(false);
+      }
+    }
+
+    setRenderTrigger((prev) => !prev);
+  };
+
   return (
     <Modal
       open={open}
       onClose={() => setOpenExerciseModal((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-2/4 flex flex-col items-center p-5 rounded">
+      <div className="bg-white w-[25%] flex flex-col items-center p-10 rounded relative gap-6">
         <button
-          className="self-end"
+          className="absolute top-2 right-3"
           onClick={() => {
             setOpenExerciseModal((prev) => !prev);
           }}
@@ -31,103 +70,95 @@ export default function ExerciceModal({
           ✕
         </button>
         <h2 className="font-[sora] text-xl font-semibold">Nouvel Exercice</h2>
-        <div className=" w-[100%] flex flex-row  justify-around ">
-          <div className=" flex flex-col gap-4">
-            <TextFieldComponent
-              id="exerciseName"
-              label="Nom de votre exercice *"
-              valueGetter={title}
-              valueSetter={setTitle}
-            />
-            <SelectForm
-              id="specialities"
-              label="Spécialité *"
-              multiple={true}
-              valueGetter={disciplines}
-              valueSetter={setDisciplines}
-              valueList={[
-                "Coaching sportif",
-                "Diététique",
-                "Kinésithérapie",
-                "Ostéopathie",
-                "Psychologie",
-              ]}
-            />
-            <SelectForm
-              id="movement"
-              label="Mouvement *"
-              multiple={false}
-              valueGetter={movement}
-              valueSetter={setMovement}
-              valueList={[
-                "Gait / Carry (Locomotion / Transport)",
-                "Hinge (Pliage à la charnière de hanche)",
-                "Lunge (Fente)",
-                "Pull (Tirage)",
-                "Push (Poussée)",
-                "Squat (Accroupissement)",
-                "Twist (Rotation / Anti-rotation)",
-                "Aucun (none)",
-              ]}
-            />
-            <SelectForm
-              id="bodyParts"
-              label="
+        <div className=" flex flex-col w-full gap-4">
+          <TextFieldComponent
+            id="exerciseName"
+            label="Nom de votre exercice *"
+            valueGetter={title}
+            valueSetter={setTitle}
+          />
+          <SelectForm
+            id="specialities"
+            label="Spécialité *"
+            multiple={true}
+            valueGetter={disciplines}
+            valueSetter={setDisciplines}
+            valueList={[
+              "Coaching sportif",
+              "Diététique",
+              "Kinésithérapie",
+              "Ostéopathie",
+              "Psychologie",
+            ]}
+          />
+          <SelectForm
+            id="movement"
+            label="Mouvement *"
+            multiple={false}
+            valueGetter={movement}
+            valueSetter={setMovement}
+            valueList={[
+              "Gait / Carry (Locomotion / Transport)",
+              "Hinge (Pliage à la charnière de hanche)",
+              "Lunge (Fente)",
+              "Pull (Tirage)",
+              "Push (Poussée)",
+              "Squat (Accroupissement)",
+              "Twist (Rotation / Anti-rotation)",
+              "Aucun (none)",
+            ]}
+          />
+          <SelectForm
+            id="bodyParts"
+            label="
               Membre engagé *"
-              multiple={true}
-              valueGetter={bodyParts}
-              valueSetter={setBodyParts}
-              valueList={[
-                "Abdomen",
-                "Avant-bras",
-                "Bras",
-                "Cervicale",
-                "Chevilles",
-                "Coudes",
-                "Cuisses",
-                "Dos",
-                "Doigts",
-                "Épaules",
-                "Genoux",
-                "Hanches",
-                "Ischio-jambiers",
-                "Lombaires",
-                "Main",
-                "Mollets",
-                "Nuque",
-                "Orteils",
-                "Poignets",
-                "Poitrine",
-                "Pieds",
-              ]}
-            />
-            <TextFieldComponent
-              id="videoLink"
-              label="lien vers la vidéo"
-              valueGetter={videoLink}
-              valueSetter={setVideoLink}
-            />
-            <p className="self-center">{message}</p>
-            <Button
-              onClick={() => {
-                handleCreate(
-                  title,
-                  movement,
-                  bodyParts,
-                  disciplines,
-                  videoLink
-                ),
-                  setTitle(""),
-                  setMovement(""),
-                  setBodyParts([]),
-                  setDisciplines([]),
-                  setVideoLink("");
-              }}
-            >
-              Enregistrer l'exercice
-            </Button>
-          </div>
+            multiple={true}
+            valueGetter={bodyParts}
+            valueSetter={setBodyParts}
+            valueList={[
+              "Abdomen",
+              "Avant-bras",
+              "Bras",
+              "Cervicale",
+              "Chevilles",
+              "Coudes",
+              "Cuisses",
+              "Dos",
+              "Doigts",
+              "Épaules",
+              "Genoux",
+              "Hanches",
+              "Ischio-jambiers",
+              "Lombaires",
+              "Main",
+              "Mollets",
+              "Nuque",
+              "Orteils",
+              "Poignets",
+              "Poitrine",
+              "Pieds",
+            ]}
+          />
+          <TextFieldComponent
+            id="videoLink"
+            label="lien vers la vidéo"
+            valueGetter={videoLink}
+            valueSetter={setVideoLink}
+          />
         </div>
+        <p>{message}</p>
+        <Button
+          onClick={() => {
+            handleCreate(title, movement, bodyParts, disciplines, videoLink),
+              setTitle(""),
+              setMovement(""),
+              setBodyParts([]),
+              setDisciplines([]),
+              setVideoLink("");
+          }}
+        >
+          Enregistrer
+        </Button>
       </div>
     </Modal>
   );

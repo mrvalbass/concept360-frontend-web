@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import uid2 from "uid2";
 
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "@mui/material";
 import Card from "@/components/Card";
 import Exercise from "@/components/Exercise";
@@ -117,7 +117,7 @@ export default function RoutineModal({
       <Exercise
         key={i}
         {...exercise}
-        icon={faAdd}
+        icon={faSquarePlus}
         onIconClick={() => handleAddToRoutine(exercise._id)}
         setRenderTrigger={setRenderTrigger}
       />
@@ -129,9 +129,9 @@ export default function RoutineModal({
       onClose={() => setOpen((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded">
+      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded relative">
         <button
-          className="self-end"
+          className="absolute top-2 right-3"
           onClick={() => {
             setOpen((prev) => !prev);
           }}
