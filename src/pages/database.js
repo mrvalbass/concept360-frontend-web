@@ -17,8 +17,6 @@ export default function Programs() {
   const [message, setMessage] = useState("");
   const [searchExerciseName, setSearchExerciseName] = useState("");
   const [exerciseSearch, setExerciseSearch] = useState([]);
-  const [searchRoutineName, setSearchRoutineName] = useState("");
-  const [routineSearch, setRoutineSearch] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +32,7 @@ export default function Programs() {
     })();
   }, [renderTrigger]);
 
-  const handleDelete = async (id) => {
+  const handleDeleteExercice = async (id) => {
     const deleteResponse = await fetch(
       `http://localhost:3000/exercises/${id}`,
       {
@@ -42,6 +40,20 @@ export default function Programs() {
         headers: { "Content-Type": "application/json" },
       }
     ).then((response) => response.json());
+
+    if (deleteResponse.result) {
+      setRenderTrigger((prev) => !prev);
+    } else {
+      console.error("Error deleting exercise:", deleteResponse.message);
+    }
+  };
+
+  const handleDeleteRoutine = async (id) => {
+    const deleteResponse = await fetch(`http://localhost:3000/routines/`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ routine: id }),
+    }).then((response) => response.json());
 
     if (deleteResponse.result) {
       setRenderTrigger((prev) => !prev);
@@ -95,7 +107,7 @@ export default function Programs() {
         key={i}
         {...exercise}
         icon={faXmark}
-        onIconClick={handleDelete}
+        onIconClick={handleDeleteExercice}
         setRenderTrigger={setRenderTrigger}
       />
     ));
@@ -103,17 +115,28 @@ export default function Programs() {
   const routinesComponents =
     routines &&
     routines.map((routine, i) => {
-      return <Routine key={i} {...routine} editable />;
+      return (
+        <Routine
+          key={i}
+          {...routine}
+          update
+          allExercisesData={exercises}
+          setRenderTrigger={setRenderTrigger}
+          remove
+          onRemove={() => handleDeleteRoutine(routine._id)}
+        />
+      );
     });
 
   return (
     <>
       <RoutineModal
         open={openRoutineModal}
-        setOpenRoutineModal={setOpenRoutineModal}
+        setOpen={setOpenRoutineModal}
         setRenderTrigger={setRenderTrigger}
         exercisesData={exercises}
         message={message}
+        updateId
       />
       <ExerciseModal
         open={openExerciseModal}
@@ -123,14 +146,16 @@ export default function Programs() {
       />
       <Header />
       <main
-        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
+        className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
+      >
         <Card
-          title='Exercices'
+          title="Exercices"
           displayButton
           onButtonClick={() => setOpenExerciseModal((prev) => !prev)}
-          buttonText='Créer un exercice'
-          className='basis-1/2'>
-          <div className='m-5'>
+          buttonText="Créer un exercice"
+          className="basis-1/2"
+        >
+          <div className="m-5">
             <Filter
               id={"SearchByName"}
               label="Rechercher par nom d'exercice"
@@ -160,36 +185,13 @@ export default function Programs() {
           )}
         </Card>
         <Card
-          title='Routines'
+          title="Routines"
           displayButton
           onButtonClick={() => setOpenRoutineModal((prev) => !prev)}
-          buttonText='Créer une routine'
-          className='basis-1/2'>
-          {/* <Filter
-            id={"SearchByName"}
-            label="Rechercher par nom d'exercice"
-            setterTextField={setSearchRoutineName}
-            getterTextField={searchRoutineName}
-            size={"small"}
-            listToFilter={routines}
-            category={"routine"}
-            setterToReturn={setRoutineSearch}
-          /> */}
-
-          {routineSearch.length > 0 ? (
-            routineSearch.map((exercise, i) => {
-              return (
-                <Exercise
-                  key={i}
-                  {...exercise}
-                  icon={faXmark}
-                  onIconClick={handleDelete}
-                />
-              );
-            })
-          ) : (
-            <div> {routinesComponents} </div>
-          )}
+          buttonText="Créer une routine"
+          className="basis-1/2"
+        >
+          <div> {routinesComponents} </div>
         </Card>
       </main>
     </>

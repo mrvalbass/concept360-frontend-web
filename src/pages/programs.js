@@ -1,21 +1,22 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+
+import moment from "moment";
+
+import { Skeleton } from "@mui/material";
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Patient from "@/components/Patient";
 import PatientCard from "@/components/PatientCard";
 import ProgramModal from "@/components/ProgramModal";
 import Filter from "@/components/Filter";
-import { useRouter } from "next/router";
-
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import moment from "moment";
-import { Skeleton } from "@mui/material";
 
 export default function Programs() {
   const specialist = useSelector((state) => state.users.value);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [searchSpecialistList, setSearchSpecialistList] = useState("");
-  const [specialistSearch, setSpecialistSearch] = useState([]);
+  const [specialistSearchData, setSpecialistSearchData] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState();
   const [openProgramModal, setOpenProgramModal] = useState(false);
   const [programData, setProgramData] = useState({});
@@ -52,23 +53,37 @@ export default function Programs() {
     })();
   }, [specialist, renderTrigger]);
 
-  const specialistPatients = specialistPatientsData
-    .map((patient, i) => {
-      return (
-        <Patient
-          key={i}
-          firstName={patient.user.firstName}
-          lastName={patient.user.lastName}
-          patient={patient}
-          className='gap-2 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
-          onClick={() => {
-            setSelectedPatient(patient._id),
-              localStorage.setItem("lastCheckedPatient", patient._id);
-          }}
-        />
-      );
-    })
-    .reverse();
+  const specialistPatients = specialistPatientsData.map((patient, i) => {
+    return (
+      <Patient
+        key={i}
+        firstName={patient.user.firstName}
+        lastName={patient.user.lastName}
+        patient={patient}
+        className="gap-2 cursor-pointer duration-100 hover:scale-95 active:scale-100"
+        onClick={() => {
+          setSelectedPatient(patient._id),
+            localStorage.setItem("lastCheckedPatient", patient._id);
+        }}
+      />
+    );
+  });
+
+  const specialistSearch = specialistSearchData.map((patient, i) => {
+    return (
+      <Patient
+        key={i}
+        firstName={patient.user.firstName}
+        lastName={patient.user.lastName}
+        patient={patient}
+        className="gap-4 cursor-pointer duration-100 hover:scale-95 active:scale-100"
+        onClick={() => {
+          setSelectedPatient(patient._id),
+            localStorage.setItem("lastCheckedPatient", patient._id);
+        }}
+      />
+    );
+  });
 
   return (
     <>
@@ -81,39 +96,20 @@ export default function Programs() {
       />
       <Header />
       {Object.keys(specialist).length !== 0 ? (
-        <main className='flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
-          <Card title='Mes Patients' className='w-1/4 overflow-hidden'>
+        <main className="flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
+          <Card title="Mes Patients" className="w-1/4 overflow-hidden">
             <Filter
               id={"SearchByLastName"}
-              label='Rechercher par nom'
+              label="Rechercher par nom"
               setterTextField={setSearchSpecialistList}
               getterTextField={searchSpecialistList}
               size={"small"}
               listToFilter={specialistPatientsData}
               category={"user"}
-              setterToReturn={setSpecialistSearch}
+              setterToReturn={setSpecialistSearchData}
             />
-            {specialistSearch.length > 0 ? (
-              specialistSearch
-                .map((patient, i) => {
-                  return (
-                    <Patient
-                      key={i}
-                      firstName={patient.user.firstName}
-                      lastName={patient.user.lastName}
-                      patient={patient}
-                      className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
-                      onClick={() => {
-                        setSelectedPatient(patient._id),
-                          localStorage.setItem(
-                            "lastCheckedPatient",
-                            patient._id
-                          );
-                      }}
-                    />
-                  );
-                })
-                .reverse()
+            {specialistSearchData.length > 0 ? (
+              <>{specialistSearch}</>
             ) : (
               <> {specialistPatients} </>
             )}
@@ -127,10 +123,11 @@ export default function Programs() {
             programData={programData}
             setProgramData={setProgramData}
             renderTrigger={renderTrigger}
-            setRenderTrigger={setRenderTrigger}></PatientCard>
+            setRenderTrigger={setRenderTrigger}
+          ></PatientCard>
         </main>
       ) : (
-        <Skeleton variant='rounded' animation='wave' className='m-5 !h-[99%]' />
+        <Skeleton variant="rounded" animation="wave" className="m-5 !h-[99%]" />
       )}
     </>
   );
