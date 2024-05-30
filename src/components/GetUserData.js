@@ -12,7 +12,7 @@ export default function GetUserData() {
       const token = localStorage.getItem("token");
       if (token) {
         const data = await fetch(
-          `http://localhost:3000/users/specialists/token/${token}`
+          `https://concept360-backend-five.vercel.app/users/specialists/token/${token}`
         ).then((r) => r.json());
         dispatch(setUserData(data.specialist));
       } else {

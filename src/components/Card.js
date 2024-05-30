@@ -10,13 +10,14 @@ export default function Card({
 }) {
   return (
     <div
-      className={`flex justify-between flex-col bg-white p-2 rounded shadow-md max-h-[99%] ${className}`}>
-      <h2 className='text-center font-semibold font-[sora] text-lg border-b-2 p-2 m-2'>
+      className={`flex justify-between flex-col bg-white p-2 rounded drop-shadow-xl max-h-[99%] ${className}`}
+    >
+      <h2 className="text-center font-semibold font-[sora] text-lg border-b-2 p-2 m-2">
         {title}
       </h2>
-      <div className='grow overflow-y-auto px-2'>{children}</div>
+      <div className="grow overflow-y-auto px-2">{children}</div>
       {displayButton && (
-        <Button className={"self-end mt-5"} onClick={onButtonClick}>
+        <Button className={"self-end m-3 mt-5"} onClick={onButtonClick}>
           {buttonText}
         </Button>
       )}
