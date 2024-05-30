@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import RoutineModal from "./RoutineModal";
+import AlertModal from "./AlertModal";
 
 export default function Routine({
   _id,
@@ -23,6 +24,7 @@ export default function Routine({
 }) {
   const [done, setDone] = useState(checkbox);
   const [showModal, setShowModal] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
 
   useEffect(() => {
     setDone(checkbox);
@@ -71,6 +73,13 @@ export default function Routine({
         updateData={exercises ? { exercises, id: _id } : undefined}
         setRenderTrigger={setRenderTrigger}
       />
+      <AlertModal
+        open={showAlertModal}
+        setOpenAlertModal={setShowAlertModal}
+        content={`Êtes-vous sûr de vouloir supprimer cette routine ? Elle sera également supprimée de tous les programmes.`}
+        onClickDelete={onRemove}
+      />
+
       <div className="border-b flex p-2 m-2 gap-4">
         <div className="grow flex flex-col">{exercisesList}</div>
         <div className="flex items-center gap-4 text-[#00a5ac] ">
@@ -100,7 +109,7 @@ export default function Routine({
             <FontAwesomeIcon
               icon={faXmark}
               className="cursor-pointer duration-75 hover:scale-125 active:scale-100 text-xl"
-              onClick={onRemove}
+              onClick={() => setShowAlertModal(true)}
             />
           )}
         </div>
