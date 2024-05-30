@@ -8,9 +8,11 @@ export default function ExerciceRoutine({
   onIconClick,
   tempId,
   setSelectedExercises,
+  updateReps,
+  updateSets,
 }) {
-  const [sets, setSets] = useState(0);
-  const [reps, setReps] = useState(0);
+  const [sets, setSets] = useState(updateSets ? updateSets : 0);
+  const [reps, setReps] = useState(updateReps ? updateReps : 0);
 
   return (
     <div className="flex flex-col gap-4 p-2 border-b">

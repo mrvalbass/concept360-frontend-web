@@ -149,7 +149,7 @@ export default function Clients() {
           onIconClick={deleteFromSpecialistPatients}
           patient={patient}
           icon={faTrashCan}
-          className="gap-9 px-5 cursor-pointer "
+          className="gap-9 px-5 cursor-pointer duration-75 hover:scale-95 active:scale-100"
           onClick={() =>
             router.push({
               pathname: `/programs`,
@@ -225,7 +225,14 @@ export default function Clients() {
                     key={i}
                     onIconClick={deleteFromSpecialistPatients}
                     patient={patient}
+                    className="gap-9 px-5 cursor-pointer duration-75 hover:scale-95 active:scale-100"
                     icon={faTrashCan}
+                    onClick={() =>
+                      router.push({
+                        pathname: `/programs`,
+                        query: { patient: patient._id },
+                      })
+                    }
                   />
                 );
               })
