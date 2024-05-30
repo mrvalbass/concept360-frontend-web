@@ -124,6 +124,7 @@ export default function Clients() {
 
   const specialistPatients = specialistPatientsData
     .map((patient, i) => {
+      console.log(patient);
       return (
         <Patient
           key={i}
@@ -174,9 +175,7 @@ export default function Clients() {
               return (
                 <Patient
                   key={i}
-                  firstName={patient.user.firstName}
-                  lastName={patient.user.lastName}
-                  function={addToSpecialistPatients}
+                  onIconClick={addToSpecialistPatients}
                   patient={patient}
                   icon={faSquarePlus}
                 />
@@ -203,9 +202,7 @@ export default function Clients() {
                 return (
                   <Patient
                     key={i}
-                    firstName={patient.user.firstName}
-                    lastName={patient.user.lastName}
-                    function={deleteFromSpecialistPatients}
+                    onIconClick={deleteFromSpecialistPatients}
                     patient={patient}
                     icon={faTrashCan}
                   />
