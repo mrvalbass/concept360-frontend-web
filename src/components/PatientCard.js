@@ -52,7 +52,7 @@ export default function PatientCard({
 
   if (Object.keys(programData).length === 0)
     return (
-      <Skeleton variant="rounded" animation="wave" className="grow !h-[99%]" />
+      <Skeleton variant='rounded' animation='wave' className='grow !h-[99%]' />
     );
 
   const handleRemove = async (programRoutineId) => {
@@ -77,35 +77,33 @@ export default function PatientCard({
   console.log(patientData);
 
   return (
-    <div className="flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]">
-      <div className="flex gap-10 px-10">
-        <div className="flex flex-col h-full gap-5 grow py-5">
+    <div className='flex flex-col rounded grow p-5 pt-0 bg-white drop-shadow-lg max-h-[99%]'>
+      <div className='flex gap-10 px-10'>
+        <div className='flex flex-col h-full gap-5 grow py-5'>
           <Patient
             patient={patientData}
-            className="px-0 gap-4 border-none "
-            imgSize="16"
+            className='px-0 gap-4 border-none '
+            imgSize='16'
           />
           <textarea
-            className="border-2 grow bg-[#ffffff77]
-            p-2"
-            placeholder="Notes"
+            className='border-2 grow bg-[#ffffff77]
+            p-2'
+            placeholder='Notes'
             onChange={(e) => {
               setNotes(e.target.value);
             }}
-            value={notes}
-          ></textarea>
+            value={notes}></textarea>
         </div>
-        <div className="w-[320px]">
+        <div className='w-[320px]'>
           <DateCalendar value={date} onChange={setDate} />
         </div>
       </div>
       <Card
-        title="Programme"
+        title={`Programme du ${date.format("dddd DD MMMM YYYY")}`}
         displayButton
-        buttonText="Ajouter un Programme"
+        buttonText='Ajouter un Programme'
         onButtonClick={() => setOpenProgramModal(true)}
-        className="grow min-h-0"
-      >
+        className='grow min-h-0'>
         {currentRoutine &&
           currentRoutine.map((programRoutine, i) => (
             <Routine

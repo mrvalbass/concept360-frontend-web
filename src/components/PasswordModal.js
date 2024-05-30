@@ -1,6 +1,5 @@
 import { Modal } from "@mui/material";
 import PasswordComponent from "@/components/PasswordComponent";
-import TextFieldComponent from "@/components/TextFieldComponent";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -27,7 +26,7 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
         }),
       };
       const response = await fetch(
-        `http://localhost:3000/users/changeData/${specialist._id}`,
+        `http://localhost:3000/users/changeData/${specialist.user._id}`,
         options
       ).then((r) => r.json());
       if (response.result) {
@@ -38,6 +37,7 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
     }
   };
 
+  console.log(specialist);
   return (
     <Modal
       open={open}
@@ -61,7 +61,7 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
             <p className="font-semibold font-[sora] text-sm pb-2">
               Mot de passe actuel *
             </p>
-            <TextFieldComponent
+            <PasswordComponent
               id="actualPassword"
               label="Mot de passe actuel"
               valueSetter={setActualPassword}
@@ -93,7 +93,9 @@ export default function PasswordModal({ open, setOpenNewPatientModal }) {
               size={"small"}
             />
           </div>
-          {!message ? "" : <p>{message}</p>}
+          {!message
+            ? ""
+            : setTimeout(() => setMessage(""), 2000) && <p>{message}</p>}
           <Button onClick={() => updatePassword()}>Modifier</Button>
         </div>
       </div>

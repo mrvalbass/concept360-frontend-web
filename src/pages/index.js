@@ -34,7 +34,7 @@ export default function Home() {
           firstName={patient.user.firstName}
           lastName={patient.user.lastName}
           patient={patient}
-          className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+          className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
           onClick={() =>
             router.push({
               pathname: `/programs`,
@@ -64,7 +64,7 @@ export default function Home() {
         key={i}
         {...routine}
         title={routine.exercises.title}
-        className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+        className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
       />
     ));
 
@@ -73,12 +73,11 @@ export default function Home() {
       <Header />
       {Object.keys(specialist).length !== 0 ? (
         <main
-          className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}
-        >
-          <Card title="Mes Patients" className="basis-1/2 overflow-hidden">
+          className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
+          <Card title='Mes Patients' className='basis-1/2 overflow-hidden'>
             <Filter
               id={"SearchByLastName"}
-              label="Rechercher par nom"
+              label='Rechercher par nom'
               setterTextField={setSearchSpecialistList}
               getterTextField={searchSpecialistList}
               size={"small"}
@@ -95,7 +94,7 @@ export default function Home() {
                       firstName={patient.user.firstName}
                       lastName={patient.user.lastName}
                       patient={patient}
-                      className="gap-4 px-5 cursor-pointer duration-100 hover:scale-90 active:scale-100"
+                      className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
                       onClick={() =>
                         router.push({
                           pathname: `/programs`,
@@ -110,12 +109,12 @@ export default function Home() {
               <> {specialistPatients} </>
             )}
           </Card>
-          <Card title="Routines" className="basis-1/2 overflow-hidden">
+          <Card title='Routines' className='basis-1/2 overflow-hidden'>
             {routinesComponents}
           </Card>
         </main>
       ) : (
-        <main className="flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
+        <main className='flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
           Loading ...
         </main>
       )}
