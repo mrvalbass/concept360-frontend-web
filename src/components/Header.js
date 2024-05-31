@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -10,7 +8,7 @@ export default function Header() {
   const specialist = useSelector((state) => state.users.value);
 
   const pages = [
-    { title: "Programmes", path: "/programs" },
+    { title: "Programmes", path: "/" },
     { title: "Mes Patients", path: "/clients" },
     { title: "Base de Données", path: "/database" },
     {
@@ -48,16 +46,13 @@ export default function Header() {
   return (
     <div
       className={
-        "flex justify-between px-9 items-center bg-[#00a5ac] h-[10vh] text-white font-[Sora]"
+        "flex justify-between px-9 items-center bg-[#00a5ac] h-[10vh] text-white "
       }
     >
-      <div className="flex items-center gap-9">
-        <h1 className="font-bold text-2xl">Concept 360</h1>
-        <FontAwesomeIcon
-          className="text-2xl duration-75 hover:scale-110"
-          onClick={() => router.push("/")}
-          icon={faHouse}
-        />
+      <div className="flex  items-center gap-9">
+        <Link href="/" className="font-bold font-[sora] text-2xl">
+          Concept 360
+        </Link>
       </div>
       <div className="flex gap-20 items-center">{nav}</div>
     </div>

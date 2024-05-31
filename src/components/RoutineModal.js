@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import uid2 from "uid2";
 
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "@mui/material";
 import Card from "@/components/Card";
 import Exercise from "@/components/Exercise";
@@ -33,7 +33,7 @@ export default function RoutineModal({
 
   const handleAddToRoutine = async (id) => {
     const selectedExercise = await fetch(
-      `http://localhost:3000/exercises?_id=${id}`
+      `https://concept360-backend-five.vercel.app/exercises?_id=${id}`
     ).then((r) => r.json());
     selectedExercise.exercises[0].tempId = uid2(8);
     setSelectedExercises([...selectedExercises, ...selectedExercise.exercises]);
@@ -60,7 +60,7 @@ export default function RoutineModal({
       }),
     };
     const response = await fetch(
-      `http://localhost:3000/routines/${updateData.id}/updateRoutine`,
+      `https://concept360-backend-five.vercel.app/routines/${updateData.id}/updateRoutine`,
       options
     ).then((r) => r.json());
     if (response.result) {
@@ -85,7 +85,7 @@ export default function RoutineModal({
       }),
     };
     const response = await fetch(
-      "http://localhost:3000/routines",
+      "https://concept360-backend-five.vercel.app/routines",
       options
     ).then((r) => r.json());
     if (response.result) {
@@ -117,7 +117,7 @@ export default function RoutineModal({
       <Exercise
         key={i}
         {...exercise}
-        icon={faAdd}
+        icon={faSquarePlus}
         onIconClick={() => handleAddToRoutine(exercise._id)}
         setRenderTrigger={setRenderTrigger}
       />
@@ -129,9 +129,9 @@ export default function RoutineModal({
       onClose={() => setOpen((prev) => !prev)}
       className="flex justify-center items-center "
     >
-      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded">
+      <div className="bg-white h-3/4 w-3/4 flex flex-col p-5 rounded relative">
         <button
-          className="self-end"
+          className="absolute top-2 right-3"
           onClick={() => {
             setOpen((prev) => !prev);
           }}

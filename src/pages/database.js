@@ -14,27 +14,26 @@ export default function Programs() {
   const [routines, setRoutines] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
-  const [message, setMessage] = useState("");
   const [searchExerciseName, setSearchExerciseName] = useState("");
   const [exerciseSearch, setExerciseSearch] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const routinesData = await fetch("http://localhost:3000/routines/").then(
-        (r) => r.json()
-      );
+      const routinesData = await fetch(
+        "https://concept360-backend-five.vercel.app/routines/"
+      ).then((r) => r.json());
       setRoutines(routinesData.routines);
 
-      const exercisesData = await fetch("http://localhost:3000/exercises").then(
-        (response) => response.json()
-      );
+      const exercisesData = await fetch(
+        "https://concept360-backend-five.vercel.app/exercises"
+      ).then((response) => response.json());
       setExercises(exercisesData.exercises);
     })();
   }, [renderTrigger]);
 
   const handleDeleteExercice = async (id) => {
     const deleteResponse = await fetch(
-      `http://localhost:3000/exercises/${id}`,
+      `https://concept360-backend-five.vercel.app/exercises/${id}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -49,55 +48,20 @@ export default function Programs() {
   };
 
   const handleDeleteRoutine = async (id) => {
-    const deleteResponse = await fetch(`http://localhost:3000/routines/`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ routine: id }),
-    }).then((response) => response.json());
+    const deleteResponse = await fetch(
+      `https://concept360-backend-five.vercel.app/routines/`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ routine: id }),
+      }
+    ).then((response) => response.json());
 
     if (deleteResponse.result) {
       setRenderTrigger((prev) => !prev);
     } else {
       console.error("Error deleting exercise:", deleteResponse.message);
     }
-  };
-
-  const handleCreate = async (
-    title,
-    movement,
-    bodyParts,
-    disciplines,
-    videoLinkExercice
-  ) => {
-    if (!title || !movement || !bodyParts || !disciplines) {
-      setMessage("Un ou des champs sont vides");
-    } else {
-      let videoLink;
-      const token = localStorage.getItem("token");
-      videoLinkExercice ? (videoLink = videoLinkExercice) : (videoLink = "");
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          creatorToken: token,
-          title,
-          movement,
-          bodyParts,
-          disciplines,
-          videoLink,
-          description: "",
-        }),
-      };
-      const response = await fetch(
-        "http://localhost:3000/exercises",
-        options
-      ).then((r) => r.json());
-      if (response.result) {
-        setMessage("L'exercice a bien été ajouté");
-        console.log(response);
-      }
-    }
-    setRenderTrigger((prev) => !prev);
   };
 
   const exercisesComponents =
@@ -126,6 +90,7 @@ export default function Programs() {
           setRenderTrigger={setRenderTrigger}
           remove
           onRemove={() => handleDeleteRoutine(routine._id)}
+          alertMessage="Êtes-vous sûr de vouloir supprimer cette routine ? Elle sera également supprimée de tous les programmes."
         />
       );
     });
@@ -137,14 +102,12 @@ export default function Programs() {
         setOpen={setOpenRoutineModal}
         setRenderTrigger={setRenderTrigger}
         exercisesData={exercises}
-        message={message}
         updateId
       />
       <ExerciseModal
         open={openExerciseModal}
         setOpenExerciseModal={setOpenExerciseModal}
-        handleCreate={handleCreate}
-        message={message}
+        setRenderTrigger={setRenderTrigger}
       />
       <Header />
       <main

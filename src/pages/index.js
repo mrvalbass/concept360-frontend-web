@@ -1,122 +1,148 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+
+import moment from "moment";
+
+import { Skeleton } from "@mui/material";
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Patient from "@/components/Patient";
-import Routine from "@/components/Routine";
+import PatientCard from "@/components/PatientCard";
+import ProgramModal from "@/components/ProgramModal";
 import Filter from "@/components/Filter";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Programs() {
   const specialist = useSelector((state) => state.users.value);
   const [specialistPatientsData, setSpecialistsPatientsData] = useState([]);
   const [searchSpecialistList, setSearchSpecialistList] = useState("");
-  const [specialistSearch, setSpecialistSearch] = useState([]);
-  const [routines, setRoutines] = useState([]);
+  const [specialistSearchData, setSpecialistSearchData] = useState([]);
+  const [selectedPatient, setSelectedPatient] = useState();
+  const [openProgramModal, setOpenProgramModal] = useState(false);
+  const [programData, setProgramData] = useState({});
+  const [date, setDate] = useState(() => moment().startOf("day"));
+  const [renderTrigger, setRenderTrigger] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      if (Object.keys(specialist).length !== 0) {
-        const specialistPatientsData = await fetch(
-          `http://localhost:3000/users/patients/specialist/${specialist._id}`
+      if (Object.keys(specialist).length) {
+        const response = await fetch(
+          `https://concept360-backend-five.vercel.app/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
-        setSpecialistsPatientsData(specialistPatientsData.patients);
+        setSpecialistsPatientsData(
+          response.patients.sort((a, b) => {
+            if (a.user.lastName < b.user.lastName) return -1;
+            else if (a.user.lastName > b.user.lastName) return 1;
+            else {
+              if (a.user.firstName < b.user.firstName) return -1;
+              else if (a.user.firstName > b.user.firstName) return 1;
+              else return 0;
+            }
+          })
+        );
+        const lastCheckedPatient = localStorage.getItem("lastCheckedPatient");
+        const specialistPatientsId = response.patients.map(
+          (patient) => patient._id
+        );
+        if (Object.keys(router.query).length !== 0) {
+          setSelectedPatient(router.query.patient);
+          localStorage.setItem("lastCheckedPatient", router.query.patient);
+        } else if (
+          lastCheckedPatient &&
+          specialistPatientsId.includes(lastCheckedPatient)
+        ) {
+          setSelectedPatient(lastCheckedPatient);
+        } else {
+          response.patients &&
+            response.patients.length &&
+            setSelectedPatient(response.patients[0]._id);
+        }
       }
     })();
-  }, [specialist]);
+  }, [specialist, renderTrigger]);
 
-  const specialistPatients = specialistPatientsData
-    .map((patient, i) => {
-      return (
-        <Patient
-          key={i}
-          firstName={patient.user.firstName}
-          lastName={patient.user.lastName}
-          patient={patient}
-          className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
-          onClick={() =>
-            router.push({
-              pathname: `/programs`,
-              query: { patient: patient._id },
-            })
-          }
-        />
-      );
-    })
-    .reverse();
-
-  useEffect(() => {
-    (async () => {
-      if (Object.keys(specialist).length !== 0) {
-        const routinesData = await fetch(
-          "http://localhost:3000/routines/"
-        ).then((r) => r.json());
-        setRoutines(routinesData.routines);
-      }
-    })();
-  }, [specialist]);
-
-  const routinesComponents =
-    routines &&
-    routines.map((routine, i) => (
-      <Routine
+  const specialistPatients = specialistPatientsData.map((patient, i) => {
+    return (
+      <Patient
         key={i}
-        {...routine}
-        title={routine.exercises.title}
-        className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
+        firstName={patient.user.firstName}
+        lastName={patient.user.lastName}
+        patient={patient}
+        className="gap-2 cursor-pointer duration-100 hover:scale-95 active:scale-100"
+        onClick={() => {
+          setSelectedPatient(patient._id),
+            localStorage.setItem("lastCheckedPatient", patient._id);
+        }}
       />
-    ));
+    );
+  });
+
+  const specialistSearch = specialistSearchData.map((patient, i) => {
+    return (
+      <Patient
+        key={i}
+        firstName={patient.user.firstName}
+        lastName={patient.user.lastName}
+        patient={patient}
+        className="gap-4 cursor-pointer duration-100 hover:scale-95 active:scale-100"
+        onClick={() => {
+          setSelectedPatient(patient._id),
+            localStorage.setItem("lastCheckedPatient", patient._id);
+        }}
+      />
+    );
+  });
 
   return (
     <>
+      <ProgramModal
+        open={openProgramModal}
+        setOpenProgramModal={setOpenProgramModal}
+        date={date}
+        programData={programData}
+        setRenderTrigger={setRenderTrigger}
+      />
       <Header />
       {Object.keys(specialist).length !== 0 ? (
-        <main
-          className={`flex justify-center p-10 h-[90vh] gap-10 bg-[linear-gradient(150deg,rgba(255,255,255,0.40)20%,rgba(6,125,93,0.40)65%,rgba(0,165,172,0.40)100%)]`}>
-          <Card title='Mes Patients' className='basis-1/2 overflow-hidden'>
+        <main className="flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
+          <Card
+            title="Mes Patients"
+            className="w-1/4 overflow-hidden"
+            displayButton
+            buttonText="Ajouter un patient"
+            onButtonClick={() => router.push("/clients")}
+          >
             <Filter
               id={"SearchByLastName"}
-              label='Rechercher par nom'
+              label="Rechercher par nom"
               setterTextField={setSearchSpecialistList}
               getterTextField={searchSpecialistList}
               size={"small"}
               listToFilter={specialistPatientsData}
               category={"user"}
-              setterToReturn={setSpecialistSearch}
+              setterToReturn={setSpecialistSearchData}
             />
-            {specialistSearch.length > 0 ? (
-              specialistSearch
-                .map((patient, i) => {
-                  return (
-                    <Patient
-                      key={i}
-                      firstName={patient.user.firstName}
-                      lastName={patient.user.lastName}
-                      patient={patient}
-                      className='gap-4 px-5 cursor-pointer duration-100 hover:scale-95 active:scale-100'
-                      onClick={() =>
-                        router.push({
-                          pathname: `/programs`,
-                          query: { patient: patient._id },
-                        })
-                      }
-                    />
-                  );
-                })
-                .reverse()
+            {specialistSearchData.length > 0 ? (
+              <>{specialistSearch}</>
             ) : (
               <> {specialistPatients} </>
             )}
           </Card>
-          <Card title='Routines' className='basis-1/2 overflow-hidden'>
-            {routinesComponents}
-          </Card>
+
+          <PatientCard
+            patient={selectedPatient}
+            setOpenProgramModal={setOpenProgramModal}
+            date={date}
+            setDate={setDate}
+            programData={programData}
+            setProgramData={setProgramData}
+            renderTrigger={renderTrigger}
+            setRenderTrigger={setRenderTrigger}
+          ></PatientCard>
         </main>
       ) : (
-        <main className='flex justify-center items-center h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]'>
-          Loading ...
-        </main>
+        <Skeleton variant="rounded" animation="wave" className="m-5 !h-[99%]" />
       )}
     </>
   );
