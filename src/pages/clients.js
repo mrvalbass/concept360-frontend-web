@@ -114,6 +114,7 @@ export default function Clients() {
     (patient) =>
       !specialistPatientsData.find((element) => patient._id === element._id)
   );
+
   const patients =
     patientsDataFiltered &&
     !!patientsDataFiltered.length &&
@@ -166,7 +167,7 @@ export default function Clients() {
           title="Patients du Cabinet"
           displayButton
           onButtonClick={() => setOpenNewPatientModal((prev) => !prev)}
-          buttonText="Ajouter un patient"
+          buttonText="Créer un patient"
           className="basis-1/2"
         >
           <Filter
