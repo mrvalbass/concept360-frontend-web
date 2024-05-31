@@ -79,6 +79,7 @@ export default function Clients() {
     (patient) =>
       !specialistPatientsData.find((element) => patient._id === element._id)
   );
+
   const patients =
     patientsDataFiltered &&
     !!patientsDataFiltered.length &&
