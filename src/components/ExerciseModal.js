@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Button from "./Button";
-import { Modal } from "@mui/material";
+import { Modal, CircularProgress } from "@mui/material";
 import TextFieldComponent from "./TextFieldComponent";
 import SelectForm from "./SelectForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faBan } from "@fortawesome/free-solid-svg-icons";
 
 export default function ExerciceModal({
   open,
@@ -15,6 +17,7 @@ export default function ExerciceModal({
   const [disciplines, setDisciplines] = useState([]);
   const [videoLink, setVideoLink] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCreate = async (
     title,
@@ -23,36 +26,72 @@ export default function ExerciceModal({
     disciplines,
     videoLinkExercice
   ) => {
-    if (!title || !movement || !bodyParts || !disciplines) {
-      setMessage("Un ou des champs sont vides");
-    } else {
-      let videoLink;
-      const token = localStorage.getItem("token");
-      videoLinkExercice ? (videoLink = videoLinkExercice) : (videoLink = "");
-      const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          creatorToken: token,
-          title,
-          movement,
-          bodyParts,
-          disciplines,
-          videoLink,
-          description: "",
-        }),
-      };
-      const response = await fetch(
-        "https://concept360-backend-five.vercel.app/exercises",
-        options
-      ).then((r) => r.json());
-      if (response.result) {
-        setOpenExerciseModal(false);
+    if (!loading) {
+      setLoading(true);
+      if (!title || !movement || !bodyParts || !disciplines) {
+        setMessage(<FontAwesomeIcon icon={faBan} />);
+      } else {
+        let videoLink;
+        const token = localStorage.getItem("token");
+        videoLinkExercice ? (videoLink = videoLinkExercice) : (videoLink = "");
+        const options = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            creatorToken: token,
+            title,
+            movement,
+            bodyParts,
+            disciplines,
+            videoLink,
+            description: "",
+          }),
+        };
+        const response = await fetch(
+          "https://concept360-backend-five.vercel.app/exercises",
+          options
+        ).then((r) => r.json());
+        if (response.result) {
+          setMessage(<FontAwesomeIcon icon={faCheck} />);
+          setOpenExerciseModal(false);
+          setTitle("");
+          setMovement("");
+          setBodyParts([]);
+          setDisciplines([]);
+          setVideoLink("");
+        } else {
+          setMessage(<FontAwesomeIcon icon={faBan} />);
+        }
       }
+      setLoading(false);
     }
-
     setRenderTrigger((prev) => !prev);
   };
+
+  let saveButton;
+  if (loading) {
+    saveButton = (
+      <Button className="items-center w-40 !bg-[#00a5ac]">
+        <CircularProgress size={"1rem"} />
+      </Button>
+    );
+  } else if (message) {
+    setTimeout(() => setMessage(""), 2000);
+    saveButton = (
+      <Button className="items-center w-40 !bg-[#00a5ac]">{message}</Button>
+    );
+  } else {
+    saveButton = (
+      <Button
+        onClick={() =>
+          handleCreate(title, movement, bodyParts, disciplines, videoLink)
+        }
+        className="items-center w-40 !bg-[#00a5ac]"
+      >
+        Enregistrer
+      </Button>
+    );
+  }
 
   return (
     <Modal
@@ -146,19 +185,7 @@ export default function ExerciceModal({
             valueSetter={setVideoLink}
           />
         </div>
-        <p>{message}</p>
-        <Button
-          onClick={() => {
-            handleCreate(title, movement, bodyParts, disciplines, videoLink),
-              setTitle(""),
-              setMovement(""),
-              setBodyParts([]),
-              setDisciplines([]),
-              setVideoLink("");
-          }}
-        >
-          Enregistrer
-        </Button>
+        {saveButton}
       </div>
     </Modal>
   );
