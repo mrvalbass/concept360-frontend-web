@@ -26,7 +26,7 @@ export default function Programs() {
 
   useEffect(() => {
     (async () => {
-      if (Object.keys(specialist).length) {
+      if (specialist && Object.keys(specialist).length) {
         const response = await fetch(
           `https://concept360-backend-five.vercel.app/users/patients/specialist/${specialist._id}`
         ).then((r) => r.json());
@@ -104,7 +104,7 @@ export default function Programs() {
         setRenderTrigger={setRenderTrigger}
       />
       <Header />
-      {Object.keys(specialist).length !== 0 ? (
+      {specialist && Object.keys(specialist).length !== 0 ? (
         <main className="flex h-[90vh] gap-5 p-5 bg-[linear-gradient(149deg,_rgba(255,_255,_255,_0.50)_10%,_rgba(6,_125,_93,_0.50)_65%,_rgba(0,_165,_172,_0.50)_100%)]">
           <Card
             title="Mes Patients"
