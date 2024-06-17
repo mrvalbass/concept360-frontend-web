@@ -11,7 +11,7 @@ export default function Patient({
   icon,
 }) {
   const [openAlertModal, setOpenAlertModal] = useState(false);
-
+  console.log("test");
   const handleClick = () => {
     if (icon.iconName === "trash-can") {
       setOpenAlertModal((prev) => !prev);
