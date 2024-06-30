@@ -47,7 +47,7 @@ export default function login() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center gap-20 bg-[linear-gradient(150deg,rgba(255,255,255,0.30)10%,rgba(0,165,172,0.30)100%,rgba(6,125,93,0.30)65%)]">
+    <main className="flex items-center flex-col min-h-screen justify-center gap-20 bg-[linear-gradient(150deg,rgba(255,255,255,0.30)10%,rgba(0,165,172,0.30)100%,rgba(6,125,93,0.30)65%)] ">
       <div className="font-[sora] text-8xl font-semibold text-[#00a5ac]">
         Concept 360
       </div>
@@ -75,6 +75,11 @@ export default function login() {
         )}
         <Button onClick={signIn}>Connexion</Button>
       </div>
+      <p className="absolute border-2 bg-white border-[#00a5ac] bottom-5 right-5 rounded py-2 px-5">
+        For test purpose use : <br />
+        Email : john.doe@example.com <br />
+        Password : azerty1234
+      </p>
     </main>
   );
 }
